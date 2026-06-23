@@ -1,0 +1,156 @@
+{
+  "meta": {
+    "title": "Galaxie Voyages — Intercity passenger transport in Cameroon",
+    "description": "Travel across Cameroon safely and in comfort with Galaxie Voyages: intercity connections between Yaoundé, Mbalmayo, Ebolowa and Sangmélima."
+  },
+  "nav": {
+    "home": "Home",
+    "destinations": "Destinations",
+    "fleet": "Our fleet",
+    "about": "About",
+    "contact": "Contact",
+    "book": "Contact us"
+  },
+  "common": {
+    "from": "From",
+    "to": "To",
+    "duration": "Duration",
+    "departures": "Departures",
+    "viewAll": "View all",
+    "popular": "Flagship line",
+    "hours": "h",
+    "seeRoutes": "See routes",
+    "callUs": "Call us",
+    "phone": "Phone",
+    "email": "Email",
+    "whatsapp": "WhatsApp"
+  },
+  "hero": {
+    "eyebrow": "Intercity transport · Cameroon",
+    "title": "Travel across Cameroon, with confidence.",
+    "subtitle": "Daily connections between the cities of Cameroon's Centre and South regions aboard modern, safe and comfortable coaches.",
+    "ctaPrimary": "View destinations",
+    "ctaSecondary": "Contact us"
+  },
+  "stats": {
+    "routes": "Routes served",
+    "cities": "Cities connected",
+    "passengers": "Passengers a year",
+    "onTime": "On-time rate"
+  },
+  "features": {
+    "title": "Why travel with Galaxie Voyages",
+    "subtitle": "Comfort and safety on every kilometre.",
+    "items": [
+      { "title": "Safety first", "text": "Experienced drivers, well-maintained vehicles and real-time trip monitoring." },
+      { "title": "Modern comfort", "text": "Reclining seats, air conditioning and room for your luggage on all VIP routes." },
+      { "title": "On time", "text": "Regular, reliable departures several times a day on our main routes." },
+      { "title": "Regional network", "text": "The cities of the Centre and South linked by a single network, departing from Yaoundé." }
+    ]
+  },
+  "experience": {
+    "title": "The Galaxie experience",
+    "subtitle": "Designed so every journey is as pleasant as the destination.",
+    "items": [
+      { "title": "Comfort on board", "text": "Reclining seats, air conditioning and generous space for a relaxed journey." },
+      { "title": "Dedicated teams", "text": "Trained drivers and agency staff, at your service at every step." },
+      { "title": "Luggage secured", "text": "Spacious holds and careful handling of your luggage, from departure to arrival." },
+      { "title": "Punctuality", "text": "Regular departures, several times a day, on schedule." }
+    ]
+  },
+  "popularRoutes": {
+    "title": "Our routes",
+    "subtitle": "Our regular connections across the Centre and South.",
+    "cta": "All routes and schedules"
+  },
+  "network": {
+    "title": "Our network",
+    "subtitle": "Daily connections at the heart of Cameroon's Centre and South.",
+    "citiesTitle": "Cities served",
+    "note": "A growing network, departing from Yaoundé."
+  },
+  "testimonials": {
+    "title": "They travel with us",
+    "items": [
+      { "quote": "A comfortable, on-time journey every single time. I won't travel any other way.", "author": "Aline N.", "city": "Yaoundé" },
+      { "quote": "Welcoming staff and clean coaches. The comfort-to-service ratio is excellent.", "author": "Serge M.", "city": "Ebolowa" },
+      { "quote": "Reliable departures that let me plan my trips with peace of mind.", "author": "Pauline T.", "city": "Sangmélima" }
+    ]
+  },
+  "gallery": {
+    "title": "The journey in pictures",
+    "subtitle": "Our roads, our vehicles and the regions we serve across Cameroon."
+  },
+  "parent": {
+    "eyebrow": "GHF SARL Group",
+    "title": "A subsidiary of the GHF SARL group",
+    "text": "Galaxie Voyages draws on the strength of the GHF SARL group, based in Yaoundé, to invest sustainably in its fleet, its teams and the quality of its service.",
+    "cta": "Learn more"
+  },
+  "destinations": {
+    "title": "Destinations & schedules",
+    "subtitle": "All our routes and their departure times, as daily round trips.",
+    "tableRoute": "Route",
+    "tableDuration": "Duration",
+    "tableDepartures": "Departure times",
+    "note": "ℹ️ Schedules are indicative. Contact an agency to confirm availability."
+  },
+  "fleet": {
+    "title": "Our fleet",
+    "subtitle": "Coaches chosen for your comfort and safety.",
+    "seats": "seats",
+    "amenities": {
+      "ac": "Air conditioning",
+      "wifi": "On-board Wi-Fi",
+      "usb": "USB ports",
+      "reclining": "Reclining seats",
+      "tv": "TV screen",
+      "snack": "Complimentary snack"
+    },
+    "classes": {
+      "vip": { "name": "Galaxie VIP", "text": "Our premium service: fewer seats, more space, and every on-board amenity." },
+      "classic": { "name": "Classic", "text": "The reliable, affordable ride for your everyday intercity travel." },
+      "express": { "name": "Express", "text": "Direct connections with minimal stops, to get you there faster." }
+    }
+  },
+  "about": {
+    "title": "About Galaxie Voyages",
+    "lead": "Galaxie Voyages connects the cities of Cameroon with one goal: to make every journey a safe, punctual and comfortable experience.",
+    "story": [
+      "Founded in 2015 and based in Yaoundé, Galaxie Voyages has become a benchmark for intercity passenger transport in Cameroon. Every day, our coaches link the cities of the Centre and South, carrying families, professionals and students with peace of mind.",
+      "Galaxie Voyages is a subsidiary of GHF SARL, a Cameroonian group based in Yaoundé. This backing allows us to invest continuously in our fleet, the training of our teams and the quality of our service."
+    ],
+    "missionTitle": "Our mission",
+    "mission": "To give every Cameroonian intercity transport they can trust — safe, accessible and on time.",
+    "valuesTitle": "Our values",
+    "values": [
+      { "title": "Safety", "text": "The protection of our passengers guides every decision we make." },
+      { "title": "Reliability", "text": "We keep to our schedules and our commitments." },
+      { "title": "Respect", "text": "Every traveller is welcomed with courtesy and care." }
+    ],
+    "parentNote": "Galaxie Voyages is a company of the GHF SARL group."
+  },
+  "contact": {
+    "title": "Contact us",
+    "subtitle": "A question or a group request? Our team is here to help.",
+    "agenciesTitle": "Our agencies",
+    "headOffice": "Head office",
+    "hours": "Every day, 6:00 am – 9:00 pm",
+    "formTitle": "Send us a message",
+    "formNote": "Fill in this form and we'll get back to you quickly. (Demo form — not connected yet.)",
+    "formName": "Full name",
+    "formPhone": "Phone",
+    "formEmail": "Email",
+    "formMessage": "Message",
+    "formSubmit": "Send message",
+    "formSuccess": "Thank you! Your message has been received (demo)."
+  },
+  "footer": {
+    "tagline": "Intercity passenger transport in Cameroon.",
+    "quickLinks": "Quick links",
+    "contactTitle": "Contact",
+    "parent": "A company of",
+    "rights": "All rights reserved.",
+    "placeholderNote": "Demo site — provisional content and contact details."
+  }
+}

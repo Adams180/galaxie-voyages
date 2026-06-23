@@ -1,0 +1,156 @@
+{
+  "meta": {
+    "title": "Galaxie Voyages — Transport interurbain au Cameroun",
+    "description": "Voyagez à travers le Cameroun en toute sécurité et confort avec Galaxie Voyages : liaisons interurbaines entre Yaoundé, Mbalmayo, Ebolowa et Sangmélima."
+  },
+  "nav": {
+    "home": "Accueil",
+    "destinations": "Destinations",
+    "fleet": "Notre flotte",
+    "about": "À propos",
+    "contact": "Contact",
+    "book": "Nous contacter"
+  },
+  "common": {
+    "from": "Au départ de",
+    "to": "Vers",
+    "duration": "Durée",
+    "departures": "Départs",
+    "viewAll": "Voir tout",
+    "popular": "Ligne phare",
+    "hours": "h",
+    "seeRoutes": "Voir les trajets",
+    "callUs": "Appelez-nous",
+    "phone": "Téléphone",
+    "email": "E-mail",
+    "whatsapp": "WhatsApp"
+  },
+  "hero": {
+    "eyebrow": "Transport interurbain · Cameroun",
+    "title": "Voyagez à travers le Cameroun, en toute confiance.",
+    "subtitle": "Des liaisons quotidiennes entre les villes du Centre et du Sud Cameroun, à bord d'autocars modernes, sûrs et confortables.",
+    "ctaPrimary": "Voir les destinations",
+    "ctaSecondary": "Nous contacter"
+  },
+  "stats": {
+    "routes": "Lignes desservies",
+    "cities": "Villes reliées",
+    "passengers": "Voyageurs par an",
+    "onTime": "Ponctualité"
+  },
+  "features": {
+    "title": "Pourquoi voyager avec Galaxie Voyages",
+    "subtitle": "Le confort et la sécurité à chaque kilomètre.",
+    "items": [
+      { "title": "Sécurité avant tout", "text": "Conducteurs expérimentés, véhicules entretenus et suivi des trajets en temps réel." },
+      { "title": "Confort moderne", "text": "Sièges inclinables, climatisation et espace pour vos bagages sur toutes nos lignes VIP." },
+      { "title": "Ponctualité", "text": "Des départs réguliers et fiables, plusieurs fois par jour sur nos lignes principales." },
+      { "title": "Réseau régional", "text": "Les villes du Centre et du Sud reliées par un seul réseau, au départ de Yaoundé." }
+    ]
+  },
+  "experience": {
+    "title": "L'expérience Galaxie",
+    "subtitle": "Pensée pour que chaque trajet soit aussi agréable que la destination.",
+    "items": [
+      { "title": "Confort à bord", "text": "Sièges inclinables, climatisation et espace généreux pour voyager détendu." },
+      { "title": "Équipes dédiées", "text": "Des conducteurs et personnels d'agence formés, à votre service à chaque étape." },
+      { "title": "Bagages en sécurité", "text": "Soutes spacieuses et gestion soignée de vos bagages, du départ à l'arrivée." },
+      { "title": "Ponctualité", "text": "Des départs réguliers, plusieurs fois par jour, dans le respect des horaires." }
+    ]
+  },
+  "popularRoutes": {
+    "title": "Nos trajets",
+    "subtitle": "Nos liaisons régulières à travers le Centre et le Sud.",
+    "cta": "Tous les trajets et horaires"
+  },
+  "network": {
+    "title": "Notre réseau",
+    "subtitle": "Des liaisons quotidiennes au cœur du Centre et du Sud Cameroun.",
+    "citiesTitle": "Villes desservies",
+    "note": "Un réseau en croissance, au départ de Yaoundé."
+  },
+  "testimonials": {
+    "title": "Ils voyagent avec nous",
+    "items": [
+      { "quote": "Un trajet confortable et à l'heure, à chaque fois. Je ne voyage plus autrement.", "author": "Aline N.", "city": "Yaoundé" },
+      { "quote": "Personnel accueillant et autocars propres. Le rapport confort-service est excellent.", "author": "Serge M.", "city": "Ebolowa" },
+      { "quote": "Des départs fiables qui me permettent d'organiser sereinement mes déplacements.", "author": "Pauline T.", "city": "Sangmélima" }
+    ]
+  },
+  "gallery": {
+    "title": "Le voyage en images",
+    "subtitle": "Nos routes, nos véhicules et les régions que nous desservons à travers le Cameroun."
+  },
+  "parent": {
+    "eyebrow": "Groupe GHF SARL",
+    "title": "Une filiale du groupe GHF SARL",
+    "text": "Galaxie Voyages s'appuie sur la solidité du groupe GHF SARL, basé à Yaoundé, pour investir durablement dans sa flotte, ses équipes et la qualité de son service.",
+    "cta": "En savoir plus"
+  },
+  "destinations": {
+    "title": "Destinations & horaires",
+    "subtitle": "Toutes nos lignes et leurs horaires de départ, en aller-retour quotidien.",
+    "tableRoute": "Trajet",
+    "tableDuration": "Durée",
+    "tableDepartures": "Heures de départ",
+    "note": "ℹ️ Horaires donnés à titre indicatif. Contactez une agence pour confirmer la disponibilité."
+  },
+  "fleet": {
+    "title": "Notre flotte",
+    "subtitle": "Des autocars choisis pour votre confort et votre sécurité.",
+    "seats": "places",
+    "amenities": {
+      "ac": "Climatisation",
+      "wifi": "Wi-Fi à bord",
+      "usb": "Prises USB",
+      "reclining": "Sièges inclinables",
+      "tv": "Écran TV",
+      "snack": "Collation offerte"
+    },
+    "classes": {
+      "vip": { "name": "Galaxie VIP", "text": "Notre service haut de gamme : moins de sièges, plus d'espace, et tous les services à bord." },
+      "classic": { "name": "Classique", "text": "Le trajet fiable et économique pour vos déplacements quotidiens entre les villes." },
+      "express": { "name": "Express", "text": "Liaisons directes avec un minimum d'arrêts, pour arriver plus vite." }
+    }
+  },
+  "about": {
+    "title": "À propos de Galaxie Voyages",
+    "lead": "Galaxie Voyages relie les villes du Cameroun avec un seul objectif : faire de chaque trajet une expérience sûre, ponctuelle et confortable.",
+    "story": [
+      "Fondée en 2015 et basée à Yaoundé, Galaxie Voyages s'est imposée comme une référence du transport interurbain de passagers au Cameroun. Chaque jour, nos autocars relient les villes du Centre et du Sud, transportant familles, professionnels et étudiants en toute sérénité.",
+      "Galaxie Voyages est une filiale de GHF SARL, groupe camerounais basé à Yaoundé. Cet adossement nous permet d'investir continuellement dans notre flotte, la formation de nos équipes et la qualité de notre service."
+    ],
+    "missionTitle": "Notre mission",
+    "mission": "Offrir à chaque Camerounais un transport interurbain digne de confiance — sûr, accessible et ponctuel.",
+    "valuesTitle": "Nos valeurs",
+    "values": [
+      { "title": "Sécurité", "text": "La protection de nos passagers guide chacune de nos décisions." },
+      { "title": "Fiabilité", "text": "Nous tenons nos horaires et nos engagements." },
+      { "title": "Respect", "text": "Chaque voyageur est accueilli avec courtoisie et attention." }
+    ],
+    "parentNote": "Galaxie Voyages est une société du groupe GHF SARL."
+  },
+  "contact": {
+    "title": "Contactez-nous",
+    "subtitle": "Une question ou une demande de groupe ? Notre équipe est à votre écoute.",
+    "agenciesTitle": "Nos agences",
+    "headOffice": "Siège social",
+    "hours": "Tous les jours, 06h00 – 21h00",
+    "formTitle": "Envoyez-nous un message",
+    "formNote": "Remplissez ce formulaire et nous vous répondrons rapidement. (Formulaire de démonstration — non connecté pour le moment.)",
+    "formName": "Nom complet",
+    "formPhone": "Téléphone",
+    "formEmail": "E-mail",
+    "formMessage": "Message",
+    "formSubmit": "Envoyer le message",
+    "formSuccess": "Merci ! Votre message a bien été pris en compte (démonstration)."
+  },
+  "footer": {
+    "tagline": "Transport interurbain de passagers au Cameroun.",
+    "quickLinks": "Liens rapides",
+    "contactTitle": "Contact",
+    "parent": "Une société du groupe",
+    "rights": "Tous droits réservés.",
+    "placeholderNote": "Site de démonstration — contenu et coordonnées provisoires."
+  }
+}
