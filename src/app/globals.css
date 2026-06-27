@@ -1,8 +1,10 @@
 @import "tailwindcss";
 
+/* Enable class-based dark mode (.dark on <html>) */
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
-  /* ── Galaxie Voyages brand — corporate navy + teal ──
-     navy #1a3a6e · teal #0e7490 (timeless, no yellow) */
+  /* ── Galaxie Voyages brand — navy + teal + gold (real logo colors) ── */
   --color-navy-50: #eef3fb;
   --color-navy-100: #d4e0f3;
   --color-navy-200: #a7bfe5;
@@ -20,20 +22,47 @@
   --color-teal-500: #0e7490;
   --color-teal-600: #0b5e75;
 
-  /* Cinematic dark surfaces */
+  /* gold — the warm accent from the Galaxie emblem */
+  --color-gold-300: #ffdd73;
+  --color-gold-400: #f4c430;
+  --color-gold-500: #dca714;
+  --color-gold-600: #b07d0a;
+
+  /* fixed dark "ink" surfaces (used by photo overlays in both themes) */
   --color-ink-900: #060b16;
   --color-ink-850: #0a1120;
   --color-ink-800: #0f1830;
   --color-ink-700: #16203c;
   --color-ink-600: #1e2b4d;
 
+  /* ── Semantic tokens — default = LIGHT (overridden under .dark) ── */
+  --color-page: #f3f6fc;
+  --color-surface: #ffffff;
+  --color-band: #e9f0fa;
+  --color-elevated: #e3ebf7;
+  --color-fg: #0f2240;
+  --color-muted: #4b5b78;
+  --color-faint: #74859f;
+  --color-line: #d8e2f1;
+  --color-accent: #0b5e75;
+  --color-highlight: #b07d0a;
+
   --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, monospace;
 }
 
-:root {
-  --background: #060b16;
-  --foreground: #eef2fb;
+/* Dark theme overrides — same token names, cinematic values */
+.dark {
+  --color-page: #060b16;
+  --color-surface: #0f1830;
+  --color-band: #0a1120;
+  --color-elevated: #16203c;
+  --color-fg: #eef2fb;
+  --color-muted: #9aa7bd;
+  --color-faint: #647387;
+  --color-line: rgba(255, 255, 255, 0.1);
+  --color-accent: #5fd3e6;
+  --color-highlight: #f4c430;
 }
 
 html {
@@ -41,11 +70,11 @@ html {
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: var(--color-page);
+  color: var(--color-fg);
 }
 
-/* Netflix-style horizontal row: hide scrollbar but keep scroll */
+/* horizontal row: hide scrollbar but keep scroll */
 .row-scroll {
   scrollbar-width: none;
 }

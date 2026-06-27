@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Logo from "./Logo";
 import LangSwitcher from "./LangSwitcher";
+import ThemeToggle from "./ThemeToggle";
 
 type NavLabels = {
   home: string;
@@ -18,9 +19,11 @@ type NavLabels = {
 export default function SiteHeader({
   lang,
   nav,
+  themeLabel,
 }: {
   lang: string;
   nav: NavLabels;
+  themeLabel: string;
 }) {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -44,17 +47,19 @@ export default function SiteHeader({
   const isActive = (href: string, exact?: boolean) =>
     exact ? pathname === href : pathname.startsWith(href);
 
+  const solid = scrolled || open;
+
   return (
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-colors duration-300 ${
-        scrolled || open
-          ? "border-b border-white/10 bg-ink-900/95 backdrop-blur"
-          : "bg-gradient-to-b from-black/70 to-transparent"
+        solid
+          ? "border-b border-line bg-surface/95 text-fg backdrop-blur"
+          : "bg-gradient-to-b from-black/70 to-transparent text-white"
       }`}
     >
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
         <Link href={`/${lang}`} aria-label="Galaxie Voyages">
-          <Logo variant="light" />
+          <Logo />
         </Link>
 
         <nav className="hidden items-center gap-1 md:flex">
@@ -64,8 +69,8 @@ export default function SiteHeader({
               href={l.href}
               className={`rounded-md px-3 py-2 text-sm font-medium transition ${
                 isActive(l.href, l.exact)
-                  ? "text-teal-300"
-                  : "text-slate-200 hover:text-white"
+                  ? "text-gold-400"
+                  : "opacity-80 hover:opacity-100"
               }`}
             >
               {l.label}
@@ -73,11 +78,12 @@ export default function SiteHeader({
           ))}
         </nav>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2.5">
+          <ThemeToggle label={themeLabel} />
           <LangSwitcher current={lang} />
           <Link
             href={`/${lang}/contact`}
-            className="hidden rounded-full bg-teal-500 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-teal-400 sm:inline-block"
+            className="hidden rounded-full bg-gold-400 px-4 py-2 text-sm font-semibold text-navy-900 shadow-sm transition hover:bg-gold-300 sm:inline-block"
           >
             {nav.book}
           </Link>
@@ -86,7 +92,7 @@ export default function SiteHeader({
             onClick={() => setOpen((v) => !v)}
             aria-label="Menu"
             aria-expanded={open}
-            className="inline-flex h-10 w-10 items-center justify-center rounded-md text-white md:hidden"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-md md:hidden"
           >
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               {open ? (
@@ -100,7 +106,7 @@ export default function SiteHeader({
       </div>
 
       {open && (
-        <nav className="border-t border-white/10 bg-ink-900 md:hidden">
+        <nav className="border-t border-line bg-surface text-fg md:hidden">
           <div className="mx-auto flex max-w-6xl flex-col px-4 py-2 sm:px-6">
             {links.map((l) => (
               <Link
@@ -109,8 +115,8 @@ export default function SiteHeader({
                 onClick={() => setOpen(false)}
                 className={`rounded-md px-3 py-3 text-sm font-medium ${
                   isActive(l.href, l.exact)
-                    ? "bg-white/5 text-teal-300"
-                    : "text-slate-200"
+                    ? "bg-elevated text-gold-500 dark:text-gold-400"
+                    : "text-muted"
                 }`}
               >
                 {l.label}
@@ -119,7 +125,7 @@ export default function SiteHeader({
             <Link
               href={`/${lang}/contact`}
               onClick={() => setOpen(false)}
-              className="mt-2 rounded-full bg-teal-500 px-4 py-3 text-center text-sm font-semibold text-white"
+              className="mt-2 rounded-full bg-gold-400 px-4 py-3 text-center text-sm font-semibold text-navy-900"
             >
               {nav.book}
             </Link>

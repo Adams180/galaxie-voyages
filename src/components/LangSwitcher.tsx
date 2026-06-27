@@ -15,7 +15,7 @@ export default function LangSwitcher({ current }: { current: string }) {
   };
 
   return (
-    <div className="flex items-center rounded-full border border-white/15 bg-white/5 p-0.5 text-xs font-semibold">
+    <div className="flex items-center rounded-full border border-line p-0.5 text-xs font-semibold">
       {locales.map((locale) => {
         const active = locale === current;
         return (
@@ -26,7 +26,7 @@ export default function LangSwitcher({ current }: { current: string }) {
             className={`rounded-full px-2.5 py-1 uppercase transition ${
               active
                 ? "bg-teal-500 text-white"
-                : "text-slate-200 hover:bg-white/10"
+                : "opacity-70 hover:opacity-100"
             }`}
           >
             {locale}

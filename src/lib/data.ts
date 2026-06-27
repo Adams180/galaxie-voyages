@@ -31,23 +31,40 @@ export type Coach = {
   /** translation key into dictionary.fleet.classes */
   key: "vip" | "classic";
   seats: number;
+  img: string;
   amenities: ("ac" | "wifi" | "usb" | "reclining" | "tv" | "snack")[];
 };
 
 export const fleet: Coach[] = [
-  { key: "vip", seats: 30, amenities: ["ac", "wifi", "usb", "reclining", "tv", "snack"] },
-  { key: "classic", seats: 49, amenities: ["ac", "usb", "reclining"] },
+  { key: "vip", seats: 30, img: "/vehicles/coaster-vip-side.jpg", amenities: ["ac", "wifi", "usb", "reclining", "tv", "snack"] },
+  { key: "classic", seats: 14, img: "/vehicles/hiace-vip-side.jpg", amenities: ["ac", "usb", "reclining"] },
+];
+
+/** Service lines — keys map into dictionary.services.items */
+export const services = ["vip", "standard", "organized", "charter"] as const;
+export type Service = (typeof services)[number];
+
+/** Curated vehicle photos for the gallery */
+export const galleryImages = [
+  "/vehicles/coaster-vip-side.jpg",
+  "/vehicles/coaster-front.jpg",
+  "/vehicles/hiace-vip-side.jpg",
+  "/vehicles/hiace-front.jpg",
+  "/vehicles/coaster-boarding.jpg",
+  "/vehicles/staff-coaster.jpg",
+  "/vehicles/hiace-agency.jpg",
+  "/vehicles/routes-flyer.jpg",
 ];
 
 export const contact = {
-  // ⚠️ PLACEHOLDER — replace with real values
+  email: "ghfsarl@yahoo.com",
+  // ⚠️ phone numbers are PLACEHOLDERS — replace with real values
   phone: "+237 6 00 00 00 00",
   whatsapp: "+237 6 00 00 00 00",
-  email: "contact@galaxievoyages.cm",
-  addressLine: "Avenue Kennedy",
+  addressLine: "Quartier Mvan",
   city: "Yaoundé, Cameroun",
   agencies: [
-    { city: "Yaoundé", area: "Gare routière — Avenue Kennedy", phone: "+237 6 00 00 00 01" },
+    { city: "Yaoundé", area: "Quartier Mvan (siège)", phone: "+237 6 00 00 00 01" },
     { city: "Mbalmayo", area: "Centre-ville", phone: "+237 6 00 00 00 02" },
     { city: "Ebolowa", area: "Gare routière", phone: "+237 6 00 00 00 03" },
     { city: "Sangmélima", area: "Centre-ville", phone: "+237 6 00 00 00 04" },

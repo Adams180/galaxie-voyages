@@ -23,7 +23,9 @@
     "callUs": "Call us",
     "phone": "Phone",
     "email": "Email",
-    "whatsapp": "WhatsApp"
+    "whatsapp": "WhatsApp",
+    "theme": "Toggle theme",
+    "slogan": "La différence"
   },
   "hero": {
     "eyebrow": "Intercity transport · Cameroon",
@@ -56,6 +58,16 @@
       { "title": "Dedicated teams", "text": "Trained drivers and agency staff, at your service at every step." },
       { "title": "Luggage secured", "text": "Spacious holds and careful handling of your luggage, from departure to arrival." },
       { "title": "Punctuality", "text": "Regular departures, several times a day, on schedule." }
+    ]
+  },
+  "services": {
+    "title": "Our services",
+    "subtitle": "Much more than transport — a complete travel experience.",
+    "items": [
+      { "title": "VIP transport", "text": "Our premium coaches: more space, air conditioning and on-board service for travel in the greatest comfort." },
+      { "title": "Standard transport", "text": "Reliable, affordable connections, ideal for your everyday intercity travel." },
+      { "title": "Organised trips", "text": "Discover new destinations with professional guidance, without worrying about the logistics." },
+      { "title": "Rental & charter", "text": "Buses and vehicles available to hire for your groups, events and private journeys." }
     ]
   },
   "popularRoutes": {
@@ -97,8 +109,9 @@
   },
   "fleet": {
     "title": "Our fleet",
-    "subtitle": "Coaches chosen for your comfort and safety.",
+    "subtitle": "Buses and vehicles chosen for your comfort and safety.",
     "seats": "seats",
+    "featured": "Most popular",
     "amenities": {
       "ac": "Air conditioning",
       "wifi": "On-board Wi-Fi",
@@ -115,10 +128,12 @@
   },
   "about": {
     "title": "About Galaxie Voyages",
-    "lead": "Galaxie Voyages connects the cities of Cameroon with one goal: to make every journey a safe, punctual and comfortable experience.",
+    "lead": "Located in the Mvan district of Yaoundé, Galaxie Voyages is a travel company recognised for the quality of its services.",
     "story": [
-      "Founded in 2015 and based in Yaoundé, Galaxie Voyages has become a benchmark for intercity passenger transport in Cameroon. Every day, our coaches link the cities of the Centre and South, carrying families, professionals and students with peace of mind.",
-      "Galaxie Voyages is a subsidiary of GHF SARL, a Cameroonian group based in Yaoundé. This backing allows us to invest continuously in our fleet, the training of our teams and the quality of our service."
+      "The company stands out through its commitment to safety, comfort and punctuality — essential values for guaranteeing client satisfaction. Every aspect of the service is designed to deliver a pleasant travel experience.",
+      "Galaxie Voyages operates a varied fleet of buses and cars, all carefully selected and regularly maintained to ensure an optimal level of safety. Whether you choose a VIP or standard service, every detail is taken into account for your comfort.",
+      "Beyond transport, the company also offers organised trips that let clients discover a range of destinations with professional guidance — an excellent way to travel without worrying about the logistics.",
+      "Whether for a short hop or a longer journey, travellers can expect attentive, quality service. A focus on the customer experience and an eye for detail make Galaxie Voyages a preferred choice for travelling with peace of mind."
     ],
     "missionTitle": "Our mission",
     "mission": "To give every Cameroonian intercity transport they can trust — safe, accessible and on time.",

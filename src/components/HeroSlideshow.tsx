@@ -4,11 +4,10 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 
 const slides = [
-  "/img/road-forest.jpg",
-  "/img/road-signage.jpg",
-  "/img/road-dusk.jpg",
-  "/img/bus-coaster.jpg",
-  "/img/bus-hiace.jpg",
+  "/vehicles/coaster-vip-side.jpg",
+  "/vehicles/coaster-boarding.jpg",
+  "/vehicles/hiace-vip-side.jpg",
+  "/vehicles/hiace-front.jpg",
 ];
 
 export default function HeroSlideshow() {
@@ -54,7 +53,7 @@ export default function HeroSlideshow() {
           <span
             key={i}
             className={`h-1.5 rounded-full transition-all duration-500 ${
-              i === active ? "w-8 bg-teal-400" : "w-1.5 bg-white/40"
+              i === active ? "w-8 bg-gold-400" : "w-1.5 bg-white/40"
             }`}
           />
         ))}

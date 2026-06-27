@@ -16,12 +16,12 @@ export default function ContactForm({ labels }: { labels: Labels }) {
   const [sent, setSent] = useState(false);
 
   const field =
-    "w-full rounded-lg border border-white/15 bg-white/5 px-3 py-2.5 text-sm text-white placeholder:text-slate-500 focus:border-teal-400 focus:outline-none focus:ring-2 focus:ring-teal-500/40";
-  const label = "mb-1 block text-xs font-semibold text-slate-400";
+    "w-full rounded-lg border border-line bg-page px-3 py-2.5 text-sm text-fg placeholder:text-faint focus:border-teal-400 focus:outline-none focus:ring-2 focus:ring-teal-500/40";
+  const label = "mb-1 block text-xs font-semibold text-muted";
 
   if (sent) {
     return (
-      <div className="rounded-2xl border border-emerald-500/30 bg-emerald-500/10 p-6 text-sm text-emerald-300">
+      <div className="rounded-2xl border border-emerald-500/40 bg-emerald-500/10 p-6 text-sm text-emerald-600 dark:text-emerald-300">
         ✓ {labels.formSuccess}
       </div>
     );
@@ -35,7 +35,7 @@ export default function ContactForm({ labels }: { labels: Labels }) {
       }}
       className="space-y-4"
     >
-      <p className="text-sm text-slate-400">{labels.formNote}</p>
+      <p className="text-sm text-muted">{labels.formNote}</p>
       <div className="grid gap-4 sm:grid-cols-2">
         <label className="block">
           <span className={label}>{labels.formName}</span>
@@ -56,7 +56,7 @@ export default function ContactForm({ labels }: { labels: Labels }) {
       </div>
       <button
         type="submit"
-        className="rounded-full bg-teal-500 px-6 py-3 text-sm font-semibold text-white transition hover:bg-teal-400"
+        className="rounded-full bg-gold-400 px-6 py-3 text-sm font-semibold text-navy-900 transition hover:bg-gold-300"
       >
         {labels.formSubmit}
       </button>

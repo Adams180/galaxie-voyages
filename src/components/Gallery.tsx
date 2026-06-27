@@ -1,18 +1,13 @@
 import Image from "next/image";
-
-const COUNT = 24;
-const images = Array.from(
-  { length: COUNT },
-  (_, i) => `/gallery/${String(i + 1).padStart(2, "0")}.jpg`,
-);
+import { galleryImages } from "@/lib/data";
 
 export default function Gallery() {
   return (
     <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 sm:gap-3 lg:grid-cols-4">
-      {images.map((src, i) => (
+      {galleryImages.map((src, i) => (
         <div
           key={src}
-          className="group relative aspect-[4/3] overflow-hidden rounded-xl border border-white/10 bg-ink-800"
+          className="group relative aspect-[4/3] overflow-hidden rounded-xl border border-line bg-elevated"
         >
           <Image
             src={src}

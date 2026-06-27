@@ -23,7 +23,9 @@
     "callUs": "Appelez-nous",
     "phone": "Téléphone",
     "email": "E-mail",
-    "whatsapp": "WhatsApp"
+    "whatsapp": "WhatsApp",
+    "theme": "Changer de thème",
+    "slogan": "La différence"
   },
   "hero": {
     "eyebrow": "Transport interurbain · Cameroun",
@@ -56,6 +58,16 @@
       { "title": "Équipes dédiées", "text": "Des conducteurs et personnels d'agence formés, à votre service à chaque étape." },
       { "title": "Bagages en sécurité", "text": "Soutes spacieuses et gestion soignée de vos bagages, du départ à l'arrivée." },
       { "title": "Ponctualité", "text": "Des départs réguliers, plusieurs fois par jour, dans le respect des horaires." }
+    ]
+  },
+  "services": {
+    "title": "Nos services",
+    "subtitle": "Bien plus que du transport : une expérience de voyage complète.",
+    "items": [
+      { "title": "Transport VIP", "text": "Nos autocars haut de gamme : plus d'espace, climatisation et services à bord pour voyager dans le plus grand confort." },
+      { "title": "Transport standard", "text": "Des liaisons fiables et économiques, idéales pour vos déplacements quotidiens entre les villes." },
+      { "title": "Voyages organisés", "text": "Découvrez de nouvelles destinations avec un accompagnement professionnel, sans vous soucier de la logistique." },
+      { "title": "Location & affrètement", "text": "Bus et véhicules disponibles à la location pour vos groupes, événements et déplacements privés." }
     ]
   },
   "popularRoutes": {
@@ -97,8 +109,9 @@
   },
   "fleet": {
     "title": "Notre flotte",
-    "subtitle": "Des autocars choisis pour votre confort et votre sécurité.",
+    "subtitle": "Bus et véhicules choisis pour votre confort et votre sécurité.",
     "seats": "places",
+    "featured": "Le plus prisé",
     "amenities": {
       "ac": "Climatisation",
       "wifi": "Wi-Fi à bord",
@@ -115,10 +128,12 @@
   },
   "about": {
     "title": "À propos de Galaxie Voyages",
-    "lead": "Galaxie Voyages relie les villes du Cameroun avec un seul objectif : faire de chaque trajet une expérience sûre, ponctuelle et confortable.",
+    "lead": "Située au quartier Mvan à Yaoundé, Galaxie Voyages est une agence de voyage reconnue pour la qualité de ses services.",
     "story": [
-      "Fondée en 2015 et basée à Yaoundé, Galaxie Voyages s'est imposée comme une référence du transport interurbain de passagers au Cameroun. Chaque jour, nos autocars relient les villes du Centre et du Sud, transportant familles, professionnels et étudiants en toute sérénité.",
-      "Galaxie Voyages est une filiale de GHF SARL, groupe camerounais basé à Yaoundé. Cet adossement nous permet d'investir continuellement dans notre flotte, la formation de nos équipes et la qualité de notre service."
+      "L'agence se distingue par son engagement envers la sécurité, le confort et la ponctualité, des valeurs essentielles pour garantir la satisfaction de ses clients. Chaque aspect du service est conçu pour offrir une expérience de voyage agréable.",
+      "Galaxie Voyages propose une flotte variée comprenant des bus et des voitures, tous soigneusement sélectionnés et régulièrement entretenus pour assurer un niveau de sécurité optimal. Que vous choisissiez un service VIP ou standard, chaque détail est pris en compte pour votre confort.",
+      "En plus de ses services de transport, l'agence offre également des voyages organisés qui permettent aux clients de découvrir diverses destinations tout en bénéficiant d'un accompagnement professionnel — un excellent moyen de voyager sans se soucier des détails logistiques.",
+      "Que ce soit pour un trajet court ou un voyage plus long, les voyageurs peuvent s'attendre à un service attentif et de qualité. L'accent mis sur l'expérience client et le souci du détail font de Galaxie Voyages un choix privilégié pour voyager en toute sérénité."
     ],
     "missionTitle": "Notre mission",
     "mission": "Offrir à chaque Camerounais un transport interurbain digne de confiance — sûr, accessible et ponctuel.",

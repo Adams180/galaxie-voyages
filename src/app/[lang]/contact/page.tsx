@@ -55,24 +55,24 @@ export default async function ContactPage({
 
           <dl className="mt-8 space-y-4 text-sm">
             <div>
-              <dt className="font-semibold text-white">{ct.headOffice}</dt>
-              <dd className="text-slate-400">
+              <dt className="font-semibold text-fg">{ct.headOffice}</dt>
+              <dd className="text-muted">
                 {contact.addressLine}, {contact.city}
               </dd>
             </div>
             <div>
-              <dt className="font-semibold text-white">{c.phone}</dt>
+              <dt className="font-semibold text-fg">{c.phone}</dt>
               <dd>
-                <a className="text-teal-300 hover:underline" href={`tel:${tel}`}>
+                <a className="text-accent hover:underline" href={`tel:${tel}`}>
                   {contact.phone}
                 </a>
               </dd>
             </div>
             <div>
-              <dt className="font-semibold text-white">{c.email}</dt>
+              <dt className="font-semibold text-fg">{c.email}</dt>
               <dd>
                 <a
-                  className="text-teal-300 hover:underline"
+                  className="text-accent hover:underline"
                   href={`mailto:${contact.email}`}
                 >
                   {contact.email}
@@ -80,23 +80,23 @@ export default async function ContactPage({
               </dd>
             </div>
             <div>
-              <dt className="font-semibold text-white">{ct.hours}</dt>
+              <dt className="font-semibold text-fg">{ct.hours}</dt>
             </div>
           </dl>
 
-          <h2 className="mt-10 text-lg font-bold text-white">
+          <h2 className="mt-10 text-lg font-bold text-fg">
             {ct.agenciesTitle}
           </h2>
           <ul className="mt-4 space-y-3">
             {contact.agencies.map((ag) => (
               <li
                 key={ag.city}
-                className="rounded-xl border border-white/10 bg-ink-800 p-4"
+                className="rounded-xl border border-line bg-surface p-4"
               >
-                <div className="font-semibold text-white">{ag.city}</div>
-                <div className="text-sm text-slate-400">{ag.area}</div>
+                <div className="font-semibold text-fg">{ag.city}</div>
+                <div className="text-sm text-muted">{ag.area}</div>
                 <a
-                  className="text-sm text-teal-300 hover:underline"
+                  className="text-sm text-accent hover:underline"
                   href={`tel:${ag.phone.replace(/\s/g, "")}`}
                 >
                   {ag.phone}
@@ -107,8 +107,8 @@ export default async function ContactPage({
         </div>
 
         {/* Right: form */}
-        <div className="rounded-2xl border border-white/10 bg-ink-800 p-6 sm:p-8">
-          <h2 className="text-lg font-bold text-white">{ct.formTitle}</h2>
+        <div className="rounded-2xl border border-line bg-surface p-6 sm:p-8">
+          <h2 className="text-lg font-bold text-fg">{ct.formTitle}</h2>
           <div className="mt-4">
             <ContactForm labels={ct} />
           </div>

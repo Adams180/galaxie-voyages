@@ -16,7 +16,6 @@ export default async function DestinationsPage({
   const from = typeof sp.from === "string" ? sp.from : "";
   const to = typeof sp.to === "string" ? sp.to : "";
 
-  // Routes are round trips, so match either direction.
   const touches = (r: { a: string; b: string }, city: string) =>
     r.a === city || r.b === city;
   const filtered = routes.filter(
@@ -25,51 +24,37 @@ export default async function DestinationsPage({
 
   return (
     <>
-      <section className="relative overflow-hidden">
-        <div
-          aria-hidden
-          className="absolute inset-0 -z-10"
-          style={{
-            background:
-              "radial-gradient(900px 400px at 80% 0%, #1a3a6e, transparent), linear-gradient(180deg, #0a172d, #060b16)",
-          }}
-        />
-        <div className="mx-auto max-w-6xl px-4 pb-12 pt-32 sm:px-6">
-          <h1 className="text-3xl font-black tracking-tight text-white sm:text-4xl">
-            {d.title}
-          </h1>
-          <p className="mt-3 max-w-2xl text-slate-300">{d.subtitle}</p>
-          {(from || to) && (
-            <p className="mt-4 inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-1.5 text-sm text-white">
-              {from || "…"} <span className="text-teal-300">⇄</span> {to || "…"}
-            </p>
-          )}
-        </div>
-      </section>
+      <PageHero title={d.title} subtitle={d.subtitle}>
+        {(from || to) && (
+          <p className="mt-4 inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-1.5 text-sm text-white">
+            {from || "…"} <span className="text-teal-300">⇄</span> {to || "…"}
+          </p>
+        )}
+      </PageHero>
 
       <section className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
-        <div className="overflow-hidden rounded-2xl border border-white/10 bg-ink-800">
+        <div className="overflow-hidden rounded-2xl border border-line bg-surface">
           {/* desktop table */}
           <table className="hidden w-full text-left text-sm md:table">
-            <thead className="bg-white/5 text-xs uppercase tracking-wide text-slate-400">
+            <thead className="bg-band text-xs uppercase tracking-wide text-muted">
               <tr>
                 <th className="px-5 py-3 font-semibold">{d.tableRoute}</th>
                 <th className="px-5 py-3 font-semibold">{d.tableDuration}</th>
                 <th className="px-5 py-3 font-semibold">{d.tableDepartures}</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-white/5">
+            <tbody className="divide-y divide-line">
               {filtered.map((r) => (
-                <tr key={r.code} className="hover:bg-white/5">
-                  <td className="px-5 py-4 font-semibold text-white">
-                    {r.a} <span className="text-teal-300">⇄</span> {r.b}
+                <tr key={r.code} className="transition hover:bg-band">
+                  <td className="px-5 py-4 font-semibold text-fg">
+                    {r.a} <span className="text-accent">⇄</span> {r.b}
                     {r.popular && (
-                      <span className="ml-2 rounded-full bg-teal-500/15 px-2 py-0.5 text-[0.65rem] font-semibold uppercase text-teal-300">
+                      <span className="ml-2 rounded-full bg-gold-400/15 px-2 py-0.5 text-[0.65rem] font-semibold uppercase text-highlight">
                         {c.popular}
                       </span>
                     )}
                   </td>
-                  <td className="px-5 py-4 text-slate-300">
+                  <td className="px-5 py-4 text-muted">
                     ~{r.hours}
                     {c.hours}
                   </td>
@@ -78,7 +63,7 @@ export default async function DestinationsPage({
                       {r.departures.map((t) => (
                         <span
                           key={t}
-                          className="rounded-md bg-white/10 px-2 py-0.5 text-xs font-medium text-slate-200"
+                          className="rounded-md bg-elevated px-2 py-0.5 text-xs font-medium text-fg"
                         >
                           {t}
                         </span>
@@ -91,13 +76,13 @@ export default async function DestinationsPage({
           </table>
 
           {/* mobile cards */}
-          <div className="divide-y divide-white/5 md:hidden">
+          <div className="divide-y divide-line md:hidden">
             {filtered.map((r) => (
               <div key={r.code} className="p-4">
-                <div className="flex items-center gap-2 font-semibold text-white">
-                  {r.a} <span className="text-teal-300">⇄</span> {r.b}
+                <div className="flex items-center gap-2 font-semibold text-fg">
+                  {r.a} <span className="text-accent">⇄</span> {r.b}
                 </div>
-                <div className="mt-1 text-xs text-slate-400">
+                <div className="mt-1 text-xs text-muted">
                   ~{r.hours}
                   {c.hours}
                 </div>
@@ -105,7 +90,7 @@ export default async function DestinationsPage({
                   {r.departures.map((t) => (
                     <span
                       key={t}
-                      className="rounded-md bg-white/10 px-2 py-0.5 text-xs font-medium text-slate-200"
+                      className="rounded-md bg-elevated px-2 py-0.5 text-xs font-medium text-fg"
                     >
                       {t}
                     </span>
@@ -116,12 +101,42 @@ export default async function DestinationsPage({
           </div>
 
           {filtered.length === 0 && (
-            <div className="p-10 text-center text-sm text-slate-400">—</div>
+            <div className="p-10 text-center text-sm text-muted">—</div>
           )}
         </div>
 
-        <p className="mt-5 text-sm text-slate-400">{d.note}</p>
+        <p className="mt-5 text-sm text-muted">{d.note}</p>
       </section>
     </>
+  );
+}
+
+function PageHero({
+  title,
+  subtitle,
+  children,
+}: {
+  title: string;
+  subtitle: string;
+  children?: React.ReactNode;
+}) {
+  return (
+    <section className="relative overflow-hidden">
+      <div
+        aria-hidden
+        className="absolute inset-0 -z-10"
+        style={{
+          background:
+            "radial-gradient(900px 400px at 80% 0%, #1a3a6e, transparent), linear-gradient(180deg, #0a172d, #060b16)",
+        }}
+      />
+      <div className="mx-auto max-w-6xl px-4 pb-12 pt-32 sm:px-6">
+        <h1 className="text-3xl font-black tracking-tight text-white sm:text-4xl">
+          {title}
+        </h1>
+        <p className="mt-3 max-w-2xl text-slate-300">{subtitle}</p>
+        {children}
+      </div>
+    </section>
   );
 }
