@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Logo from "./Logo";
-import LangSwitcher from "./LangSwitcher";
 import ThemeToggle from "./ThemeToggle";
 
 type NavLabels = {
@@ -80,7 +79,6 @@ export default function SiteHeader({
 
         <div className="flex items-center gap-2.5">
           <ThemeToggle label={themeLabel} />
-          <LangSwitcher current={lang} />
           <Link
             href={`/${lang}/contact`}
             className="hidden rounded-full bg-gold-400 px-4 py-2 text-sm font-semibold text-navy-900 shadow-sm transition hover:bg-gold-300 sm:inline-block"

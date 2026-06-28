@@ -46,29 +46,64 @@ export type Service = (typeof services)[number];
 
 /** Curated vehicle photos for the gallery */
 export const galleryImages = [
+  "/vehicles/fleet-lineup-day.jpg",
+  "/vehicles/fleet-lineup-night.jpg",
+  "/vehicles/vip-station.jpg",
+  "/vehicles/waiting-hall.jpg",
   "/vehicles/coaster-vip-side.jpg",
-  "/vehicles/coaster-front.jpg",
-  "/vehicles/hiace-vip-side.jpg",
-  "/vehicles/hiace-front.jpg",
+  "/vehicles/vip-interior.jpg",
   "/vehicles/coaster-boarding.jpg",
+  "/vehicles/hiace-vip-side.jpg",
+  "/vehicles/coaster-rear.jpg",
   "/vehicles/staff-coaster.jpg",
-  "/vehicles/hiace-agency.jpg",
+  "/vehicles/coaster-front.jpg",
   "/vehicles/routes-flyer.jpg",
+];
+
+export type AgencyPhone = { number: string; toCity?: string };
+export type Agency = { city: string; area: string; phones: AgencyPhone[] };
+
+const agencies: Agency[] = [
+  {
+    city: "Yaoundé",
+    area: "Quartier Mvan · BP 7094",
+    phones: [
+      { number: "+237 698 83 24 24", toCity: "Ebolowa" },
+      { number: "+237 676 63 96 97", toCity: "Mbalmayo" },
+      { number: "+237 698 93 24 24", toCity: "Sangmélima" },
+    ],
+  },
+  {
+    city: "Ebolowa",
+    area: "Ebolowa ville",
+    phones: [{ number: "+237 679 50 79 01" }, { number: "+237 659 20 16 20" }],
+  },
+  {
+    city: "Mbalmayo",
+    area: "Mbalmayo ville",
+    phones: [{ number: "+237 696 64 26 98" }],
+  },
+  {
+    city: "Sangmélima",
+    area: "Sangmélima ville",
+    phones: [{ number: "+237 678 18 15 24" }],
+  },
 ];
 
 export const contact = {
   email: "ghfsarl@yahoo.com",
-  // ⚠️ phone numbers are PLACEHOLDERS — replace with real values
-  phone: "+237 6 00 00 00 00",
-  whatsapp: "+237 6 00 00 00 00",
+  phone: "+237 698 83 24 24",
+  whatsapp: "+237 698 83 24 24",
   addressLine: "Quartier Mvan",
   city: "Yaoundé, Cameroun",
-  agencies: [
-    { city: "Yaoundé", area: "Quartier Mvan (siège)", phone: "+237 6 00 00 00 01" },
-    { city: "Mbalmayo", area: "Centre-ville", phone: "+237 6 00 00 00 02" },
-    { city: "Ebolowa", area: "Gare routière", phone: "+237 6 00 00 00 03" },
-    { city: "Sangmélima", area: "Centre-ville", phone: "+237 6 00 00 00 04" },
-  ],
+  poBox: "BP 7094, Yaoundé",
+  agencies,
+};
+
+/** Attribution for the downloaded highway photo (CC BY-SA 4.0). */
+export const imageCredit = {
+  label: "Serieminou / Wikimedia Commons · CC BY-SA 4.0",
+  href: "https://commons.wikimedia.org/wiki/File:Echangeur_Bakoko_Yapaki.jpg",
 };
 
 export const company = {

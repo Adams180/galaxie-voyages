@@ -58,6 +58,8 @@ export default async function ContactPage({
               <dt className="font-semibold text-fg">{ct.headOffice}</dt>
               <dd className="text-muted">
                 {contact.addressLine}, {contact.city}
+                <br />
+                {contact.poBox}
               </dd>
             </div>
             <div>
@@ -87,7 +89,7 @@ export default async function ContactPage({
           <h2 className="mt-10 text-lg font-bold text-fg">
             {ct.agenciesTitle}
           </h2>
-          <ul className="mt-4 space-y-3">
+          <ul className="mt-4 grid gap-3 sm:grid-cols-2">
             {contact.agencies.map((ag) => (
               <li
                 key={ag.city}
@@ -95,12 +97,23 @@ export default async function ContactPage({
               >
                 <div className="font-semibold text-fg">{ag.city}</div>
                 <div className="text-sm text-muted">{ag.area}</div>
-                <a
-                  className="text-sm text-accent hover:underline"
-                  href={`tel:${ag.phone.replace(/\s/g, "")}`}
-                >
-                  {ag.phone}
-                </a>
+                <ul className="mt-2 space-y-1">
+                  {ag.phones.map((p) => (
+                    <li key={p.number} className="text-sm">
+                      {p.toCity && (
+                        <span className="text-faint">
+                          {ct.line} {p.toCity} ·{" "}
+                        </span>
+                      )}
+                      <a
+                        className="text-accent hover:underline"
+                        href={`tel:${p.number.replace(/\s/g, "")}`}
+                      >
+                        {p.number}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
               </li>
             ))}
           </ul>

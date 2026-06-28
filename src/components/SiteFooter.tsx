@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Logo from "./Logo";
-import { contact } from "@/lib/data";
+import { contact, imageCredit } from "@/lib/data";
 import type { Dictionary } from "@/lib/i18n";
 
 export default function SiteFooter({
@@ -66,7 +66,18 @@ export default function SiteFooter({
           <span>
             © {new Date().getFullYear()} Galaxie Voyages. {f.rights}
           </span>
-          <span>{f.placeholderNote}</span>
+          <span className="flex flex-wrap items-center gap-x-2">
+            <a
+              href={imageCredit.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-accent"
+            >
+              {imageCredit.label}
+            </a>
+            <span aria-hidden>·</span>
+            <span>{f.placeholderNote}</span>
+          </span>
         </div>
       </div>
     </footer>

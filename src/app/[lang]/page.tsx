@@ -4,6 +4,7 @@ import { getDictionary, isLocale } from "@/lib/i18n";
 import { routes, cities, company } from "@/lib/data";
 import HeroSlideshow from "@/components/HeroSlideshow";
 import Gallery from "@/components/Gallery";
+import Comments from "@/components/Comments";
 
 export default async function HomePage({ params }: PageProps<"/[lang]">) {
   const { lang } = await params;
@@ -258,27 +259,16 @@ export default async function HomePage({ params }: PageProps<"/[lang]">) {
         </div>
       </section>
 
-      {/* ── Testimonials ── */}
+      {/* ── Traveller reviews (user comments, no account) ── */}
       <section className="mx-auto max-w-6xl px-4 py-20 sm:px-6">
-        <h2 className="text-3xl font-bold tracking-tight text-fg">
-          {dict.testimonials.title}
-        </h2>
-        <div className="mt-10 grid gap-6 md:grid-cols-3">
-          {dict.testimonials.items.map((t, i) => (
-            <figure
-              key={i}
-              className="flex flex-col rounded-2xl border border-line bg-surface p-6"
-            >
-              <div className="text-3xl leading-none text-gold-400">“</div>
-              <blockquote className="mt-2 flex-1 text-sm leading-relaxed text-fg">
-                {t.quote}
-              </blockquote>
-              <figcaption className="mt-5 border-t border-line pt-4 text-sm">
-                <span className="font-semibold text-fg">{t.author}</span>
-                <span className="text-faint"> · {t.city}</span>
-              </figcaption>
-            </figure>
-          ))}
+        <div className="max-w-2xl">
+          <h2 className="text-3xl font-bold tracking-tight text-fg">
+            {dict.comments.title}
+          </h2>
+          <p className="mt-3 text-muted">{dict.comments.subtitle}</p>
+        </div>
+        <div className="mt-10">
+          <Comments labels={dict.comments} seeds={dict.comments.seed} />
         </div>
       </section>
 

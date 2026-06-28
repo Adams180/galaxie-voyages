@@ -93,6 +93,23 @@
     "title": "Le voyage en images",
     "subtitle": "Nos routes, nos véhicules et les régions que nous desservons à travers le Cameroun."
   },
+  "comments": {
+    "title": "Avis des voyageurs",
+    "subtitle": "Partagez votre expérience — aucun compte requis, seulement votre nom.",
+    "nameLabel": "Votre nom",
+    "namePlaceholder": "Ex. Aline N.",
+    "messageLabel": "Votre avis",
+    "messagePlaceholder": "Comment s'est passé votre voyage avec Galaxie ?",
+    "submit": "Publier mon avis",
+    "localNote": "Vos avis sont enregistrés sur cet appareil (démonstration — un stockage partagé pourra être ajouté).",
+    "you": "Vous",
+    "seed": [
+      { "name": "Aline N.", "text": "Un trajet confortable et à l'heure, à chaque fois. Je ne voyage plus autrement." },
+      { "name": "Serge M.", "text": "Personnel accueillant et autocars propres. Le rapport confort-service est excellent." },
+      { "name": "Pauline T.", "text": "Des départs fiables qui me permettent d'organiser sereinement mes déplacements." },
+      { "name": "Jean-Paul K.", "text": "Service VIP impeccable sur Yaoundé–Sangmélima. Je recommande vivement." }
+    ]
+  },
   "parent": {
     "eyebrow": "Groupe GHF SARL",
     "title": "Une filiale du groupe GHF SARL",
@@ -150,6 +167,7 @@
     "subtitle": "Une question ou une demande de groupe ? Notre équipe est à votre écoute.",
     "agenciesTitle": "Nos agences",
     "headOffice": "Siège social",
+    "line": "Ligne",
     "hours": "Tous les jours, 06h00 – 21h00",
     "formTitle": "Envoyez-nous un message",
     "formNote": "Remplissez ce formulaire et nous vous répondrons rapidement. (Formulaire de démonstration — non connecté pour le moment.)",

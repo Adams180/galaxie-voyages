@@ -5,6 +5,7 @@ import "../globals.css";
 import { getDictionary, isLocale, locales } from "@/lib/i18n";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
+import FloatingContact from "@/components/FloatingContact";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
@@ -47,6 +48,7 @@ export default async function LangLayout({
         <SiteHeader lang={lang} nav={dict.nav} themeLabel={dict.common.theme} />
         <main className="flex-1">{children}</main>
         <SiteFooter lang={lang} dict={dict} />
+        <FloatingContact label={dict.common.whatsapp} />
       </body>
     </html>
   );

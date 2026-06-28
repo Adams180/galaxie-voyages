@@ -93,6 +93,23 @@
     "title": "The journey in pictures",
     "subtitle": "Our roads, our vehicles and the regions we serve across Cameroon."
   },
+  "comments": {
+    "title": "Traveller reviews",
+    "subtitle": "Share your experience — no account needed, just your name.",
+    "nameLabel": "Your name",
+    "namePlaceholder": "e.g. Aline N.",
+    "messageLabel": "Your review",
+    "messagePlaceholder": "How was your trip with Galaxie?",
+    "submit": "Post my review",
+    "localNote": "Your reviews are saved on this device (demo — shared storage can be added later).",
+    "you": "You",
+    "seed": [
+      { "name": "Aline N.", "text": "A comfortable, on-time journey every single time. I won't travel any other way." },
+      { "name": "Serge M.", "text": "Welcoming staff and clean coaches. The comfort-to-service ratio is excellent." },
+      { "name": "Pauline T.", "text": "Reliable departures that let me plan my trips with peace of mind." },
+      { "name": "Jean-Paul K.", "text": "Flawless VIP service on Yaoundé–Sangmélima. Highly recommended." }
+    ]
+  },
   "parent": {
     "eyebrow": "GHF SARL Group",
     "title": "A subsidiary of the GHF SARL group",
@@ -150,6 +167,7 @@
     "subtitle": "A question or a group request? Our team is here to help.",
     "agenciesTitle": "Our agencies",
     "headOffice": "Head office",
+    "line": "Line",
     "hours": "Every day, 6:00 am – 9:00 pm",
     "formTitle": "Send us a message",
     "formNote": "Fill in this form and we'll get back to you quickly. (Demo form — not connected yet.)",
