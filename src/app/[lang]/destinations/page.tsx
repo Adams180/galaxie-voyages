@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import { notFound } from "next/navigation";
 import { getDictionary, isLocale } from "@/lib/i18n";
 import { routes } from "@/lib/data";
@@ -33,7 +34,10 @@ export default async function DestinationsPage({
       </PageHero>
 
       <section className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
-        <div className="overflow-hidden rounded-2xl border border-line bg-surface">
+        <div
+          data-reveal
+          className="overflow-hidden rounded-2xl border border-line bg-surface"
+        >
           {/* desktop table */}
           <table className="hidden w-full text-left text-sm md:table">
             <thead className="bg-band text-xs uppercase tracking-wide text-muted">
@@ -131,10 +135,15 @@ function PageHero({
         }}
       />
       <div className="mx-auto max-w-6xl px-4 pb-12 pt-32 sm:px-6">
-        <h1 className="text-3xl font-black tracking-tight text-white sm:text-4xl">
+        <h1
+          data-reveal
+          className="text-3xl font-black tracking-tight text-white sm:text-4xl"
+        >
           {title}
         </h1>
-        <p className="mt-3 max-w-2xl text-slate-300">{subtitle}</p>
+        <p data-reveal style={{ "--reveal-delay": "90ms" } as CSSProperties} className="mt-3 max-w-2xl text-slate-300">
+          {subtitle}
+        </p>
         {children}
       </div>
     </section>

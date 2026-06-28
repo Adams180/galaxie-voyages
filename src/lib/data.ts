@@ -68,7 +68,7 @@ const agencies: Agency[] = [
     city: "Yaoundé",
     area: "Quartier Mvan · BP 7094",
     phones: [
-      { number: "+237 698 83 24 24", toCity: "Ebolowa" },
+      { number: "+237 697 16 22 32", toCity: "Ebolowa" },
       { number: "+237 676 63 96 97", toCity: "Mbalmayo" },
       { number: "+237 698 93 24 24", toCity: "Sangmélima" },
     ],
@@ -92,8 +92,8 @@ const agencies: Agency[] = [
 
 export const contact = {
   email: "ghfsarl@yahoo.com",
-  phone: "+237 698 83 24 24",
-  whatsapp: "+237 698 83 24 24",
+  phone: "+237 698 93 24 24",
+  whatsapp: "+237 698 93 24 24",
   addressLine: "Quartier Mvan",
   city: "Yaoundé, Cameroun",
   poBox: "BP 7094, Yaoundé",

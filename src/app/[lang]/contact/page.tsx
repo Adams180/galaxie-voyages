@@ -26,16 +26,21 @@ export default async function ContactPage({
           }}
         />
         <div className="mx-auto max-w-6xl px-4 pb-12 pt-32 sm:px-6">
-          <h1 className="text-3xl font-black tracking-tight text-white sm:text-4xl">
+          <h1
+            data-reveal
+            className="text-3xl font-black tracking-tight text-white sm:text-4xl"
+          >
             {ct.title}
           </h1>
-          <p className="mt-3 max-w-2xl text-slate-300">{ct.subtitle}</p>
+          <p data-reveal className="mt-3 max-w-2xl text-slate-300">
+            {ct.subtitle}
+          </p>
         </div>
       </section>
 
       <section className="mx-auto grid max-w-6xl gap-12 px-4 py-14 sm:px-6 lg:grid-cols-2">
         {/* Left: contact details */}
-        <div>
+        <div data-reveal="left">
           <div className="flex flex-wrap gap-3">
             <a
               href={`tel:${tel}`}
@@ -120,7 +125,7 @@ export default async function ContactPage({
         </div>
 
         {/* Right: form */}
-        <div className="rounded-2xl border border-line bg-surface p-6 sm:p-8">
+        <div data-reveal="right" className="rounded-2xl border border-line bg-surface p-6 sm:p-8">
           <h2 className="text-lg font-bold text-fg">{ct.formTitle}</h2>
           <div className="mt-4">
             <ContactForm labels={ct} />

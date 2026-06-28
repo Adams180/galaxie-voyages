@@ -81,3 +81,103 @@ body {
 .row-scroll::-webkit-scrollbar {
   display: none;
 }
+
+/* ── Motion system (Fluent-inspired) ─────────────────────────────
+   Reveal-on-scroll. Elements with [data-reveal] start hidden only
+   once JS marks <html class="reveal-on"> and motion is allowed, so
+   no-JS / reduced-motion users always see content. */
+@media (prefers-reduced-motion: no-preference) {
+  .reveal-on [data-reveal] {
+    opacity: 0;
+    transform: translateY(22px);
+    transition:
+      opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    transition-delay: var(--reveal-delay, 0ms);
+    will-change: opacity, transform;
+  }
+  .reveal-on [data-reveal="fade"] {
+    transform: none;
+  }
+  .reveal-on [data-reveal="left"] {
+    transform: translateX(-26px);
+  }
+  .reveal-on [data-reveal="right"] {
+    transform: translateX(26px);
+  }
+  .reveal-on [data-reveal="scale"] {
+    transform: scale(0.94);
+  }
+  .reveal-on [data-reveal].is-visible {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Looping accents — paused for reduced motion */
+@keyframes gv-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-7px); }
+}
+@keyframes gv-sheen {
+  0% { background-position: -150% 0; }
+  100% { background-position: 250% 0; }
+}
+@keyframes gv-scroll-dot {
+  0% { transform: translateY(0); opacity: 1; }
+  70% { transform: translateY(14px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 0; }
+}
+.gv-float {
+  animation: gv-float 4.5s ease-in-out infinite;
+}
+
+/* Animated brand-gradient text (hero accent) */
+.gv-gradient-text {
+  background: linear-gradient(100deg, #f4c430, #5fd3e6, #f4c430);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: gv-sheen 6s linear infinite;
+}
+
+/* Press micro-interaction for buttons/links */
+.gv-press {
+  transition: transform 0.15s ease, box-shadow 0.25s ease, background-color 0.2s ease;
+}
+.gv-press:active {
+  transform: scale(0.96);
+}
+
+/* Animated nav underline */
+.gv-navlink {
+  position: relative;
+}
+.gv-navlink::after {
+  content: "";
+  position: absolute;
+  left: 0.75rem;
+  right: 0.75rem;
+  bottom: 0.35rem;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--color-gold-400);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.gv-navlink:hover::after,
+.gv-navlink[data-active="true"]::after {
+  transform: scaleX(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gv-float,
+  .gv-gradient-text {
+    animation: none;
+  }
+  .gv-gradient-text {
+    color: var(--color-gold-400);
+  }
+}

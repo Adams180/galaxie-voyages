@@ -6,12 +6,14 @@ import { getDictionary, isLocale, locales } from "@/lib/i18n";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import FloatingContact from "@/components/FloatingContact";
+import RevealObserver from "@/components/RevealObserver";
+import ScrollProgress from "@/components/ScrollProgress";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
 
 // Runs before paint to set the theme class and avoid a flash of the wrong theme.
-const themeScript = `(function(){try{var t=localStorage.getItem('theme');if(!t){t=window.matchMedia('(prefers-color-scheme: light)').matches?'light':'dark';}if(t==='dark'){document.documentElement.classList.add('dark');}}catch(e){document.documentElement.classList.add('dark');}})();`;
+const themeScript = `(function(){var d=document.documentElement;d.classList.add('reveal-on');try{var t=localStorage.getItem('theme');if(!t){t=window.matchMedia('(prefers-color-scheme: light)').matches?'light':'dark';}if(t==='dark'){d.classList.add('dark');}}catch(e){d.classList.add('dark');}})();`;
 
 export async function generateStaticParams() {
   return locales.map((lang) => ({ lang }));
@@ -45,6 +47,8 @@ export default async function LangLayout({
     >
       <body className="flex min-h-full flex-col bg-page font-sans text-fg antialiased">
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+        <ScrollProgress />
+        <RevealObserver />
         <SiteHeader lang={lang} nav={dict.nav} themeLabel={dict.common.theme} />
         <main className="flex-1">{children}</main>
         <SiteFooter lang={lang} dict={dict} />

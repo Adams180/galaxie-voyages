@@ -50,38 +50,48 @@ export default function SiteHeader({
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 transition-colors duration-300 ${
+      className={`fixed inset-x-0 top-0 z-50 transition-[background-color,box-shadow,backdrop-filter,border-color] duration-500 ${
         solid
-          ? "border-b border-line bg-surface/95 text-fg backdrop-blur"
-          : "bg-gradient-to-b from-black/70 to-transparent text-white"
+          ? "border-b border-line bg-surface/70 text-fg shadow-[0_8px_30px_-12px_rgba(8,15,35,0.35)] backdrop-blur-xl supports-[backdrop-filter]:bg-surface/65"
+          : "border-b border-transparent bg-gradient-to-b from-black/70 to-transparent text-white"
       }`}
     >
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
-        <Link href={`/${lang}`} aria-label="Galaxie Voyages">
+      <div
+        className={`mx-auto flex max-w-6xl items-center justify-between px-4 transition-[height] duration-500 sm:px-6 ${
+          solid ? "h-14" : "h-20"
+        }`}
+      >
+        <Link
+          href={`/${lang}`}
+          aria-label="Galaxie Voyages"
+          className="gv-press transition-transform hover:scale-[1.02]"
+        >
           <Logo />
         </Link>
 
-        <nav className="hidden items-center gap-1 md:flex">
-          {links.map((l) => (
-            <Link
-              key={l.href}
-              href={l.href}
-              className={`rounded-md px-3 py-2 text-sm font-medium transition ${
-                isActive(l.href, l.exact)
-                  ? "text-gold-400"
-                  : "opacity-80 hover:opacity-100"
-              }`}
-            >
-              {l.label}
-            </Link>
-          ))}
+        <nav className="hidden items-center gap-0.5 md:flex">
+          {links.map((l) => {
+            const active = isActive(l.href, l.exact);
+            return (
+              <Link
+                key={l.href}
+                href={l.href}
+                data-active={active}
+                className={`gv-navlink rounded-md px-3 py-2 text-sm font-medium transition-colors ${
+                  active ? "text-gold-400" : "opacity-80 hover:opacity-100"
+                }`}
+              >
+                {l.label}
+              </Link>
+            );
+          })}
         </nav>
 
         <div className="flex items-center gap-2.5">
           <ThemeToggle label={themeLabel} />
           <Link
             href={`/${lang}/contact`}
-            className="hidden rounded-full bg-gold-400 px-4 py-2 text-sm font-semibold text-navy-900 shadow-sm transition hover:bg-gold-300 sm:inline-block"
+            className="gv-press hidden rounded-full bg-gold-400 px-4 py-2 text-sm font-semibold text-navy-900 shadow-sm transition hover:-translate-y-0.5 hover:bg-gold-300 hover:shadow-lg hover:shadow-gold-500/25 sm:inline-block"
           >
             {nav.book}
           </Link>
@@ -90,7 +100,7 @@ export default function SiteHeader({
             onClick={() => setOpen((v) => !v)}
             aria-label="Menu"
             aria-expanded={open}
-            className="inline-flex h-10 w-10 items-center justify-center rounded-md md:hidden"
+            className="gv-press inline-flex h-10 w-10 items-center justify-center rounded-md md:hidden"
           >
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               {open ? (
@@ -103,33 +113,36 @@ export default function SiteHeader({
         </div>
       </div>
 
-      {open && (
-        <nav className="border-t border-line bg-surface text-fg md:hidden">
-          <div className="mx-auto flex max-w-6xl flex-col px-4 py-2 sm:px-6">
-            {links.map((l) => (
-              <Link
-                key={l.href}
-                href={l.href}
-                onClick={() => setOpen(false)}
-                className={`rounded-md px-3 py-3 text-sm font-medium ${
-                  isActive(l.href, l.exact)
-                    ? "bg-elevated text-gold-500 dark:text-gold-400"
-                    : "text-muted"
-                }`}
-              >
-                {l.label}
-              </Link>
-            ))}
+      {/* mobile sheet */}
+      <nav
+        className={`overflow-hidden border-line bg-surface text-fg transition-[max-height,opacity] duration-300 md:hidden ${
+          open ? "max-h-96 border-t opacity-100" : "max-h-0 opacity-0"
+        }`}
+      >
+        <div className="mx-auto flex max-w-6xl flex-col px-4 py-2 sm:px-6">
+          {links.map((l) => (
             <Link
-              href={`/${lang}/contact`}
+              key={l.href}
+              href={l.href}
               onClick={() => setOpen(false)}
-              className="mt-2 rounded-full bg-gold-400 px-4 py-3 text-center text-sm font-semibold text-navy-900"
+              className={`rounded-md px-3 py-3 text-sm font-medium transition-colors ${
+                isActive(l.href, l.exact)
+                  ? "bg-elevated text-gold-500 dark:text-gold-400"
+                  : "text-muted hover:bg-elevated"
+              }`}
             >
-              {nav.book}
+              {l.label}
             </Link>
-          </div>
-        </nav>
-      )}
+          ))}
+          <Link
+            href={`/${lang}/contact`}
+            onClick={() => setOpen(false)}
+            className="gv-press mt-2 rounded-full bg-gold-400 px-4 py-3 text-center text-sm font-semibold text-navy-900"
+          >
+            {nav.book}
+          </Link>
+        </div>
+      </nav>
     </header>
   );
 }

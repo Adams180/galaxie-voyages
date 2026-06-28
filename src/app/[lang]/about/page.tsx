@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { getDictionary, isLocale } from "@/lib/i18n";
@@ -32,7 +33,7 @@ export default async function AboutPage({ params }: PageProps<"/[lang]/about">) 
       </section>
 
       <section className="mx-auto grid max-w-6xl gap-12 px-4 py-16 sm:px-6 lg:grid-cols-[1.4fr_1fr] lg:items-start">
-        <div className="space-y-5 text-muted">
+        <div data-reveal="left" className="space-y-5 text-muted">
           {a.story.map((p, i) => (
             <p key={i} className="leading-relaxed">{p}</p>
           ))}
@@ -43,14 +44,14 @@ export default async function AboutPage({ params }: PageProps<"/[lang]/about">) 
           </div>
         </div>
 
-        <div className="overflow-hidden rounded-2xl border border-line">
-          <div className="relative aspect-[3/4]">
+        <div data-reveal="right" className="group overflow-hidden rounded-2xl border border-line">
+          <div className="relative aspect-[3/4] overflow-hidden">
             <Image
               src="/vehicles/staff-coaster.jpg"
               alt="Galaxie Voyages"
               fill
               sizes="(max-width: 1024px) 100vw, 33vw"
-              className="object-cover"
+              className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
             />
           </div>
         </div>
@@ -63,7 +64,9 @@ export default async function AboutPage({ params }: PageProps<"/[lang]/about">) 
             {a.values.map((v, i) => (
               <div
                 key={i}
-                className="rounded-2xl border border-line bg-surface p-6"
+                data-reveal
+                style={{ "--reveal-delay": `${i * 100}ms` } as CSSProperties}
+                className="rounded-2xl border border-line bg-surface p-6 transition duration-300 hover:-translate-y-1 hover:border-gold-400/40"
               >
                 <div className="text-2xl font-black text-highlight">
                   0{i + 1}

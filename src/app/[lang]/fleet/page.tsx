@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { getDictionary, isLocale } from "@/lib/i18n";
@@ -21,32 +22,43 @@ export default async function FleetPage({ params }: PageProps<"/[lang]/fleet">) 
           }}
         />
         <div className="mx-auto max-w-6xl px-4 pb-12 pt-32 sm:px-6">
-          <h1 className="text-3xl font-black tracking-tight text-white sm:text-4xl">
+          <h1
+            data-reveal
+            className="text-3xl font-black tracking-tight text-white sm:text-4xl"
+          >
             {fl.title}
           </h1>
-          <p className="mt-3 max-w-2xl text-slate-300">{fl.subtitle}</p>
+          <p
+            data-reveal
+            style={{ "--reveal-delay": "90ms" } as CSSProperties}
+            className="mt-3 max-w-2xl text-slate-300"
+          >
+            {fl.subtitle}
+          </p>
         </div>
       </section>
 
       <section className="mx-auto max-w-6xl px-4 py-14 sm:px-6">
         <div className="grid gap-6 md:grid-cols-2">
-          {fleet.map((coach) => {
+          {fleet.map((coach, i) => {
             const cls = fl.classes[coach.key];
             const featured = coach.key === "vip";
             return (
               <div
                 key={coach.key}
-                className={`flex flex-col overflow-hidden rounded-2xl border bg-surface ${
+                data-reveal
+                style={{ "--reveal-delay": `${i * 120}ms` } as CSSProperties}
+                className={`group flex flex-col overflow-hidden rounded-2xl border bg-surface transition duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-navy-900/15 ${
                   featured ? "border-gold-400/50 shadow-xl" : "border-line"
                 }`}
               >
-                <div className="relative aspect-[16/10]">
+                <div className="relative aspect-[16/10] overflow-hidden">
                   <Image
                     src={coach.img}
                     alt={cls.name}
                     fill
                     sizes="(max-width: 768px) 100vw, 50vw"
-                    className="object-cover"
+                    className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                   />
                   {featured && (
                     <span className="absolute left-4 top-4 rounded-full bg-gold-400 px-3 py-1 text-[0.65rem] font-bold uppercase tracking-wide text-navy-900">
