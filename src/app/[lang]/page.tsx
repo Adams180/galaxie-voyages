@@ -305,14 +305,30 @@ export default async function HomePage({ params }: PageProps<"/[lang]">) {
       {/* ── Gallery ── */}
       <section className="bg-band py-20">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
-          <div className="max-w-2xl" data-reveal>
-            <h2 className="text-3xl font-bold tracking-tight text-fg">
-              {dict.gallery.title}
-            </h2>
-            <p className="mt-3 text-muted">{dict.gallery.subtitle}</p>
+          <div className="flex flex-wrap items-end justify-between gap-4" data-reveal>
+            <div className="max-w-2xl">
+              <h2 className="text-3xl font-bold tracking-tight text-fg">
+                {dict.gallery.title}
+              </h2>
+              <p className="mt-3 text-muted">{dict.gallery.subtitle}</p>
+            </div>
+            <Link
+              href={`/${lang}/gallery`}
+              className="text-sm font-semibold text-accent transition hover:opacity-80"
+            >
+              {dict.gallery.cta} →
+            </Link>
           </div>
           <div className="mt-10" data-reveal="fade">
             <Gallery />
+          </div>
+          <div className="mt-10 text-center" data-reveal="fade">
+            <Link
+              href={`/${lang}/gallery`}
+              className="gv-press inline-flex items-center gap-2 rounded-full border border-line bg-surface px-6 py-3 text-sm font-semibold text-fg transition hover:bg-elevated"
+            >
+              {dict.gallery.cta} →
+            </Link>
           </div>
         </div>
       </section>

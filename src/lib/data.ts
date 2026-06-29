@@ -44,7 +44,18 @@ export const fleet: Coach[] = [
 export const services = ["vip", "standard", "organized", "charter"] as const;
 export type Service = (typeof services)[number];
 
-/** Curated vehicle photos for the gallery */
+/** Full set for the dedicated /gallery page: 23 field photos + fleet highlights. */
+export const galleryPageImages = [
+  ...Array.from({ length: 23 }, (_, i) => `/gallery/g${String(i + 1).padStart(2, "0")}.jpg`),
+  "/vehicles/fleet-lineup-day.jpg",
+  "/vehicles/fleet-lineup-night.jpg",
+  "/vehicles/vip-station.jpg",
+  "/vehicles/coaster-vip-side.jpg",
+  "/vehicles/vip-interior.jpg",
+  "/vehicles/waiting-hall.jpg",
+];
+
+/** Curated vehicle photos for the home-page gallery teaser */
 export const galleryImages = [
   "/vehicles/fleet-lineup-day.jpg",
   "/vehicles/fleet-lineup-night.jpg",

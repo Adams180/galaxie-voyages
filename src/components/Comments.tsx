@@ -5,18 +5,17 @@ import { useEffect, useState } from "react";
 export type Seed = { name: string; text: string };
 
 type Labels = {
-  title: string;
-  subtitle: string;
   nameLabel: string;
   namePlaceholder: string;
   messageLabel: string;
   messagePlaceholder: string;
   submit: string;
   localNote: string;
+  sharedNote: string;
   you: string;
 };
 
-type StoredComment = { id: string; name: string; text: string; ts: number };
+type Comment = { id: string; name: string; text: string; ts: number };
 
 const KEY = "galaxie_comments_v1";
 
@@ -36,30 +35,74 @@ export default function Comments({
   labels: Labels;
   seeds: Seed[];
 }) {
-  const [mine, setMine] = useState<StoredComment[]>([]);
+  const [comments, setComments] = useState<Comment[]>([]);
+  const [shared, setShared] = useState(false);
   const [name, setName] = useState("");
   const [text, setText] = useState("");
+  const [busy, setBusy] = useState(false);
 
   useEffect(() => {
-    try {
-      const raw = localStorage.getItem(KEY);
-      if (raw) setMine(JSON.parse(raw));
-    } catch {
-      /* ignore */
-    }
+    let active = true;
+    (async () => {
+      try {
+        const res = await fetch("/api/comments", { cache: "no-store" });
+        const data = await res.json();
+        if (active && data?.enabled && Array.isArray(data.comments)) {
+          setShared(true);
+          setComments(data.comments);
+          return;
+        }
+      } catch {
+        /* fall through to local */
+      }
+      // local fallback
+      try {
+        const raw = localStorage.getItem(KEY);
+        if (active && raw) setComments(JSON.parse(raw));
+      } catch {
+        /* ignore */
+      }
+    })();
+    return () => {
+      active = false;
+    };
   }, []);
 
-  const submit = (e: React.FormEvent) => {
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!name.trim() || !text.trim()) return;
-    const entry: StoredComment = {
+    if (!name.trim() || !text.trim() || busy) return;
+    const entry: Comment = {
       id: crypto.randomUUID(),
       name: name.trim(),
       text: text.trim(),
       ts: Date.now(),
     };
-    const next = [entry, ...mine];
-    setMine(next);
+
+    if (shared) {
+      setBusy(true);
+      try {
+        const res = await fetch("/api/comments", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ name: entry.name, text: entry.text }),
+        });
+        const data = await res.json();
+        if (res.ok && data?.comment) {
+          setComments((cur) => [data.comment, ...cur]);
+          setName("");
+          setText("");
+        }
+      } catch {
+        /* ignore */
+      } finally {
+        setBusy(false);
+      }
+      return;
+    }
+
+    // local mode
+    const next = [entry, ...comments];
+    setComments(next);
     setName("");
     setText("");
     try {
@@ -114,22 +157,25 @@ export default function Comments({
           </label>
           <button
             type="submit"
-            className="w-full rounded-full bg-gold-400 px-6 py-3 text-sm font-semibold text-navy-900 transition hover:bg-gold-300"
+            disabled={busy}
+            className="gv-press w-full rounded-full bg-gold-400 px-6 py-3 text-sm font-semibold text-navy-900 transition hover:bg-gold-300 disabled:opacity-60"
           >
             {labels.submit}
           </button>
-          <p className="text-xs text-faint">{labels.localNote}</p>
+          <p className="text-xs text-faint">
+            {shared ? labels.sharedNote : labels.localNote}
+          </p>
         </div>
       </form>
 
       {/* list */}
       <div className="space-y-4">
-        {mine.map((c) => (
+        {comments.map((cm) => (
           <CommentCard
-            key={c.id}
-            name={c.name}
-            text={c.text}
-            meta={`${labels.you} · ${fmtDate(c.ts)}`}
+            key={cm.id}
+            name={cm.name}
+            text={cm.text}
+            meta={`${shared ? "" : labels.you + " · "}${fmtDate(cm.ts)}`}
             highlight
           />
         ))}
@@ -154,7 +200,7 @@ function CommentCard({
 }) {
   return (
     <figure
-      className={`flex gap-4 rounded-2xl border bg-surface p-5 ${
+      className={`flex gap-4 rounded-2xl border bg-surface p-5 transition duration-300 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-navy-900/5 ${
         highlight ? "border-gold-400/40" : "border-line"
       }`}
     >

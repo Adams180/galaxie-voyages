@@ -1,12 +1,13 @@
 {
   "meta": {
-    "title": "Galaxie Voyages — Intercity passenger transport in Cameroon",
-    "description": "Travel across Cameroon safely and in comfort with Galaxie Voyages: intercity connections between Yaoundé, Mbalmayo, Ebolowa and Sangmélima."
+    "title": "Galaxie Voyages — Urban and intercity transport in Cameroon",
+    "description": "An urban and intercity transport company in Cameroon. Travel safely and in comfort with Galaxie Voyages: Yaoundé, Mbalmayo, Ebolowa and Sangmélima."
   },
   "nav": {
     "home": "Home",
     "destinations": "Destinations",
     "fleet": "Our fleet",
+    "gallery": "Gallery",
     "about": "About",
     "contact": "Contact",
     "book": "Contact us"
@@ -28,7 +29,7 @@
     "slogan": "La différence"
   },
   "hero": {
-    "eyebrow": "Intercity transport · Cameroon",
+    "eyebrow": "Urban & intercity transport · Cameroon",
     "title": "Travel across Cameroon, with confidence.",
     "subtitle": "Daily connections between the cities of Cameroon's Centre and South regions aboard modern, safe and comfortable coaches.",
     "ctaPrimary": "View destinations",
@@ -91,7 +92,10 @@
   },
   "gallery": {
     "title": "The journey in pictures",
-    "subtitle": "Our roads, our vehicles and the regions we serve across Cameroon."
+    "subtitle": "Our roads, our vehicles and the regions we serve across Cameroon.",
+    "cta": "View the full gallery",
+    "pageTitle": "Gallery",
+    "pageSubtitle": "Our fleet, our agencies and daily life at Galaxie Voyages, in pictures."
   },
   "comments": {
     "title": "Traveller reviews",
@@ -102,6 +106,7 @@
     "messagePlaceholder": "How was your trip with Galaxie?",
     "submit": "Post my review",
     "localNote": "Your reviews are saved on this device (demo — shared storage can be added later).",
+    "sharedNote": "Your review will be visible to every visitor of the site.",
     "you": "You",
     "seed": [
       { "name": "Aline N.", "text": "A comfortable, on-time journey every single time. I won't travel any other way." },
@@ -156,9 +161,12 @@
     "mission": "To give every Cameroonian intercity transport they can trust — safe, accessible and on time.",
     "valuesTitle": "Our values",
     "values": [
-      { "title": "Safety", "text": "The protection of our passengers guides every decision we make." },
-      { "title": "Reliability", "text": "We keep to our schedules and our commitments." },
-      { "title": "Respect", "text": "Every traveller is welcomed with courtesy and care." }
+      { "title": "Trust", "text": "We earn our travellers' trust through consistent, transparent service." },
+      { "title": "Integrity", "text": "We act with honesty and keep our commitments, on every trip." },
+      { "title": "Respect", "text": "Every traveller and team member is welcomed with courtesy and consideration." },
+      { "title": "Creativity", "text": "We constantly look for better ways to serve our customers." },
+      { "title": "Innovation", "text": "We modernise our fleet and services so you always travel better." },
+      { "title": "Punctuality", "text": "We keep to our schedules — your time matters." }
     ],
     "parentNote": "Galaxie Voyages is a company of the GHF SARL group."
   },
@@ -179,7 +187,7 @@
     "formSuccess": "Thank you! Your message has been received (demo)."
   },
   "footer": {
-    "tagline": "Intercity passenger transport in Cameroon.",
+    "tagline": "An urban and intercity transport company in Cameroon.",
     "quickLinks": "Quick links",
     "contactTitle": "Contact",
     "parent": "A company of",

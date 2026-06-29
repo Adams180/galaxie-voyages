@@ -10,6 +10,7 @@ type NavLabels = {
   home: string;
   destinations: string;
   fleet: string;
+  gallery: string;
   about: string;
   contact: string;
   book: string;
@@ -39,6 +40,7 @@ export default function SiteHeader({
     { href: `/${lang}`, label: nav.home, exact: true },
     { href: `/${lang}/destinations`, label: nav.destinations },
     { href: `/${lang}/fleet`, label: nav.fleet },
+    { href: `/${lang}/gallery`, label: nav.gallery },
     { href: `/${lang}/about`, label: nav.about },
     { href: `/${lang}/contact`, label: nav.contact },
   ];

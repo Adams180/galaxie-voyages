@@ -1,12 +1,13 @@
 {
   "meta": {
-    "title": "Galaxie Voyages — Transport interurbain au Cameroun",
-    "description": "Voyagez à travers le Cameroun en toute sécurité et confort avec Galaxie Voyages : liaisons interurbaines entre Yaoundé, Mbalmayo, Ebolowa et Sangmélima."
+    "title": "Galaxie Voyages — Transport urbain et interurbain au Cameroun",
+    "description": "Société de transport urbain et interurbain au Cameroun. Voyagez en toute sécurité et confort avec Galaxie Voyages : Yaoundé, Mbalmayo, Ebolowa et Sangmélima."
   },
   "nav": {
     "home": "Accueil",
     "destinations": "Destinations",
     "fleet": "Notre flotte",
+    "gallery": "Galerie",
     "about": "À propos",
     "contact": "Contact",
     "book": "Nous contacter"
@@ -28,7 +29,7 @@
     "slogan": "La différence"
   },
   "hero": {
-    "eyebrow": "Transport interurbain · Cameroun",
+    "eyebrow": "Transport urbain & interurbain · Cameroun",
     "title": "Voyagez à travers le Cameroun, en toute confiance.",
     "subtitle": "Des liaisons quotidiennes entre les villes du Centre et du Sud Cameroun, à bord d'autocars modernes, sûrs et confortables.",
     "ctaPrimary": "Voir les destinations",
@@ -91,7 +92,10 @@
   },
   "gallery": {
     "title": "Le voyage en images",
-    "subtitle": "Nos routes, nos véhicules et les régions que nous desservons à travers le Cameroun."
+    "subtitle": "Nos routes, nos véhicules et les régions que nous desservons à travers le Cameroun.",
+    "cta": "Voir toute la galerie",
+    "pageTitle": "Galerie",
+    "pageSubtitle": "Notre flotte, nos agences et le quotidien de Galaxie Voyages en images."
   },
   "comments": {
     "title": "Avis des voyageurs",
@@ -102,6 +106,7 @@
     "messagePlaceholder": "Comment s'est passé votre voyage avec Galaxie ?",
     "submit": "Publier mon avis",
     "localNote": "Vos avis sont enregistrés sur cet appareil (démonstration — un stockage partagé pourra être ajouté).",
+    "sharedNote": "Votre avis sera visible par tous les visiteurs du site.",
     "you": "Vous",
     "seed": [
       { "name": "Aline N.", "text": "Un trajet confortable et à l'heure, à chaque fois. Je ne voyage plus autrement." },
@@ -156,9 +161,12 @@
     "mission": "Offrir à chaque Camerounais un transport interurbain digne de confiance — sûr, accessible et ponctuel.",
     "valuesTitle": "Nos valeurs",
     "values": [
-      { "title": "Sécurité", "text": "La protection de nos passagers guide chacune de nos décisions." },
-      { "title": "Fiabilité", "text": "Nous tenons nos horaires et nos engagements." },
-      { "title": "Respect", "text": "Chaque voyageur est accueilli avec courtoisie et attention." }
+      { "title": "La Confiance", "text": "Nous gagnons la confiance de nos voyageurs par un service constant et transparent." },
+      { "title": "L'intégrité", "text": "Nous agissons avec honnêteté et tenons nos engagements, à chaque trajet." },
+      { "title": "Respect", "text": "Chaque voyageur et chaque collaborateur est accueilli avec courtoisie et considération." },
+      { "title": "La créativité", "text": "Nous cherchons sans cesse de meilleures façons de servir nos clients." },
+      { "title": "L'innovation", "text": "Nous modernisons notre flotte et nos services pour voyager toujours mieux." },
+      { "title": "La ponctualité", "text": "Nous tenons nos horaires : votre temps est précieux." }
     ],
     "parentNote": "Galaxie Voyages est une société du groupe GHF SARL."
   },
@@ -179,7 +187,7 @@
     "formSuccess": "Merci ! Votre message a bien été pris en compte (démonstration)."
   },
   "footer": {
-    "tagline": "Transport interurbain de passagers au Cameroun.",
+    "tagline": "Société de transport urbain et interurbain au Cameroun.",
     "quickLinks": "Liens rapides",
     "contactTitle": "Contact",
     "parent": "Une société du groupe",

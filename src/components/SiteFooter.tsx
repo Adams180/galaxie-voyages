@@ -36,6 +36,7 @@ export default function SiteFooter({
             <li><Link className="hover:text-accent" href={`/${lang}`}>{nav.home}</Link></li>
             <li><Link className="hover:text-accent" href={`/${lang}/destinations`}>{nav.destinations}</Link></li>
             <li><Link className="hover:text-accent" href={`/${lang}/fleet`}>{nav.fleet}</Link></li>
+            <li><Link className="hover:text-accent" href={`/${lang}/gallery`}>{nav.gallery}</Link></li>
             <li><Link className="hover:text-accent" href={`/${lang}/about`}>{nav.about}</Link></li>
             <li><Link className="hover:text-accent" href={`/${lang}/contact`}>{nav.contact}</Link></li>
           </ul>
