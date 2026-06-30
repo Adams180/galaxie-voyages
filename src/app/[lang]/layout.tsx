@@ -8,6 +8,7 @@ import SiteFooter from "@/components/SiteFooter";
 import FloatingContact from "@/components/FloatingContact";
 import RevealObserver from "@/components/RevealObserver";
 import ScrollProgress from "@/components/ScrollProgress";
+import BackToTop from "@/components/BackToTop";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
@@ -53,6 +54,7 @@ export default async function LangLayout({
         <main className="flex-1">{children}</main>
         <SiteFooter lang={lang} dict={dict} />
         <FloatingContact label={dict.common.whatsapp} />
+        <BackToTop label={dict.common.backToTop} />
       </body>
     </html>
   );

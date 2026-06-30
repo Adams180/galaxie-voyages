@@ -112,7 +112,7 @@ export default async function HomePage({ params }: PageProps<"/[lang]">) {
       {/* ── Services ── */}
       <section className="mx-auto max-w-6xl px-4 py-20 sm:px-6">
         <div className="max-w-2xl" data-reveal>
-          <h2 className="text-3xl font-bold tracking-tight text-fg">
+          <h2 className="gv-h2 text-3xl font-bold tracking-tight text-fg">
             {dict.services.title}
           </h2>
           <p className="mt-3 text-muted">{dict.services.subtitle}</p>
@@ -139,7 +139,7 @@ export default async function HomePage({ params }: PageProps<"/[lang]">) {
       <section className="bg-band py-20">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="max-w-2xl" data-reveal>
-            <h2 className="text-3xl font-bold tracking-tight text-fg">
+            <h2 className="gv-h2 text-3xl font-bold tracking-tight text-fg">
               {dict.features.title}
             </h2>
             <p className="mt-3 text-muted">{dict.features.subtitle}</p>
@@ -168,7 +168,7 @@ export default async function HomePage({ params }: PageProps<"/[lang]">) {
       {/* ── On-board experience ── */}
       <section className="mx-auto max-w-6xl px-4 py-20 sm:px-6">
         <div className="max-w-2xl" data-reveal>
-          <h2 className="text-3xl font-bold tracking-tight text-fg">
+          <h2 className="gv-h2 text-3xl font-bold tracking-tight text-fg">
             {dict.experience.title}
           </h2>
           <p className="mt-3 text-muted">{dict.experience.subtitle}</p>
@@ -199,7 +199,7 @@ export default async function HomePage({ params }: PageProps<"/[lang]">) {
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="flex flex-wrap items-end justify-between gap-4" data-reveal>
             <div>
-              <h2 className="text-3xl font-bold tracking-tight text-fg">
+              <h2 className="gv-h2 text-3xl font-bold tracking-tight text-fg">
                 {dict.popularRoutes.title}
               </h2>
               <p className="mt-3 text-muted">{dict.popularRoutes.subtitle}</p>
@@ -221,32 +221,39 @@ export default async function HomePage({ params }: PageProps<"/[lang]">) {
             <Link
               key={r.code}
               href={`/${lang}/destinations?from=${encodeURIComponent(r.a)}&to=${encodeURIComponent(r.b)}`}
-              className="group relative w-64 shrink-0 snap-start overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-navy-600 to-navy-800 p-5 text-white transition duration-300 hover:-translate-y-1.5 hover:border-gold-400/50 hover:shadow-2xl hover:shadow-navy-900/40"
+              className="group relative w-72 shrink-0 snap-start overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-navy-600 to-navy-800 p-6 text-white transition duration-300 hover:-translate-y-1.5 hover:border-gold-400/50 hover:shadow-2xl hover:shadow-navy-900/40"
             >
               <div
                 aria-hidden
-                className="absolute -right-6 -top-6 h-24 w-24 rounded-full bg-teal-500/20 blur-2xl transition duration-500 group-hover:bg-gold-400/25"
+                className="absolute -right-8 -top-8 h-28 w-28 rounded-full bg-teal-500/20 blur-2xl transition duration-500 group-hover:bg-gold-400/25"
               />
               {r.popular && (
-                <span className="text-xs font-semibold uppercase tracking-wide text-gold-300">
+                <span className="inline-block rounded-full bg-gold-400/15 px-2.5 py-0.5 text-[0.65rem] font-semibold uppercase tracking-wide text-gold-300">
                   {c.popular}
                 </span>
               )}
-              <div className="mt-3 flex items-center gap-2 text-xl font-bold">
-                <span>{r.a}</span>
-                <span className="text-teal-300 transition-transform duration-300 group-hover:translate-x-0.5">
-                  ⇄
-                </span>
-                <span>{r.b}</span>
+              {/* itinerary: departure → destination */}
+              <div className="mt-4">
+                <div className="flex items-center gap-3 text-lg font-bold">
+                  <span className="h-2.5 w-2.5 shrink-0 rounded-full bg-teal-300 ring-4 ring-teal-300/15" />
+                  <span>{r.a}</span>
+                </div>
+                <div className="ml-[4px] h-6 border-l border-dashed border-white/25" />
+                <div className="flex items-center gap-3 text-lg font-bold">
+                  <svg
+                    className="h-3.5 w-3.5 shrink-0 text-gold-300"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    aria-hidden
+                  >
+                    <path d="M12 2C8 2 5 5 5 9c0 5 7 13 7 13s7-8 7-13c0-4-3-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z" />
+                  </svg>
+                  <span>{r.b}</span>
+                </div>
               </div>
-              <div className="mt-6 flex items-center justify-between text-sm text-slate-300">
-                <span>
-                  ~{r.hours}
-                  {c.hours}
-                </span>
-                <span className="text-gold-300">
-                  {r.departures.length} {c.departures.toLowerCase()}
-                </span>
+              <div className="mt-6 flex items-center gap-1 text-sm font-semibold text-gold-300 opacity-80 transition-all duration-300 group-hover:gap-2 group-hover:opacity-100">
+                {c.seeRoutes}
+                <span aria-hidden>→</span>
               </div>
             </Link>
           ))}
@@ -256,7 +263,7 @@ export default async function HomePage({ params }: PageProps<"/[lang]">) {
       {/* ── Network / coverage ── */}
       <section className="mx-auto grid max-w-6xl gap-12 px-4 py-20 sm:px-6 lg:grid-cols-2 lg:items-center">
         <div data-reveal="left">
-          <h2 className="text-3xl font-bold tracking-tight text-fg">
+          <h2 className="gv-h2 text-3xl font-bold tracking-tight text-fg">
             {dict.network.title}
           </h2>
           <p className="mt-3 text-muted">{dict.network.subtitle}</p>
@@ -307,7 +314,7 @@ export default async function HomePage({ params }: PageProps<"/[lang]">) {
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="flex flex-wrap items-end justify-between gap-4" data-reveal>
             <div className="max-w-2xl">
-              <h2 className="text-3xl font-bold tracking-tight text-fg">
+              <h2 className="gv-h2 text-3xl font-bold tracking-tight text-fg">
                 {dict.gallery.title}
               </h2>
               <p className="mt-3 text-muted">{dict.gallery.subtitle}</p>
@@ -336,7 +343,7 @@ export default async function HomePage({ params }: PageProps<"/[lang]">) {
       {/* ── Traveller reviews (user comments, no account) ── */}
       <section className="mx-auto max-w-6xl px-4 py-20 sm:px-6">
         <div className="max-w-2xl" data-reveal>
-          <h2 className="text-3xl font-bold tracking-tight text-fg">
+          <h2 className="gv-h2 text-3xl font-bold tracking-tight text-fg">
             {dict.comments.title}
           </h2>
           <p className="mt-3 text-muted">{dict.comments.subtitle}</p>

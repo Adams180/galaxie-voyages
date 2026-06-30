@@ -46,7 +46,7 @@ export type Service = (typeof services)[number];
 
 /** Full set for the dedicated /gallery page: 23 field photos + fleet highlights. */
 export const galleryPageImages = [
-  ...Array.from({ length: 23 }, (_, i) => `/gallery/g${String(i + 1).padStart(2, "0")}.jpg`),
+  ...Array.from({ length: 39 }, (_, i) => `/gallery/g${String(i + 1).padStart(2, "0")}.jpg`),
   "/vehicles/fleet-lineup-day.jpg",
   "/vehicles/fleet-lineup-night.jpg",
   "/vehicles/vip-station.jpg",
