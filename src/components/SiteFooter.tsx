@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Logo from "./Logo";
-import { contact, imageCredit } from "@/lib/data";
+import { contact } from "@/lib/data";
 import type { Dictionary } from "@/lib/i18n";
 
 export default function SiteFooter({
@@ -63,21 +63,9 @@ export default function SiteFooter({
       </div>
 
       <div className="border-t border-line">
-        <div className="mx-auto flex max-w-6xl flex-col gap-1 px-4 py-5 text-xs text-faint sm:flex-row sm:items-center sm:justify-between sm:px-6">
+        <div className="mx-auto flex max-w-6xl items-center justify-center px-4 py-5 text-xs text-faint sm:px-6">
           <span>
             © {new Date().getFullYear()} Galaxie Voyages. {f.rights}
-          </span>
-          <span className="flex flex-wrap items-center gap-x-2">
-            <a
-              href={imageCredit.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-accent"
-            >
-              {imageCredit.label}
-            </a>
-            <span aria-hidden>·</span>
-            <span>{f.placeholderNote}</span>
           </span>
         </div>
       </div>

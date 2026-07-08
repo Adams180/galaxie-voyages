@@ -109,6 +109,27 @@ export default async function HomePage({ params }: PageProps<"/[lang]">) {
         </div>
       </section>
 
+      {/* ── City ticker ── */}
+      <section className="border-b border-line bg-navy-900 py-3.5">
+        <div className="gv-marquee">
+          <div className="gv-marquee-track">
+            {[0, 1].map((dup) => (
+              <div key={dup} className="flex shrink-0" aria-hidden={dup === 1}>
+                {[...cities, ...cities, ...cities, ...cities].map((city, i) => (
+                  <span
+                    key={`${dup}-${i}`}
+                    className="flex items-center gap-6 pl-6 text-sm font-semibold uppercase tracking-[0.2em] text-white/75"
+                  >
+                    {city}
+                    <span className="h-1.5 w-1.5 rounded-full bg-gold-400" />
+                  </span>
+                ))}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ── Services ── */}
       <section className="mx-auto max-w-6xl px-4 py-20 sm:px-6">
         <div className="max-w-2xl" data-reveal>

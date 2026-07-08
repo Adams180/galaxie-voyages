@@ -46,7 +46,7 @@ export type Service = (typeof services)[number];
 
 /** Full set for the dedicated /gallery page: 23 field photos + fleet highlights. */
 export const galleryPageImages = [
-  ...Array.from({ length: 39 }, (_, i) => `/gallery/g${String(i + 1).padStart(2, "0")}.jpg`),
+  ...Array.from({ length: 57 }, (_, i) => `/gallery/g${String(i + 1).padStart(2, "0")}.jpg`),
   "/vehicles/fleet-lineup-day.jpg",
   "/vehicles/fleet-lineup-night.jpg",
   "/vehicles/vip-station.jpg",
@@ -111,11 +111,6 @@ export const contact = {
   agencies,
 };
 
-/** Attribution for the downloaded highway photo (CC BY-SA 4.0). */
-export const imageCredit = {
-  label: "Serieminou / Wikimedia Commons · CC BY-SA 4.0",
-  href: "https://commons.wikimedia.org/wiki/File:Echangeur_Bakoko_Yapaki.jpg",
-};
 
 export const company = {
   founded: 2015,
