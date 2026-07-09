@@ -27,7 +27,8 @@
     "whatsapp": "WhatsApp",
     "theme": "Changer de thème",
     "slogan": "La différence",
-    "backToTop": "Haut de page"
+    "backToTop": "Haut de page",
+    "since": "Depuis"
   },
   "hero": {
     "eyebrow": "Transport urbain & interurbain · Cameroun",
@@ -106,7 +107,6 @@
     "messageLabel": "Votre avis",
     "messagePlaceholder": "Comment s'est passé votre voyage avec Galaxie ?",
     "submit": "Publier mon avis",
-    "localNote": "Vos avis sont enregistrés sur votre appareil.",
     "sharedNote": "Votre avis sera visible par tous les visiteurs du site.",
     "you": "Vous",
     "seed": [
@@ -144,7 +144,7 @@
       "snack": "Collation offerte"
     },
     "classes": {
-      "vip": { "name": "Galaxie VIP", "text": "Notre service haut de gamme : moins de sièges, plus d'espace, et tous les services à bord." },
+      "vip": { "name": "Galaxie VIP", "text": "Notre service haut de gamme : moins de sièges, plus d'espace et plus de confort à bord." },
       "classic": { "name": "Classique", "text": "Le trajet fiable et économique pour vos déplacements quotidiens entre les villes." },
       "express": { "name": "Express", "text": "Liaisons directes avec un minimum d'arrêts, pour arriver plus vite." }
     }
@@ -177,7 +177,7 @@
     "agenciesTitle": "Nos agences",
     "headOffice": "Siège social",
     "line": "Ligne",
-    "hours": "Tous les jours, 06h00 – 21h00",
+    "hours": "Tous les jours, 02h00 – 22h00",
     "formTitle": "Envoyez-nous un message",
     "formNote": "Remplissez ce formulaire et notre équipe vous répondra dans les plus brefs délais.",
     "formName": "Nom complet",

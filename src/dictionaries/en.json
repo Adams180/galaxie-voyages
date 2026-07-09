@@ -27,7 +27,8 @@
     "whatsapp": "WhatsApp",
     "theme": "Toggle theme",
     "slogan": "La différence",
-    "backToTop": "Back to top"
+    "backToTop": "Back to top",
+    "since": "Since"
   },
   "hero": {
     "eyebrow": "Urban & intercity transport · Cameroon",
@@ -106,7 +107,6 @@
     "messageLabel": "Your review",
     "messagePlaceholder": "How was your trip with Galaxie?",
     "submit": "Post my review",
-    "localNote": "Your reviews are saved on your device.",
     "sharedNote": "Your review will be visible to every visitor of the site.",
     "you": "You",
     "seed": [
@@ -144,7 +144,7 @@
       "snack": "Complimentary snack"
     },
     "classes": {
-      "vip": { "name": "Galaxie VIP", "text": "Our premium service: fewer seats, more space, and every on-board amenity." },
+      "vip": { "name": "Galaxie VIP", "text": "Our premium service: fewer seats, more space and more on-board comfort." },
       "classic": { "name": "Classic", "text": "The reliable, affordable ride for your everyday intercity travel." },
       "express": { "name": "Express", "text": "Direct connections with minimal stops, to get you there faster." }
     }
@@ -177,7 +177,7 @@
     "agenciesTitle": "Our agencies",
     "headOffice": "Head office",
     "line": "Line",
-    "hours": "Every day, 6:00 am – 9:00 pm",
+    "hours": "Every day, 2:00 am – 10:00 pm",
     "formTitle": "Send us a message",
     "formNote": "Fill in this form and our team will get back to you as soon as possible.",
     "formName": "Full name",

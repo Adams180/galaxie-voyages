@@ -30,12 +30,15 @@ export default async function HomePage({ params }: PageProps<"/[lang]">) {
         <HeroSlideshow />
 
         <div className="mx-auto max-w-6xl px-4 pb-28 pt-36 sm:px-6 sm:pb-40 sm:pt-48">
-          <p
-            data-reveal="fade"
-            className="inline-flex items-center gap-2 rounded-full border border-gold-400/40 bg-gold-400/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-gold-300"
-          >
-            {dict.hero.eyebrow}
-          </p>
+          <div data-reveal="fade" className="flex flex-wrap items-center gap-2">
+            <span className="inline-flex items-center gap-2 rounded-full border border-gold-400/40 bg-gold-400/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-gold-300">
+              {dict.hero.eyebrow}
+            </span>
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-white/5 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-white/80 backdrop-blur">
+              <span className="h-1.5 w-1.5 rounded-full bg-teal-300" />
+              {c.since} {company.founded}
+            </span>
+          </div>
           <h1
             data-reveal
             style={delay(90)}

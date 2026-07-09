@@ -74,24 +74,26 @@ export default async function FleetPage({ params }: PageProps<"/[lang]/fleet">) 
                   <div className="mt-4 text-sm font-semibold text-highlight">
                     {coach.seats} {fl.seats}
                   </div>
-                  <ul className="mt-5 grid grid-cols-2 gap-2 border-t border-line pt-5 text-sm">
-                    {coach.amenities.map((a) => (
-                      <li key={a} className="flex items-center gap-2 text-muted">
-                        <svg
-                          width="16"
-                          height="16"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="3"
-                          className="text-accent"
-                        >
-                          <path d="M5 13l4 4L19 7" strokeLinecap="round" strokeLinejoin="round" />
-                        </svg>
-                        {fl.amenities[a]}
-                      </li>
-                    ))}
-                  </ul>
+                  {coach.amenities.length > 0 && (
+                    <ul className="mt-5 grid grid-cols-2 gap-2 border-t border-line pt-5 text-sm">
+                      {coach.amenities.map((a) => (
+                        <li key={a} className="flex items-center gap-2 text-muted">
+                          <svg
+                            width="16"
+                            height="16"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="3"
+                            className="text-accent"
+                          >
+                            <path d="M5 13l4 4L19 7" strokeLinecap="round" strokeLinejoin="round" />
+                          </svg>
+                          {fl.amenities[a]}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                 </div>
               </div>
             );

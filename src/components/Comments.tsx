@@ -10,7 +10,6 @@ type Labels = {
   messageLabel: string;
   messagePlaceholder: string;
   submit: string;
-  localNote: string;
   sharedNote: string;
   you: string;
 };
@@ -162,9 +161,9 @@ export default function Comments({
           >
             {labels.submit}
           </button>
-          <p className="text-xs text-faint">
-            {shared ? labels.sharedNote : labels.localNote}
-          </p>
+          {shared && (
+            <p className="text-xs text-faint">{labels.sharedNote}</p>
+          )}
         </div>
       </form>
 

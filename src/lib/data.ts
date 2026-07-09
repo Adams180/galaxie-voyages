@@ -34,8 +34,8 @@ export type Coach = {
 };
 
 export const fleet: Coach[] = [
-  { key: "vip", seats: 30, img: "/vehicles/coaster-vip-side.jpg", amenities: ["ac", "wifi", "usb", "reclining", "tv", "snack"] },
-  { key: "classic", seats: 14, img: "/vehicles/hiace-vip-side.jpg", amenities: ["ac", "usb", "reclining"] },
+  { key: "vip", seats: 30, img: "/vehicles/coaster-vip-side.jpg", amenities: ["ac"] },
+  { key: "classic", seats: 14, img: "/vehicles/hiace-vip-side.jpg", amenities: [] },
 ];
 
 /** Service lines — keys map into dictionary.services.items */
