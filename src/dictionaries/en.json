@@ -48,7 +48,7 @@
     "subtitle": "Comfort and safety on every kilometre.",
     "items": [
       { "title": "Safety first", "text": "Experienced drivers, well-maintained vehicles and real-time trip monitoring." },
-      { "title": "Modern comfort", "text": "Reclining seats, air conditioning and room for your luggage on all VIP routes." },
+      { "title": "Modern comfort", "text": "Air conditioning and room for your luggage on our VIP routes." },
       { "title": "On time", "text": "Regular, reliable departures several times a day on our main routes." },
       { "title": "Regional network", "text": "The cities of the Centre and South linked by a single network, departing from Yaoundé." }
     ]
@@ -57,7 +57,7 @@
     "title": "The Galaxie experience",
     "subtitle": "Designed so every journey is as pleasant as the destination.",
     "items": [
-      { "title": "Comfort on board", "text": "Reclining seats, air conditioning and generous space for a relaxed journey." },
+      { "title": "Comfort on board", "text": "Generous, comfortable space for a relaxed journey." },
       { "title": "Dedicated teams", "text": "Trained drivers and agency staff, at your service at every step." },
       { "title": "Luggage secured", "text": "Spacious holds and careful handling of your luggage, from departure to arrival." },
       { "title": "Punctuality", "text": "Regular departures, several times a day, on schedule." }
@@ -136,12 +136,7 @@
     "seats": "seats",
     "featured": "Most popular",
     "amenities": {
-      "ac": "Air conditioning",
-      "wifi": "On-board Wi-Fi",
-      "usb": "USB ports",
-      "reclining": "Reclining seats",
-      "tv": "TV screen",
-      "snack": "Complimentary snack"
+      "ac": "Air conditioning"
     },
     "classes": {
       "vip": { "name": "Galaxie VIP", "text": "Our premium service: fewer seats, more space and more on-board comfort." },

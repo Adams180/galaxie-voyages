@@ -48,7 +48,7 @@
     "subtitle": "Le confort et la sécurité à chaque kilomètre.",
     "items": [
       { "title": "Sécurité avant tout", "text": "Conducteurs expérimentés, véhicules entretenus et suivi des trajets en temps réel." },
-      { "title": "Confort moderne", "text": "Sièges inclinables, climatisation et espace pour vos bagages sur toutes nos lignes VIP." },
+      { "title": "Confort moderne", "text": "Climatisation et espace pour vos bagages sur nos lignes VIP." },
       { "title": "Ponctualité", "text": "Des départs réguliers et fiables, plusieurs fois par jour sur nos lignes principales." },
       { "title": "Réseau régional", "text": "Les villes du Centre et du Sud reliées par un seul réseau, au départ de Yaoundé." }
     ]
@@ -57,7 +57,7 @@
     "title": "L'expérience Galaxie",
     "subtitle": "Pensée pour que chaque trajet soit aussi agréable que la destination.",
     "items": [
-      { "title": "Confort à bord", "text": "Sièges inclinables, climatisation et espace généreux pour voyager détendu." },
+      { "title": "Confort à bord", "text": "Un espace généreux et confortable, pour voyager détendu." },
       { "title": "Équipes dédiées", "text": "Des conducteurs et personnels d'agence formés, à votre service à chaque étape." },
       { "title": "Bagages en sécurité", "text": "Soutes spacieuses et gestion soignée de vos bagages, du départ à l'arrivée." },
       { "title": "Ponctualité", "text": "Des départs réguliers, plusieurs fois par jour, dans le respect des horaires." }
@@ -136,12 +136,7 @@
     "seats": "places",
     "featured": "Le plus prisé",
     "amenities": {
-      "ac": "Climatisation",
-      "wifi": "Wi-Fi à bord",
-      "usb": "Prises USB",
-      "reclining": "Sièges inclinables",
-      "tv": "Écran TV",
-      "snack": "Collation offerte"
+      "ac": "Climatisation"
     },
     "classes": {
       "vip": { "name": "Galaxie VIP", "text": "Notre service haut de gamme : moins de sièges, plus d'espace et plus de confort à bord." },

@@ -30,7 +30,7 @@ export type Coach = {
   key: "vip" | "classic";
   seats: number;
   img: string;
-  amenities: ("ac" | "wifi" | "usb" | "reclining" | "tv" | "snack")[];
+  amenities: "ac"[];
 };
 
 export const fleet: Coach[] = [
