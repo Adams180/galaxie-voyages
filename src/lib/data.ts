@@ -1,8 +1,6 @@
 // Galaxie Voyages — network data.
-// Routes are REAL corridors (confirmed against TMS-X fleet pools: MAIN,
-// EBWA_SANG, YDE_SANG). All routes are operated as round trips (aller-retour).
-// ⚠️ Fares and durations below are APPROXIMATE PLACEHOLDERS — confirm and
-// replace with official values before production.
+// Routes are real corridors operated as round trips (aller-retour).
+// Durations are approximate; confirm official timetables before print.
 
 export type Route = {
   /** short corridor code, mirrors TMS-X fleet pools where applicable */

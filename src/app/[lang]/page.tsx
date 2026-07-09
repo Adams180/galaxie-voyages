@@ -64,7 +64,7 @@ export default async function HomePage({ params }: PageProps<"/[lang]">) {
           >
             <Link
               href={`/${lang}/destinations`}
-              className="gv-press rounded-full bg-gold-400 px-6 py-3 text-sm font-semibold text-navy-900 transition hover:-translate-y-0.5 hover:bg-gold-300 hover:shadow-lg hover:shadow-gold-500/25"
+              className="gv-press gv-shine rounded-full bg-gold-400 px-6 py-3 text-sm font-semibold text-navy-900 transition hover:-translate-y-0.5 hover:bg-gold-300 hover:shadow-lg hover:shadow-gold-500/25"
             >
               {dict.hero.ctaPrimary}
             </Link>
@@ -418,7 +418,7 @@ export default async function HomePage({ params }: PageProps<"/[lang]">) {
           <div className="flex flex-wrap justify-center gap-3">
             <Link
               href={`/${lang}/destinations`}
-              className="gv-press rounded-full bg-gold-400 px-8 py-3 text-sm font-semibold text-navy-900 transition hover:-translate-y-0.5 hover:bg-gold-300 hover:shadow-lg hover:shadow-gold-500/25"
+              className="gv-press gv-shine rounded-full bg-gold-400 px-8 py-3 text-sm font-semibold text-navy-900 transition hover:-translate-y-0.5 hover:bg-gold-300 hover:shadow-lg hover:shadow-gold-500/25"
             >
               {dict.hero.ctaPrimary}
             </Link>

@@ -106,7 +106,7 @@
     "messageLabel": "Votre avis",
     "messagePlaceholder": "Comment s'est passé votre voyage avec Galaxie ?",
     "submit": "Publier mon avis",
-    "localNote": "Vos avis sont enregistrés sur cet appareil (démonstration — un stockage partagé pourra être ajouté).",
+    "localNote": "Vos avis sont enregistrés sur votre appareil.",
     "sharedNote": "Votre avis sera visible par tous les visiteurs du site.",
     "you": "Vous",
     "seed": [
@@ -179,20 +179,22 @@
     "line": "Ligne",
     "hours": "Tous les jours, 06h00 – 21h00",
     "formTitle": "Envoyez-nous un message",
-    "formNote": "Remplissez ce formulaire et nous vous répondrons rapidement. (Formulaire de démonstration — non connecté pour le moment.)",
+    "formNote": "Remplissez ce formulaire et notre équipe vous répondra dans les plus brefs délais.",
     "formName": "Nom complet",
     "formPhone": "Téléphone",
     "formEmail": "E-mail",
     "formMessage": "Message",
     "formSubmit": "Envoyer le message",
-    "formSuccess": "Merci ! Votre message a bien été pris en compte (démonstration)."
+    "formSending": "Envoi en cours…",
+    "formSuccess": "Merci ! Votre message a bien été envoyé. Nous vous répondrons rapidement.",
+    "formDisabled": "Le formulaire n'est pas encore activé. Appelez-nous ou écrivez-nous sur WhatsApp au +237 698 93 24 24.",
+    "formError": "Une erreur est survenue. Veuillez réessayer ou nous contacter par téléphone."
   },
   "footer": {
     "tagline": "Société de transport urbain et interurbain au Cameroun.",
     "quickLinks": "Liens rapides",
     "contactTitle": "Contact",
     "parent": "Une société du groupe",
-    "rights": "Tous droits réservés.",
-    "placeholderNote": "Site de démonstration — contenu et coordonnées provisoires."
+    "rights": "Tous droits réservés."
   }
 }

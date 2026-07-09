@@ -172,6 +172,40 @@ body {
   transform: scaleX(1);
 }
 
+/* Accessible focus ring */
+:where(a, button, input, textarea, select, [tabindex]):focus-visible {
+  outline: 2px solid var(--color-teal-400);
+  outline-offset: 2px;
+}
+
+/* Shine sweep on primary CTAs */
+.gv-shine {
+  position: relative;
+  overflow: hidden;
+}
+.gv-shine::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    110deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.45) 50%,
+    transparent 70%
+  );
+  transform: translateX(-130%);
+  transition: transform 0.7s ease;
+  pointer-events: none;
+}
+.gv-shine:hover::after {
+  transform: translateX(130%);
+}
+@media (prefers-reduced-motion: reduce) {
+  .gv-shine::after {
+    display: none;
+  }
+}
+
 /* Page-enter transition (template.tsx remounts on navigation) */
 @keyframes gv-page-in {
   from { opacity: 0; transform: translateY(10px); }

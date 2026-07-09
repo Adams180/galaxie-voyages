@@ -93,7 +93,7 @@ export default function SiteHeader({
           <ThemeToggle label={themeLabel} />
           <Link
             href={`/${lang}/contact`}
-            className="gv-press hidden rounded-full bg-gold-400 px-4 py-2 text-sm font-semibold text-navy-900 shadow-sm transition hover:-translate-y-0.5 hover:bg-gold-300 hover:shadow-lg hover:shadow-gold-500/25 sm:inline-block"
+            className="gv-press gv-shine hidden rounded-full bg-gold-400 px-4 py-2 text-sm font-semibold text-navy-900 shadow-sm transition hover:-translate-y-0.5 hover:bg-gold-300 hover:shadow-lg hover:shadow-gold-500/25 sm:inline-block"
           >
             {nav.book}
           </Link>
