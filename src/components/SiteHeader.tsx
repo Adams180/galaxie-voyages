@@ -9,8 +9,10 @@ import ThemeToggle from "./ThemeToggle";
 type NavLabels = {
   home: string;
   destinations: string;
+  offers: string;
   fleet: string;
   gallery: string;
+  news: string;
   about: string;
   contact: string;
   book: string;
@@ -39,8 +41,10 @@ export default function SiteHeader({
   const links = [
     { href: `/${lang}`, label: nav.home, exact: true },
     { href: `/${lang}/destinations`, label: nav.destinations },
+    { href: `/${lang}/services`, label: nav.offers },
     { href: `/${lang}/fleet`, label: nav.fleet },
     { href: `/${lang}/gallery`, label: nav.gallery },
+    { href: `/${lang}/news`, label: nav.news },
     { href: `/${lang}/about`, label: nav.about },
     { href: `/${lang}/contact`, label: nav.contact },
   ];

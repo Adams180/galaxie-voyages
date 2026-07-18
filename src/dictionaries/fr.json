@@ -6,8 +6,10 @@
   "nav": {
     "home": "Accueil",
     "destinations": "Destinations",
+    "offers": "Offre de service",
     "fleet": "Notre flotte",
     "gallery": "Galerie",
+    "news": "Actualité",
     "about": "À propos",
     "contact": "Contact",
     "book": "Nous contacter"
@@ -184,6 +186,79 @@
     "formSuccess": "Merci ! Votre message a bien été envoyé. Nous vous répondrons rapidement.",
     "formDisabled": "Le formulaire n'est pas encore activé. Appelez-nous ou écrivez-nous sur WhatsApp au +237 698 93 24 24.",
     "formError": "Une erreur est survenue. Veuillez réessayer ou nous contacter par téléphone."
+  },
+  "offers": {
+    "title": "Offre de service",
+    "subtitle": "Bien plus que du transport : une gamme de services pensés pour les particuliers, les entreprises et les propriétaires de véhicules.",
+    "people": {
+      "title": "Transport de personnes",
+      "text": "Des liaisons quotidiennes, sûres et confortables entre les villes du Centre et du Sud Cameroun. Voyagez en toute confiance à bord de nos autocars VIP et classiques, avec des départs réguliers plusieurs fois par jour."
+    },
+    "goods": {
+      "title": "Transport de biens et marchandises",
+      "text": "Confiez-nous l'acheminement de vos colis, bagages et marchandises. Un service fiable et rapide sur l'ensemble de notre réseau, avec un suivi soigné de vos envois du départ à l'arrivée."
+    },
+    "rental": {
+      "title": "Location de bus",
+      "text": "Un mariage, un séminaire, une excursion ou un déplacement de groupe ? Louez un bus avec chauffeur, adapté à votre événement. Remplissez le formulaire et notre équipe vous fera une proposition."
+    },
+    "deposit": {
+      "title": "Dépôt de bus",
+      "text": "Vous possédez un bus et souhaitez le rentabiliser ? Confiez-le à Galaxie Voyages pour l'exploiter au sein de notre réseau. Renseignez les informations de votre véhicule et nous vous recontacterons."
+    },
+    "form": {
+      "note": "Les champs marqués d'un astérisque (*) sont obligatoires.",
+      "name": "Nom complet",
+      "ownerName": "Nom du propriétaire",
+      "phone": "Téléphone",
+      "email": "E-mail",
+      "departureDate": "Date de départ",
+      "returnDate": "Date de retour",
+      "pickup": "Lieu de prise en charge",
+      "destination": "Destination",
+      "passengers": "Nombre de passagers",
+      "busType": "Type de bus",
+      "busTypeVip": "VIP",
+      "busTypeClassic": "Classique",
+      "busModel": "Marque / modèle du bus",
+      "seats": "Nombre de places",
+      "plate": "Immatriculation",
+      "availability": "Disponibilité",
+      "message": "Message ou précisions",
+      "submit": "Envoyer la demande",
+      "sending": "Envoi en cours…",
+      "success": "Merci ! Votre demande a bien été envoyée. Notre équipe vous recontactera rapidement.",
+      "disabled": "Le formulaire n'est pas encore activé. Appelez-nous ou écrivez-nous sur WhatsApp au +237 698 93 24 24.",
+      "error": "Une erreur est survenue. Veuillez réessayer ou nous contacter par téléphone."
+    }
+  },
+  "news": {
+    "title": "Actualité",
+    "subtitle": "Les dernières nouvelles et annonces de Galaxie Voyages.",
+    "empty": "Aucune actualité pour le moment. Revenez bientôt !",
+    "by": "Par"
+  },
+  "newsAdmin": {
+    "title": "Administration — Actualités",
+    "subtitle": "Espace réservé. Saisissez le mot de passe administrateur pour publier une actualité.",
+    "passwordLabel": "Mot de passe administrateur",
+    "unlock": "Déverrouiller",
+    "unlocking": "Vérification…",
+    "wrongPassword": "Mot de passe incorrect.",
+    "notConfigured": "La publication n'est pas encore configurée sur le serveur (stockage et mot de passe requis).",
+    "lock": "Verrouiller",
+    "formTitle": "Publier une actualité",
+    "fieldTitle": "Titre",
+    "fieldBody": "Contenu",
+    "fieldImage": "Image (URL, facultatif)",
+    "fieldAuthor": "Auteur (facultatif)",
+    "publish": "Publier",
+    "publishing": "Publication…",
+    "publishError": "La publication a échoué. Veuillez réessayer.",
+    "publishedTitle": "Actualités publiées",
+    "empty": "Aucune actualité publiée.",
+    "delete": "Supprimer",
+    "confirmDelete": "Supprimer cette actualité ?"
   },
   "footer": {
     "tagline": "Société de transport urbain et interurbain au Cameroun.",
