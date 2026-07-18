@@ -6,8 +6,10 @@
   "nav": {
     "home": "Home",
     "destinations": "Destinations",
+    "offers": "Services",
     "fleet": "Our fleet",
     "gallery": "Gallery",
+    "news": "News",
     "about": "About",
     "contact": "Contact",
     "book": "Contact us"
@@ -184,6 +186,79 @@
     "formSuccess": "Thank you! Your message has been sent. We'll get back to you shortly.",
     "formDisabled": "The form isn't activated yet. Call or WhatsApp us at +237 698 93 24 24.",
     "formError": "Something went wrong. Please try again or contact us by phone."
+  },
+  "offers": {
+    "title": "Our services",
+    "subtitle": "Much more than transport: a range of services designed for individuals, businesses and vehicle owners.",
+    "people": {
+      "title": "Passenger transport",
+      "text": "Daily, safe and comfortable connections between the cities of Central and Southern Cameroon. Travel with confidence aboard our VIP and classic coaches, with regular departures several times a day."
+    },
+    "goods": {
+      "title": "Goods and freight transport",
+      "text": "Trust us with your parcels, luggage and freight. A reliable, fast service across our entire network, with careful tracking of your shipments from departure to arrival."
+    },
+    "rental": {
+      "title": "Bus rental",
+      "text": "A wedding, a seminar, an excursion or a group trip? Rent a bus with a driver to suit your event. Fill in the form and our team will get back to you with a quote."
+    },
+    "deposit": {
+      "title": "Consign your bus",
+      "text": "Own a bus and want to make it profitable? Entrust it to Galaxie Voyages to operate within our network. Provide your vehicle's details and we'll get back to you."
+    },
+    "form": {
+      "note": "Fields marked with an asterisk (*) are required.",
+      "name": "Full name",
+      "ownerName": "Owner's name",
+      "phone": "Phone",
+      "email": "Email",
+      "departureDate": "Departure date",
+      "returnDate": "Return date",
+      "pickup": "Pickup location",
+      "destination": "Destination",
+      "passengers": "Number of passengers",
+      "busType": "Bus type",
+      "busTypeVip": "VIP",
+      "busTypeClassic": "Classic",
+      "busModel": "Bus make / model",
+      "seats": "Number of seats",
+      "plate": "Registration",
+      "availability": "Availability",
+      "message": "Message or details",
+      "submit": "Send request",
+      "sending": "Sending…",
+      "success": "Thank you! Your request has been sent. Our team will get back to you shortly.",
+      "disabled": "The form isn't activated yet. Call or WhatsApp us at +237 698 93 24 24.",
+      "error": "Something went wrong. Please try again or contact us by phone."
+    }
+  },
+  "news": {
+    "title": "News",
+    "subtitle": "The latest news and announcements from Galaxie Voyages.",
+    "empty": "No news yet. Check back soon!",
+    "by": "By"
+  },
+  "newsAdmin": {
+    "title": "Administration — News",
+    "subtitle": "Restricted area. Enter the administrator password to publish news.",
+    "passwordLabel": "Administrator password",
+    "unlock": "Unlock",
+    "unlocking": "Verifying…",
+    "wrongPassword": "Incorrect password.",
+    "notConfigured": "Publishing isn't configured on the server yet (storage and password required).",
+    "lock": "Lock",
+    "formTitle": "Publish news",
+    "fieldTitle": "Title",
+    "fieldBody": "Content",
+    "fieldImage": "Image (URL, optional)",
+    "fieldAuthor": "Author (optional)",
+    "publish": "Publish",
+    "publishing": "Publishing…",
+    "publishError": "Publishing failed. Please try again.",
+    "publishedTitle": "Published news",
+    "empty": "No news published.",
+    "delete": "Delete",
+    "confirmDelete": "Delete this news item?"
   },
   "footer": {
     "tagline": "An urban and intercity transport company in Cameroon.",

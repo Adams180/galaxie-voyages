@@ -111,7 +111,7 @@ export const contact = {
 
 
 export const company = {
-  founded: 2015,
+  founded: 2016,
   parent: "GHF SARL",
   stats: {
     routes: routes.length,
