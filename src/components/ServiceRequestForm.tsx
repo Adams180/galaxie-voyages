@@ -5,21 +5,19 @@ import { useState } from "react";
 export type ServiceFormLabels = {
   note: string;
   name: string;
-  ownerName: string;
   phone: string;
   email: string;
   departureDate: string;
   returnDate: string;
+  dropoffDate: string;
+  pickupDate: string;
   pickup: string;
   destination: string;
+  returnDestination: string;
   passengers: string;
   busType: string;
   busTypeVip: string;
   busTypeClassic: string;
-  busModel: string;
-  seats: string;
-  plate: string;
-  availability: string;
   message: string;
   submit: string;
   sending: string;
@@ -83,9 +81,7 @@ export default function ServiceRequestForm({
       <p className="text-sm text-muted">{labels.note}</p>
       <div className="grid gap-4 sm:grid-cols-2">
         <label className="block">
-          <span className={labelCls}>
-            {variant === "deposit" ? labels.ownerName : labels.name} *
-          </span>
+          <span className={labelCls}>{labels.name} *</span>
           <input required className={field} type="text" name="name" />
         </label>
         <label className="block">
@@ -135,20 +131,40 @@ export default function ServiceRequestForm({
         ) : (
           <>
             <label className="block">
-              <span className={labelCls}>{labels.busModel}</span>
-              <input className={field} type="text" name="busModel" />
+              <span className={labelCls}>{labels.pickup}</span>
+              <input className={field} type="text" name="pickup" />
             </label>
             <label className="block">
-              <span className={labelCls}>{labels.seats}</span>
-              <input className={field} type="number" min="1" name="seats" />
+              <span className={labelCls}>{labels.destination}</span>
+              <input className={field} type="text" name="destination" />
             </label>
             <label className="block">
-              <span className={labelCls}>{labels.plate}</span>
-              <input className={field} type="text" name="plate" />
+              <span className={labelCls}>{labels.dropoffDate}</span>
+              <input className={field} type="date" name="dropoffDate" />
             </label>
             <label className="block">
-              <span className={labelCls}>{labels.availability}</span>
-              <input className={field} type="text" name="availability" />
+              <span className={labelCls}>{labels.pickupDate}</span>
+              <input className={field} type="date" name="pickupDate" />
+            </label>
+            <label className="block sm:col-span-2">
+              <span className={labelCls}>{labels.returnDestination}</span>
+              <input className={field} type="text" name="returnDestination" />
+            </label>
+            <label className="block">
+              <span className={labelCls}>{labels.passengers}</span>
+              <input className={field} type="number" min="1" name="passengers" />
+            </label>
+            <label className="block">
+              <span className={labelCls}>{labels.busType}</span>
+              <select className={field} name="busType" defaultValue="">
+                <option value="" disabled>
+                  —
+                </option>
+                <option value={labels.busTypeVip}>{labels.busTypeVip}</option>
+                <option value={labels.busTypeClassic}>
+                  {labels.busTypeClassic}
+                </option>
+              </select>
             </label>
           </>
         )}
