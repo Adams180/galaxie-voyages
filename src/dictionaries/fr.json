@@ -200,30 +200,28 @@
     },
     "rental": {
       "title": "Location de bus",
-      "text": "Un mariage, un séminaire, une excursion ou un déplacement de groupe ? Louez un bus avec chauffeur, adapté à votre événement. Remplissez le formulaire et notre équipe vous fera une proposition."
+      "text": "Réservez un ou plusieurs bus mis à votre entière disposition pour une durée déterminée (par exemple 24 heures). Pendant toute la période convenue, le véhicule et son chauffeur restent à votre service pour tous vos déplacements — mariages, séminaires, excursions ou événements. Remplissez le formulaire et notre équipe vous fera une proposition."
     },
     "deposit": {
       "title": "Dépôt de bus",
-      "text": "Vous possédez un bus et souhaitez le rentabiliser ? Confiez-le à Galaxie Voyages pour l'exploiter au sein de notre réseau. Renseignez les informations de votre véhicule et nous vous recontacterons."
+      "text": "Un bus vous conduit d'un point A à un point B, puis revient vous récupérer à la date convenue pour vous ramener à la destination de votre choix (retour au point de départ ou ailleurs, selon l'accord). Idéal pour un aller-retour sans immobiliser le véhicule sur place."
     },
     "form": {
       "note": "Les champs marqués d'un astérisque (*) sont obligatoires.",
       "name": "Nom complet",
-      "ownerName": "Nom du propriétaire",
       "phone": "Téléphone",
       "email": "E-mail",
       "departureDate": "Date de départ",
       "returnDate": "Date de retour",
+      "dropoffDate": "Date de dépôt (aller)",
+      "pickupDate": "Date de récupération (retour)",
       "pickup": "Lieu de prise en charge",
       "destination": "Destination",
+      "returnDestination": "Destination au retour",
       "passengers": "Nombre de passagers",
       "busType": "Type de bus",
       "busTypeVip": "VIP",
       "busTypeClassic": "Classique",
-      "busModel": "Marque / modèle du bus",
-      "seats": "Nombre de places",
-      "plate": "Immatriculation",
-      "availability": "Disponibilité",
       "message": "Message ou précisions",
       "submit": "Envoyer la demande",
       "sending": "Envoi en cours…",

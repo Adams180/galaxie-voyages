@@ -200,30 +200,28 @@
     },
     "rental": {
       "title": "Bus rental",
-      "text": "A wedding, a seminar, an excursion or a group trip? Rent a bus with a driver to suit your event. Fill in the form and our team will get back to you with a quote."
+      "text": "Book one or more buses placed entirely at your disposal for a set period (for example, 24 hours). Throughout the agreed period, the vehicle and its driver remain at your service for all your journeys — weddings, seminars, excursions or events. Fill in the form and our team will get back to you with a quote."
     },
     "deposit": {
-      "title": "Consign your bus",
-      "text": "Own a bus and want to make it profitable? Entrust it to Galaxie Voyages to operate within our network. Provide your vehicle's details and we'll get back to you."
+      "title": "Drop-off & return pickup",
+      "text": "A bus takes you from point A to point B, then returns to pick you up on the agreed date and drives you to the destination of your choice (back to the start or elsewhere, as agreed). Ideal for a round trip without keeping the vehicle on site."
     },
     "form": {
       "note": "Fields marked with an asterisk (*) are required.",
       "name": "Full name",
-      "ownerName": "Owner's name",
       "phone": "Phone",
       "email": "Email",
       "departureDate": "Departure date",
       "returnDate": "Return date",
+      "dropoffDate": "Drop-off date (outbound)",
+      "pickupDate": "Pickup date (return)",
       "pickup": "Pickup location",
       "destination": "Destination",
+      "returnDestination": "Return destination",
       "passengers": "Number of passengers",
       "busType": "Bus type",
       "busTypeVip": "VIP",
       "busTypeClassic": "Classic",
-      "busModel": "Bus make / model",
-      "seats": "Number of seats",
-      "plate": "Registration",
-      "availability": "Availability",
       "message": "Message or details",
       "submit": "Send request",
       "sending": "Sending…",
