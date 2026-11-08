@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "Galaxie Voyages — Transport urbain et interurbain au Cameroun",
-    "description": "Société de transport urbain et interurbain au Cameroun. Voyagez en toute sécurité et confort avec Galaxie Voyages : Yaoundé, Mbalmayo, Ebolowa et Sangmélima."
+    "description": "Société de transport urbain et interurbain au Cameroun. Voyagez en toute sécurité et confort avec Galaxie Voyages : Yaoundé, Mbalmayo, Ebolowa, Sangmélima et Djoum."
   },
   "nav": {
     "home": "Accueil",
@@ -30,7 +30,8 @@
     "theme": "Changer de thème",
     "slogan": "La différence",
     "backToTop": "Haut de page",
-    "since": "Depuis"
+    "since": "Depuis",
+    "timetableSoon": "Horaires à venir"
   },
   "hero": {
     "eyebrow": "Transport urbain & interurbain · Cameroun",
@@ -130,7 +131,8 @@
     "tableRoute": "Trajet",
     "tableDuration": "Durée",
     "tableDepartures": "Heures de départ",
-    "note": "ℹ️ Horaires donnés à titre indicatif. Contactez une agence pour confirmer la disponibilité."
+    "note": "ℹ️ Horaires donnés à titre indicatif. Contactez une agence pour confirmer la disponibilité.",
+    "timetableUnavailable": "Horaires non communiqués — contactez une agence"
   },
   "fleet": {
     "title": "Notre flotte",

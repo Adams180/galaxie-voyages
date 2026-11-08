@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "Galaxie Voyages — Urban and intercity transport in Cameroon",
-    "description": "An urban and intercity transport company in Cameroon. Travel safely and in comfort with Galaxie Voyages: Yaoundé, Mbalmayo, Ebolowa and Sangmélima."
+    "description": "An urban and intercity transport company in Cameroon. Travel safely and in comfort with Galaxie Voyages: Yaoundé, Mbalmayo, Ebolowa, Sangmélima and Djoum."
   },
   "nav": {
     "home": "Home",
@@ -30,7 +30,8 @@
     "theme": "Toggle theme",
     "slogan": "La différence",
     "backToTop": "Back to top",
-    "since": "Since"
+    "since": "Since",
+    "timetableSoon": "Timetable soon"
   },
   "hero": {
     "eyebrow": "Urban & intercity transport · Cameroon",
@@ -130,7 +131,8 @@
     "tableRoute": "Route",
     "tableDuration": "Duration",
     "tableDepartures": "Departure times",
-    "note": "ℹ️ Schedules are indicative. Contact an agency to confirm availability."
+    "note": "ℹ️ Schedules are indicative. Contact an agency to confirm availability.",
+    "timetableUnavailable": "Timetable not yet available — contact an agency"
   },
   "fleet": {
     "title": "Our fleet",

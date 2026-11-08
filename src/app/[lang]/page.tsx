@@ -320,12 +320,18 @@ export default async function HomePage({ params }: PageProps<"/[lang]">) {
                 <span className="flex items-center gap-2 font-medium text-fg">
                   <span className="h-2 w-2 rounded-full bg-gold-400" />
                   {r.a}
-                  <span className="text-faint">⇄</span>
+                  <span className="text-faint">{r.bidirectional === false ? "→" : "⇄"}</span>
                   {r.b}
                 </span>
                 <span className="text-xs text-muted">
-                  ~{r.hours}
-                  {c.hours}
+                  {r.hours != null ? (
+                    <>
+                      ~{r.hours}
+                      {c.hours}
+                    </>
+                  ) : (
+                    c.timetableSoon
+                  )}
                 </span>
               </li>
             ))}

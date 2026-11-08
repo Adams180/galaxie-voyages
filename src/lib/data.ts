@@ -7,18 +7,44 @@ export type Route = {
   code: string;
   a: string;
   b: string;
-  /** approximate travel time, hours */
-  hours: number;
-  /** daily departure times (24h), applies both directions */
-  departures: string[];
+  /**
+   * Approximate travel time, hours. Optional: omit when no official duration
+   * has been published. Never invent a value — the UI shows a
+   * timetable-unavailable / contact-agency state instead.
+   */
+  hours?: number;
+  /**
+   * Daily departure times (24h). Optional: omit when no official timetable has
+   * been published. When present it applies in both directions only for a
+   * bidirectional corridor.
+   */
+  departures?: string[];
+  /**
+   * Whether the corridor is operated as a round trip (aller-retour). Defaults
+   * to true for the established corridors. Set false when the return service
+   * has not been confirmed, so the UI does not imply a return that may not run.
+   */
+  bidirectional?: boolean;
   popular?: boolean;
 };
+
+/** True only when an official duration and timetable are both published. */
+export const routeHasTimetable = (r: Route): boolean =>
+  r.hours != null && Array.isArray(r.departures) && r.departures.length > 0;
+
+/** True unless a corridor's return service is explicitly unconfirmed. */
+export const routeIsBidirectional = (r: Route): boolean =>
+  r.bidirectional !== false;
 
 export const routes: Route[] = [
   { code: "YDE-MBA", a: "Yaoundé", b: "Mbalmayo", hours: 1, departures: ["06:30", "08:00", "10:00", "12:00", "14:00", "16:00", "18:00"], popular: true },
   { code: "YDE-EBWA", a: "Yaoundé", b: "Ebolowa", hours: 2.5, departures: ["06:00", "09:00", "12:00", "15:00", "17:30"], popular: true },
   { code: "YDE-SANG", a: "Yaoundé", b: "Sangmélima", hours: 3, departures: ["06:00", "10:00", "14:00", "17:00"], popular: true },
   { code: "EBWA-SANG", a: "Ebolowa", b: "Sangmélima", hours: 1.5, departures: ["07:30", "11:00", "15:30"] },
+  // Yaoundé–Djoum: management-approved corridor. No official duration, departure
+  // times or return service have been provided yet, so none are declared here.
+  // The UI renders an explicit timetable-unavailable / contact-agency state.
+  { code: "YDE-DJOUM", a: "Yaoundé", b: "Djoum", bidirectional: false },
 ];
 
 export const cities = Array.from(
