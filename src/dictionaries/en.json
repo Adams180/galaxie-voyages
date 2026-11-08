@@ -236,7 +236,9 @@
     "title": "News",
     "subtitle": "The latest news and announcements from Galaxie Voyages.",
     "empty": "No news yet. Check back soon!",
-    "by": "By"
+    "by": "By",
+    "readMore": "Read more",
+    "backToNews": "← All news"
   },
   "newsAdmin": {
     "title": "Administration — News",

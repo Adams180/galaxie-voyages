@@ -236,7 +236,9 @@
     "title": "Actualité",
     "subtitle": "Les dernières nouvelles et annonces de Galaxie Voyages.",
     "empty": "Aucune actualité pour le moment. Revenez bientôt !",
-    "by": "Par"
+    "by": "Par",
+    "readMore": "Lire la suite",
+    "backToNews": "← Toutes les actualités"
   },
   "newsAdmin": {
     "title": "Administration — Actualités",
