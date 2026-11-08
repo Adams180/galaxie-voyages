@@ -62,10 +62,17 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 });
 
 /** Resolve the signed-in publisher, or null. Use in server code before any
- *  privileged action — never trust the client. */
+ *  privileged action — never trust the client. Honours runtime revocation. */
 export async function currentPublisher() {
   const session = await auth();
   const email = session?.user?.email?.toLowerCase();
   if (!email || !publisherAllowlist.includes(email)) return null;
-  return { email };
+  // Runtime revocation (immediate account disable) overrides the allowlist.
+  try {
+    const { isRevoked } = await import("./newsroom");
+    if (await isRevoked(email)) return null;
+  } catch {
+    /* if the store is unreachable, fall back to allowlist-only */
+  }
+  return { email, name: session?.user?.name ?? undefined };
 }

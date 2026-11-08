@@ -240,6 +240,71 @@ export async function ensureMigrated(): Promise<void> {
   }
 }
 
+// ---------------------------------------------------------------------------
+// Audit log (per-publisher activity)
+// ---------------------------------------------------------------------------
+
+export type AuditEntry = {
+  ts: number;
+  actor: string;
+  action: string;
+  articleId?: string;
+  detail?: string;
+};
+
+export async function logAudit(entry: AuditEntry): Promise<void> {
+  if (!redis) return;
+  try {
+    await redis.lpush("news:audit", JSON.stringify(entry));
+    await redis.ltrim("news:audit", 0, 499);
+  } catch {
+    /* ignore */
+  }
+}
+
+export async function listAudit(limit = 100): Promise<AuditEntry[]> {
+  if (!redis) return [];
+  try {
+    const raw = await redis.lrange<unknown>("news:audit", 0, limit - 1);
+    return raw.map((x) => parse<AuditEntry>(x));
+  } catch {
+    return [];
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Runtime publisher revocation (immediate account disable, beyond the env
+// allowlist) — checked on every privileged request.
+// ---------------------------------------------------------------------------
+
+export async function revokePublisher(email: string): Promise<void> {
+  if (!redis) return;
+  await redis.sadd("news:revoked", email.toLowerCase());
+}
+
+export async function reinstatePublisher(email: string): Promise<void> {
+  if (!redis) return;
+  await redis.srem("news:revoked", email.toLowerCase());
+}
+
+export async function isRevoked(email: string): Promise<boolean> {
+  if (!redis) return false;
+  try {
+    return (await redis.sismember("news:revoked", email.toLowerCase())) === 1;
+  } catch {
+    return false;
+  }
+}
+
+export async function listRevoked(): Promise<string[]> {
+  if (!redis) return [];
+  try {
+    return await redis.smembers("news:revoked");
+  } catch {
+    return [];
+  }
+}
+
 /**
  * Public news feed: published articles from the model, unioned with any legacy
  * shared-token items not yet migrated (deduped by id, model wins). Guarantees
