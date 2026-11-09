@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useFormStatus } from "react-dom";
 import { saveArticleAction, restoreRevisionAction } from "@/app/[lang]/newsroom/actions";
 import type { Article } from "@/lib/newsroom-model";
+import RichTextEditor from "./RichTextEditor";
 
 type Labels = Record<string, string>;
 
@@ -92,10 +93,10 @@ export default function ArticleEditor({
       </div>
 
       <div className={tab === "fr" ? "space-y-4" : "hidden"}>
-        <LocaleFields loc="fr" labels={labels} t={fr} />
+        <LocaleFields loc="fr" labels={labels} t={fr} uploadEnabled={uploadEnabled} />
       </div>
       <div className={tab === "en" ? "space-y-4" : "hidden"}>
-        <LocaleFields loc="en" labels={labels} t={en} />
+        <LocaleFields loc="en" labels={labels} t={en} uploadEnabled={uploadEnabled} />
       </div>
 
       {/* Cover image */}
@@ -225,10 +226,12 @@ function LocaleFields({
   loc,
   labels,
   t,
+  uploadEnabled,
 }: {
   loc: "fr" | "en";
   labels: Labels;
   t?: { title: string; body: string; seoTitle?: string; seoDescription?: string };
+  uploadEnabled: boolean;
 }) {
   return (
     <>
@@ -236,16 +239,16 @@ function LocaleFields({
         <span className={labelCls}>{labels.fieldTitle}</span>
         <input name={`${loc}_title`} defaultValue={t?.title ?? ""} className={field} />
       </label>
-      <label className="block">
+      <div className="block">
         <span className={labelCls}>{labels.fieldBody}</span>
-        <textarea
+        <RichTextEditor
           name={`${loc}_body`}
-          rows={12}
-          defaultValue={t?.body ?? ""}
-          className={`${field} font-mono`}
+          initialHTML={t?.body ?? ""}
+          labels={labels}
+          uploadEnabled={uploadEnabled}
         />
         <span className="mt-1 block text-[0.7rem] text-faint">{labels.bodyHint}</span>
-      </label>
+      </div>
       <div className="grid gap-4 sm:grid-cols-2">
         <label className="block">
           <span className={labelCls}>{labels.fieldSeoTitle}</span>

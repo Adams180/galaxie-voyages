@@ -9,6 +9,7 @@ import {
   type Locale,
   effectivelyPublished,
   legacyToArticle,
+  mergePublicNews,
   slugify,
   translationFor,
 } from "./newsroom-model";
@@ -38,18 +39,29 @@ export const newsroomReady = () => redis !== null;
 const KEY = (id: string) => `news:article:${id}`;
 const SLUG = (slug: string) => `news:slug:${slug}`;
 const INDEX = "news:index";
+const MIGRATED_IDS = "news:migrated:ids"; // tombstone set of imported legacy ids
 const parse = <T>(x: unknown): T =>
   typeof x === "string" ? (JSON.parse(x) as T) : (x as T);
 
-async function uniqueSlug(desired: string, selfId?: string): Promise<string> {
+/**
+ * Reserve a unique slug atomically. Uses SET NX so two concurrent saves cannot
+ * both claim the same slug; the owner (selfId) may keep its own slug.
+ */
+async function reserveSlug(desired: string, selfId: string): Promise<string> {
   if (!redis) return desired;
-  let slug = desired;
   for (let i = 0; i < 50; i++) {
-    const owner = await redis.get<string>(SLUG(slug));
-    if (!owner || owner === selfId) return slug;
-    slug = `${desired}-${i + 2}`;
+    const slug = i === 0 ? desired : `${desired}-${i + 1}`;
+    const current = await redis.get<string>(SLUG(slug));
+    if (current === selfId) return slug; // already ours
+    if (current == null) {
+      // Claim it atomically; if we lost a race, loop to the next candidate.
+      const claimed = await redis.set(SLUG(slug), selfId, { nx: true });
+      if (claimed) return slug;
+    }
   }
-  return `${desired}-${randomUUID().slice(0, 6)}`;
+  const unique = `${desired}-${randomUUID().slice(0, 6)}`;
+  await redis.set(SLUG(unique), selfId);
+  return unique;
 }
 
 export async function listArticles(): Promise<Article[]> {
@@ -101,7 +113,7 @@ export async function saveArticle(
     Object.values(input.translations)[0]?.title ??
     "";
   const desiredSlug = slugify(input.slug || primaryTitle, id);
-  const slug = await uniqueSlug(desiredSlug, id);
+  const slug = await reserveSlug(desiredSlug, id);
 
   const publishedAt =
     input.status === "published"
@@ -215,18 +227,38 @@ export async function migrateLegacyNews(): Promise<{ migrated: number }> {
         ts: number;
       }>(item);
       if (!legacy?.id) continue;
-      if (await redis.get(KEY(legacy.id))) continue; // already imported
+      // Idempotent: skip anything already imported (by article key or
+      // tombstone), so interrupted/repeated runs never duplicate or resurrect.
+      if (await redis.get(KEY(legacy.id))) {
+        await redis.sadd(MIGRATED_IDS, legacy.id);
+        continue;
+      }
+      if ((await redis.sismember(MIGRATED_IDS, legacy.id)) === 1) continue;
       const article = legacyToArticle(legacy);
+      const slug = await reserveSlug(article.slug, article.id);
+      article.slug = slug;
       await redis.set(KEY(article.id), JSON.stringify(article));
-      await redis.set(SLUG(article.slug), article.id);
+      // Record the tombstone BEFORE/with the write so a crash can't leave an
+      // imported article that the legacy fallback would also show.
+      await redis.sadd(MIGRATED_IDS, article.id);
       await redis.zadd(INDEX, { score: article.createdAt, member: article.id });
       migrated++;
     }
     await redis.set("news:migrated", "1");
   } catch {
-    /* ignore — migration is best-effort and idempotent */
+    /* best-effort + idempotent: a later run completes any remainder */
   }
   return { migrated };
+}
+
+/** The set of legacy ids already imported (tombstones). */
+export async function migratedLegacyIds(): Promise<Set<string>> {
+  if (!redis) return new Set();
+  try {
+    return new Set(await redis.smembers<string[]>(MIGRATED_IDS));
+  } catch {
+    return new Set();
+  }
 }
 
 /** Run the legacy import once (guarded by a flag). */
@@ -252,13 +284,19 @@ export type AuditEntry = {
   detail?: string;
 };
 
-export async function logAudit(entry: AuditEntry): Promise<void> {
-  if (!redis) return;
+export async function logAudit(entry: AuditEntry): Promise<boolean> {
+  if (!redis) {
+    console.error("[audit] store unavailable, not recorded:", entry.action);
+    return false;
+  }
   try {
     await redis.lpush("news:audit", JSON.stringify(entry));
     await redis.ltrim("news:audit", 0, 499);
-  } catch {
-    /* ignore */
+    return true;
+  } catch (e) {
+    // Observable: audit failures are surfaced to server logs, never swallowed.
+    console.error("[audit] write failed:", entry.action, e);
+    return false;
   }
 }
 
@@ -272,60 +310,28 @@ export async function listAudit(limit = 100): Promise<AuditEntry[]> {
   }
 }
 
-// ---------------------------------------------------------------------------
-// Runtime publisher revocation (immediate account disable, beyond the env
-// allowlist) — checked on every privileged request.
-// ---------------------------------------------------------------------------
-
-export async function revokePublisher(email: string): Promise<void> {
-  if (!redis) return;
-  await redis.sadd("news:revoked", email.toLowerCase());
-}
-
-export async function reinstatePublisher(email: string): Promise<void> {
-  if (!redis) return;
-  await redis.srem("news:revoked", email.toLowerCase());
-}
-
-export async function isRevoked(email: string): Promise<boolean> {
-  if (!redis) return false;
-  try {
-    return (await redis.sismember("news:revoked", email.toLowerCase())) === 1;
-  } catch {
-    return false;
-  }
-}
-
-export async function listRevoked(): Promise<string[]> {
-  if (!redis) return [];
-  try {
-    return await redis.smembers("news:revoked");
-  } catch {
-    return [];
-  }
-}
-
 /**
  * Public news feed: published articles from the model, unioned with any legacy
- * shared-token items not yet migrated (deduped by id, model wins). Guarantees
- * the public feed never drops an item during the transition period.
+ * shared-token items that are NOT yet migrated (tombstone-aware). Once an
+ * article is migrated, the model alone governs its visibility — the legacy
+ * fallback can never resurrect an unpublished or deleted article.
  */
 export async function listPublicNews(
   locale: Locale,
   now = Date.now(),
 ): Promise<Article[]> {
   const model = await listPublishedArticles(locale, now);
-  const seen = new Set(model.map((a) => a.id));
-  let legacyExtra: Article[] = [];
+  let legacy: Article[] = [];
+  let migrated = new Set<string>();
   try {
     const { listNews } = await import("./news");
-    legacyExtra = (await listNews())
-      .filter((n) => !seen.has(n.id))
-      .map(legacyToArticle);
+    legacy = (await listNews()).map(legacyToArticle);
+    migrated = await migratedLegacyIds();
   } catch {
     /* ignore */
   }
-  return [...model, ...legacyExtra].sort(
-    (x, y) => (y.publishedAt ?? y.createdAt) - (x.publishedAt ?? x.createdAt),
-  );
+  // Only published legacy items are eligible; migration tombstones exclude any
+  // already-imported id regardless of its current model state.
+  const publishableLegacy = legacy.filter((a) => translationFor(a, locale));
+  return mergePublicNews(model, publishableLegacy, migrated);
 }

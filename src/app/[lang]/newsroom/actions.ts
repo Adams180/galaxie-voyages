@@ -11,16 +11,17 @@ import {
 } from "@/lib/auth";
 import {
   deleteArticle,
+  getArticle,
   logAudit,
-  reinstatePublisher,
   restoreRevision,
-  revokePublisher,
   saveArticle,
   setStatus,
-  type ArticleStatus,
+  coerceStatus,
+  managedImageUrl,
   type Locale,
   type ArticleTranslation,
 } from "@/lib/newsroom";
+import { sanitizeBodyHtml } from "@/lib/markdown";
 
 async function requireActor() {
   const actor = await currentPublisher();
@@ -50,11 +51,18 @@ function readTranslation(
   fd: FormData,
   loc: Locale,
 ): ArticleTranslation | undefined {
-  const title = String(fd.get(`${loc}_title`) ?? "").trim();
-  const body = String(fd.get(`${loc}_body`) ?? "").trim();
+  const title = String(fd.get(`${loc}_title`) ?? "").trim().slice(0, 200);
+  // Rich-text HTML from the editor — sanitized server-side before storage
+  // (defense in depth; the render path sanitizes again).
+  const body = sanitizeBodyHtml(String(fd.get(`${loc}_body`) ?? "")).slice(
+    0,
+    50000,
+  );
   if (!title && !body) return undefined;
-  const seoTitle = String(fd.get(`${loc}_seoTitle`) ?? "").trim();
-  const seoDescription = String(fd.get(`${loc}_seoDescription`) ?? "").trim();
+  const seoTitle = String(fd.get(`${loc}_seoTitle`) ?? "").trim().slice(0, 200);
+  const seoDescription = String(fd.get(`${loc}_seoDescription`) ?? "")
+    .trim()
+    .slice(0, 400);
   return {
     title,
     body,
@@ -67,10 +75,18 @@ export async function saveArticleAction(formData: FormData) {
   const actor = await requireActor();
   const id = String(formData.get("id") ?? "").trim() || undefined;
   const lang = String(formData.get("lang") ?? "fr");
+
+  // Validate article identity: an update must reference an existing article.
+  const existing = id ? await getArticle(id) : null;
+  if (id && !existing) redirect(`/${lang}/newsroom?error=not-found`);
+
   const primaryLocale = (String(formData.get("primaryLocale") ?? "fr") === "en"
     ? "en"
     : "fr") as Locale;
-  const status = String(formData.get("status") ?? "draft") as ArticleStatus;
+
+  // Validate status (closed set; invalid rejected).
+  const status = coerceStatus(String(formData.get("status") ?? ""));
+  if (!status) redirect(`/${lang}/newsroom/${id ?? "new"}?error=bad-status`);
 
   const translations: Partial<Record<Locale, ArticleTranslation>> = {};
   const fr = readTranslation(formData, "fr");
@@ -78,23 +94,33 @@ export async function saveArticleAction(formData: FormData) {
   if (fr) translations.fr = fr;
   if (en) translations.en = en;
 
-  // Must have the primary-locale content at minimum.
+  // Must have the primary-locale title at minimum.
   if (!translations[primaryLocale]?.title) {
     redirect(`/${lang}/newsroom/${id ?? "new"}?error=title-required`);
   }
 
-  const imageUrl = String(formData.get("imageUrl") ?? "").trim();
-  const imageAlt = String(formData.get("imageAlt") ?? "").trim();
+  // Validate schedule: a scheduled article needs a finite future timestamp.
   const scheduledForRaw = String(formData.get("scheduledFor") ?? "").trim();
-  const scheduledFor =
-    status === "scheduled" && scheduledForRaw
-      ? new Date(scheduledForRaw).getTime()
-      : undefined;
+  let scheduledFor: number | undefined;
+  if (status === "scheduled") {
+    const ts = new Date(scheduledForRaw).getTime();
+    if (!Number.isFinite(ts)) {
+      redirect(`/${lang}/newsroom/${id ?? "new"}?error=bad-schedule`);
+    }
+    scheduledFor = ts;
+  }
+
+  // Validate image provenance (managed store only; preserve unchanged value).
+  const imageUrl = managedImageUrl(
+    String(formData.get("imageUrl") ?? "").trim(),
+    existing?.image?.url,
+  );
+  const imageAlt = String(formData.get("imageAlt") ?? "").trim().slice(0, 300);
 
   const saved = await saveArticle(
     {
       id,
-      slug: String(formData.get("slug") ?? "").trim() || undefined,
+      slug: String(formData.get("slug") ?? "").trim().slice(0, 100) || undefined,
       status,
       primaryLocale,
       translations,
@@ -104,13 +130,14 @@ export async function saveArticleAction(formData: FormData) {
     actor,
   );
 
-  await logAudit({
+  const ok = await logAudit({
     ts: Date.now(),
     actor: actor.email,
     action: id ? "update" : "create",
     articleId: saved?.id,
     detail: status,
   });
+  if (!ok) console.error("[audit] failed to record save", saved?.id);
 
   revalidatePath(`/${lang}/news`);
   revalidatePath(`/${lang}/newsroom`);
@@ -119,10 +146,21 @@ export async function saveArticleAction(formData: FormData) {
 
 export async function deleteArticleAction(formData: FormData) {
   const actor = await requireActor();
-  const id = String(formData.get("id") ?? "");
+  const id = String(formData.get("id") ?? "").trim();
   const lang = String(formData.get("lang") ?? "fr");
+  const existing = id ? await getArticle(id) : null;
+  if (!existing) redirect(`/${lang}/newsroom?error=not-found`);
+
+  // High-impact: record the audit first and fail closed if it can't be written.
+  const ok = await logAudit({
+    ts: Date.now(),
+    actor: actor.email,
+    action: "delete",
+    articleId: id,
+  });
+  if (!ok) redirect(`/${lang}/newsroom?error=audit-unavailable`);
+
   await deleteArticle(id);
-  await logAudit({ ts: Date.now(), actor: actor.email, action: "delete", articleId: id });
   revalidatePath(`/${lang}/news`);
   revalidatePath(`/${lang}/newsroom`);
   redirect(`/${lang}/newsroom?deleted=1`);
@@ -130,11 +168,24 @@ export async function deleteArticleAction(formData: FormData) {
 
 export async function setStatusAction(formData: FormData) {
   const actor = await requireActor();
-  const id = String(formData.get("id") ?? "");
-  const status = String(formData.get("status") ?? "draft") as ArticleStatus;
+  const id = String(formData.get("id") ?? "").trim();
+  const status = coerceStatus(String(formData.get("status") ?? ""));
   const lang = String(formData.get("lang") ?? "fr");
+  if (!status) redirect(`/${lang}/newsroom?error=bad-status`);
+  const existing = id ? await getArticle(id) : null;
+  if (!existing) redirect(`/${lang}/newsroom?error=not-found`);
+
+  // High-impact (publish/unpublish): audit first, fail closed.
+  const ok = await logAudit({
+    ts: Date.now(),
+    actor: actor.email,
+    action: "status",
+    articleId: id,
+    detail: status,
+  });
+  if (!ok) redirect(`/${lang}/newsroom?error=audit-unavailable`);
+
   await setStatus(id, status, actor);
-  await logAudit({ ts: Date.now(), actor: actor.email, action: "status", articleId: id, detail: status });
   revalidatePath(`/${lang}/news`);
   revalidatePath(`/${lang}/newsroom`);
   redirect(`/${lang}/newsroom`);
@@ -142,30 +193,22 @@ export async function setStatusAction(formData: FormData) {
 
 export async function restoreRevisionAction(formData: FormData) {
   const actor = await requireActor();
-  const id = String(formData.get("id") ?? "");
+  const id = String(formData.get("id") ?? "").trim();
   const rev = Number(formData.get("rev") ?? 0);
   const lang = String(formData.get("lang") ?? "fr");
-  await restoreRevision(id, rev, actor);
-  await logAudit({ ts: Date.now(), actor: actor.email, action: "restore", articleId: id, detail: `rev ${rev}` });
-  revalidatePath(`/${lang}/news`);
-  redirect(`/${lang}/newsroom/${id}?restored=1`);
-}
-
-export async function revokeAction(formData: FormData) {
-  const actor = await requireActor();
-  const email = String(formData.get("email") ?? "").toLowerCase();
-  const lang = String(formData.get("lang") ?? "fr");
-  const reinstate = String(formData.get("reinstate") ?? "") === "1";
-  if (reinstate) {
-    await reinstatePublisher(email);
-  } else {
-    await revokePublisher(email);
+  const existing = id ? await getArticle(id) : null;
+  if (!existing || !Number.isInteger(rev) || rev < 1) {
+    redirect(`/${lang}/newsroom?error=bad-request`);
   }
-  await logAudit({
+  await restoreRevision(id, rev, actor);
+  const ok = await logAudit({
     ts: Date.now(),
     actor: actor.email,
-    action: reinstate ? "reinstate" : "revoke",
-    detail: email,
+    action: "restore",
+    articleId: id,
+    detail: `rev ${rev}`,
   });
-  redirect(`/${lang}/newsroom/team`);
+  if (!ok) console.error("[audit] failed to record restore", id);
+  revalidatePath(`/${lang}/news`);
+  redirect(`/${lang}/newsroom/${id}?restored=1`);
 }

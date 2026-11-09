@@ -4,6 +4,50 @@
 export type Locale = "fr" | "en";
 export const LOCALES: Locale[] = ["fr", "en"];
 export type ArticleStatus = "draft" | "scheduled" | "published" | "unpublished";
+export const ARTICLE_STATUSES: ArticleStatus[] = [
+  "draft",
+  "scheduled",
+  "published",
+  "unpublished",
+];
+
+/** Coerce arbitrary input to a valid status, or null if not one. */
+export function coerceStatus(s: string): ArticleStatus | null {
+  return (ARTICLE_STATUSES as string[]).includes(s)
+    ? (s as ArticleStatus)
+    : null;
+}
+
+/**
+ * Pure authorization decision for a publisher e-mail. Fails closed: an empty
+ * address, an address on the owner-controlled revoked list, or one absent from
+ * the allowlist all return false. Revocation always beats the allowlist.
+ */
+export function authorizeEmail(
+  email: string | null | undefined,
+  allowlist: string[],
+  revoked: string[],
+): boolean {
+  const e = email?.toLowerCase();
+  if (!e) return false;
+  if (revoked.includes(e)) return false;
+  return allowlist.includes(e);
+}
+export function managedImageUrl(url: string, existingUrl?: string): string {
+  if (!url) return "";
+  if (existingUrl && url === existingUrl) return url;
+  try {
+    const u = new URL(url);
+    if (
+      u.protocol === "https:" &&
+      u.hostname.endsWith(".blob.vercel-storage.com")
+    )
+      return url;
+  } catch {
+    /* fall through to reject */
+  }
+  return "";
+}
 
 export type ArticleTranslation = {
   title: string;
@@ -111,4 +155,26 @@ export function legacyToArticle(raw: {
     ],
     legacy: true,
   };
+}
+
+/**
+ * Merge the model's published articles with legacy shared-token items for the
+ * public feed. A legacy item is shown ONLY when it is neither present in the
+ * model (deduped by id) NOR already migrated (`migratedIds`). This guarantees
+ * that once an article has been migrated, its visibility is governed solely by
+ * the model — unpublishing or deleting it can never be undone by the legacy
+ * fallback resurrecting the old copy.
+ */
+export function mergePublicNews(
+  model: Article[],
+  legacy: Article[],
+  migratedIds: Set<string>,
+): Article[] {
+  const inModel = new Set(model.map((a) => a.id));
+  const extra = legacy.filter(
+    (a) => !inModel.has(a.id) && !migratedIds.has(a.id),
+  );
+  return [...model, ...extra].sort(
+    (x, y) => (y.publishedAt ?? y.createdAt) - (x.publishedAt ?? x.createdAt),
+  );
 }

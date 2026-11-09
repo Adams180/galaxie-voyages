@@ -10,7 +10,7 @@ import {
   translationFor,
   type Locale,
 } from "@/lib/newsroom";
-import { renderMarkdown, excerpt } from "@/lib/markdown";
+import { renderBody, excerpt } from "@/lib/markdown";
 
 export const dynamic = "force-dynamic";
 
@@ -107,7 +107,7 @@ export default async function ArticlePage({
         )}
         <div
           className="article-prose"
-          dangerouslySetInnerHTML={{ __html: renderMarkdown(t.body) }}
+          dangerouslySetInnerHTML={{ __html: renderBody(t.body) }}
         />
       </article>
     </>

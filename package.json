@@ -11,6 +11,11 @@
   },
   "dependencies": {
     "@auth/upstash-redis-adapter": "^2.11.3",
+    "@tiptap/extension-image": "^3.33.0",
+    "@tiptap/extension-link": "^3.33.0",
+    "@tiptap/pm": "^3.33.0",
+    "@tiptap/react": "^3.33.0",
+    "@tiptap/starter-kit": "^3.33.0",
     "@upstash/redis": "^1.38.0",
     "@vercel/blob": "^2.8.2",
     "marked": "^18.1.3",

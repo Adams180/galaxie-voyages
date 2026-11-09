@@ -31,9 +31,27 @@ export function renderMarkdown(md: string): string {
   return sanitizeHtml(raw, SANITIZE);
 }
 
-/** Plain-text excerpt from Markdown, for list cards and meta descriptions. */
+/** Sanitize rich-text HTML (from the editor) with the same strict allow-list. */
+export function sanitizeBodyHtml(html: string): string {
+  return sanitizeHtml(html ?? "", SANITIZE);
+}
+
+const looksLikeHtml = (s: string) => /<\/?[a-z][\s\S]*>/i.test(s);
+
+/**
+ * Render an article body for display. New content is rich-text HTML (sanitized
+ * both on save and here); legacy content is Markdown/plain text. Either way the
+ * output is sanitized server-side before it reaches the page.
+ */
+export function renderBody(body: string): string {
+  const s = body ?? "";
+  return looksLikeHtml(s) ? sanitizeHtml(s, SANITIZE) : renderMarkdown(s);
+}
+
+/** Plain-text excerpt from Markdown or HTML, for list cards and meta descriptions. */
 export function excerpt(md: string, max = 180): string {
-  const html = marked.parse(md ?? "", { async: false }) as string;
+  const s = md ?? "";
+  const html = looksLikeHtml(s) ? s : (marked.parse(s, { async: false }) as string);
   const text = sanitizeHtml(html, { allowedTags: [], allowedAttributes: {} })
     .replace(/\s+/g, " ")
     .trim();
