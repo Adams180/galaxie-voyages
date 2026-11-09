@@ -10,13 +10,16 @@ type Labels = {
   messageLabel: string;
   messagePlaceholder: string;
   submit: string;
-  sharedNote: string;
-  you: string;
+  submitting: string;
+  moderationPending: string;
+  unavailable: string;
+  privacyNotice: string;
+  validationError: string;
+  rateError: string;
 };
 
 type Comment = { id: string; name: string; text: string; ts: number };
-
-const KEY = "galaxie_comments_v1";
+type State = "loading" | "ready" | "unavailable";
 
 function initials(name: string) {
   return name
@@ -35,10 +38,13 @@ export default function Comments({
   seeds: Seed[];
 }) {
   const [comments, setComments] = useState<Comment[]>([]);
-  const [shared, setShared] = useState(false);
+  const [state, setState] = useState<State>("loading");
   const [name, setName] = useState("");
   const [text, setText] = useState("");
+  const [website, setWebsite] = useState(""); // honeypot
   const [busy, setBusy] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     let active = true;
@@ -46,20 +52,16 @@ export default function Comments({
       try {
         const res = await fetch("/api/comments", { cache: "no-store" });
         const data = await res.json();
-        if (active && data?.enabled && Array.isArray(data.comments)) {
-          setShared(true);
+        if (!active) return;
+        if (data?.enabled && Array.isArray(data.comments)) {
           setComments(data.comments);
-          return;
+          setState("ready");
+        } else {
+          // No shared store → be truthful; never present local entries as shared.
+          setState("unavailable");
         }
       } catch {
-        /* fall through to local */
-      }
-      // local fallback
-      try {
-        const raw = localStorage.getItem(KEY);
-        if (active && raw) setComments(JSON.parse(raw));
-      } catch {
-        /* ignore */
+        if (active) setState("unavailable");
       }
     })();
     return () => {
@@ -70,44 +72,27 @@ export default function Comments({
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!name.trim() || !text.trim() || busy) return;
-    const entry: Comment = {
-      id: crypto.randomUUID(),
-      name: name.trim(),
-      text: text.trim(),
-      ts: Date.now(),
-    };
-
-    if (shared) {
-      setBusy(true);
-      try {
-        const res = await fetch("/api/comments", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ name: entry.name, text: entry.text }),
-        });
-        const data = await res.json();
-        if (res.ok && data?.comment) {
-          setComments((cur) => [data.comment, ...cur]);
-          setName("");
-          setText("");
-        }
-      } catch {
-        /* ignore */
-      } finally {
-        setBusy(false);
-      }
-      return;
-    }
-
-    // local mode
-    const next = [entry, ...comments];
-    setComments(next);
-    setName("");
-    setText("");
+    setBusy(true);
+    setError("");
     try {
-      localStorage.setItem(KEY, JSON.stringify(next));
+      const res = await fetch("/api/comments", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: name.trim(), text: text.trim(), website }),
+      });
+      if (res.ok) {
+        setSubmitted(true);
+        setName("");
+        setText("");
+        return;
+      }
+      if (res.status === 429) setError(labels.rateError);
+      else if (res.status === 503) setState("unavailable");
+      else setError(labels.validationError);
     } catch {
-      /* ignore */
+      setError(labels.validationError);
+    } finally {
+      setBusy(false);
     }
   };
 
@@ -123,58 +108,85 @@ export default function Comments({
 
   return (
     <div className="grid gap-10 lg:grid-cols-[1fr_1.4fr] lg:items-start">
-      {/* form */}
-      <form
-        onSubmit={submit}
-        className="rounded-2xl border border-line bg-surface p-6"
-      >
-        <div className="space-y-4">
-          <label className="block">
-            <span className="mb-1 block text-xs font-semibold text-muted">
-              {labels.nameLabel} *
-            </span>
-            <input
-              required
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              placeholder={labels.namePlaceholder}
-              className={field}
-            />
-          </label>
-          <label className="block">
-            <span className="mb-1 block text-xs font-semibold text-muted">
-              {labels.messageLabel} *
-            </span>
-            <textarea
-              required
-              rows={4}
-              value={text}
-              onChange={(e) => setText(e.target.value)}
-              placeholder={labels.messagePlaceholder}
-              className={field}
-            />
-          </label>
-          <button
-            type="submit"
-            disabled={busy}
-            className="gv-press w-full rounded-full bg-gold-400 px-6 py-3 text-sm font-semibold text-navy-900 transition hover:bg-gold-300 disabled:opacity-60"
-          >
-            {labels.submit}
-          </button>
-          {shared && (
-            <p className="text-xs text-faint">{labels.sharedNote}</p>
-          )}
-        </div>
-      </form>
+      {/* form / status */}
+      <div className="rounded-2xl border border-line bg-surface p-6">
+        {state === "unavailable" ? (
+          <p className="rounded-lg border border-gold-400/40 bg-gold-400/10 px-4 py-3 text-sm text-highlight">
+            {labels.unavailable}
+          </p>
+        ) : submitted ? (
+          <div className="rounded-lg border border-emerald-500/40 bg-emerald-500/10 px-4 py-4 text-sm text-emerald-600 dark:text-emerald-300">
+            ✓ {labels.moderationPending}
+          </div>
+        ) : (
+          <form onSubmit={submit} className="space-y-4">
+            <label className="block">
+              <span className="mb-1 block text-xs font-semibold text-muted">
+                {labels.nameLabel} *
+              </span>
+              <input
+                required
+                maxLength={60}
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder={labels.namePlaceholder}
+                className={field}
+              />
+            </label>
+            <label className="block">
+              <span className="mb-1 block text-xs font-semibold text-muted">
+                {labels.messageLabel} *
+              </span>
+              <textarea
+                required
+                maxLength={600}
+                rows={4}
+                value={text}
+                onChange={(e) => setText(e.target.value)}
+                placeholder={labels.messagePlaceholder}
+                className={field}
+              />
+            </label>
+            {/* Honeypot — visually hidden; bots fill it, humans don't */}
+            <div
+              aria-hidden
+              className="absolute left-[-9999px] h-0 w-0 overflow-hidden"
+            >
+              <label>
+                Website
+                <input
+                  tabIndex={-1}
+                  autoComplete="off"
+                  value={website}
+                  onChange={(e) => setWebsite(e.target.value)}
+                />
+              </label>
+            </div>
+            {error && (
+              <p className="rounded-lg border border-red-500/40 bg-red-500/10 px-4 py-2.5 text-sm text-red-600 dark:text-red-300">
+                {error}
+              </p>
+            )}
+            <button
+              type="submit"
+              disabled={busy}
+              className="gv-press w-full rounded-full bg-gold-400 px-6 py-3 text-sm font-semibold text-navy-900 transition hover:bg-gold-300 disabled:opacity-60"
+            >
+              {busy ? labels.submitting : labels.submit}
+            </button>
+            <p className="text-xs text-faint">{labels.privacyNotice}</p>
+          </form>
+        )}
+      </div>
 
-      {/* list */}
+      {/* list: approved shared comments first, then curated testimonials */}
       <div className="space-y-4">
         {comments.map((cm) => (
           <CommentCard
             key={cm.id}
             name={cm.name}
             text={cm.text}
-            meta={`${shared ? "" : labels.you + " · "}${fmtDate(cm.ts)}`}
+            meta={fmtDate(cm.ts)}
             highlight
           />
         ))}

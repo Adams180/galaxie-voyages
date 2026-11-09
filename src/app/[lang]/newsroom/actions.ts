@@ -22,6 +22,7 @@ import {
   type ArticleTranslation,
 } from "@/lib/newsroom";
 import { sanitizeBodyHtml } from "@/lib/markdown";
+import { moderateComment, deleteComment } from "@/lib/comments";
 
 async function requireActor() {
   const actor = await currentPublisher();
@@ -211,4 +212,43 @@ export async function restoreRevisionAction(formData: FormData) {
   if (!ok) console.error("[audit] failed to record restore", id);
   revalidatePath(`/${lang}/news`);
   redirect(`/${lang}/newsroom/${id}?restored=1`);
+}
+
+export async function moderateCommentAction(formData: FormData) {
+  const actor = await requireActor();
+  const id = String(formData.get("id") ?? "").trim();
+  const lang = String(formData.get("lang") ?? "fr");
+  const decision = String(formData.get("decision") ?? "");
+  if (!id || (decision !== "approved" && decision !== "rejected")) {
+    redirect(`/${lang}/newsroom/comments?error=bad-request`);
+  }
+  const status = decision as "approved" | "rejected";
+  // High-impact (makes content public / removes it): audit first, fail closed.
+  const ok = await logAudit({
+    ts: Date.now(),
+    actor: actor.email,
+    action: "moderate-comment",
+    detail: `${status}:${id}`,
+  });
+  if (!ok) redirect(`/${lang}/newsroom/comments?error=audit-unavailable`);
+  await moderateComment(id, status);
+  revalidatePath(`/${lang}`);
+  redirect(`/${lang}/newsroom/comments`);
+}
+
+export async function deleteCommentAction(formData: FormData) {
+  const actor = await requireActor();
+  const id = String(formData.get("id") ?? "").trim();
+  const lang = String(formData.get("lang") ?? "fr");
+  if (!id) redirect(`/${lang}/newsroom/comments?error=bad-request`);
+  const ok = await logAudit({
+    ts: Date.now(),
+    actor: actor.email,
+    action: "delete-comment",
+    detail: id,
+  });
+  if (!ok) redirect(`/${lang}/newsroom/comments?error=audit-unavailable`);
+  await deleteComment(id);
+  revalidatePath(`/${lang}`);
+  redirect(`/${lang}/newsroom/comments`);
 }

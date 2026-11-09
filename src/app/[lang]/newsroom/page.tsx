@@ -56,6 +56,12 @@ export default async function NewsroomDashboard({
         </div>
         <div className="flex flex-wrap items-center gap-2">
           <Link
+            href={`/${lang}/newsroom/comments`}
+            className="rounded-full border border-line px-4 py-2 text-sm font-semibold text-muted transition hover:border-gold-400/50 hover:text-highlight"
+          >
+            {nr.commentsNav}
+          </Link>
+          <Link
             href={`/${lang}/newsroom/team`}
             className="rounded-full border border-line px-4 py-2 text-sm font-semibold text-muted transition hover:border-gold-400/50 hover:text-highlight"
           >
