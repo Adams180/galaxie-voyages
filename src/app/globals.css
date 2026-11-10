@@ -1,5 +1,11 @@
 @import "tailwindcss";
 
+/* Prevent document-level horizontal scrolling (clip keeps intentional overflow
+   like the city marquee, without creating a scroll container or breaking
+   sticky/fixed descendants). */
+html, body { overflow-x: clip; }
+
+
 /* Enable class-based dark mode (.dark on <html>) */
 @custom-variant dark (&:where(.dark, .dark *));
 

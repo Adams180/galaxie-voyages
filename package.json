@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test": "node --experimental-strip-types --test 'src/**/*.test.ts'"
+    "test": "node --experimental-strip-types --test 'src/**/*.test.ts'",
+    "test:e2e": "node tests/e2e/smoke.cjs"
   },
   "dependencies": {
     "@auth/upstash-redis-adapter": "^2.11.3",
