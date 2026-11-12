@@ -40,6 +40,21 @@ const KEY = (id: string) => `news:article:${id}`;
 const SLUG = (slug: string) => `news:slug:${slug}`;
 const INDEX = "news:index";
 const MIGRATED_IDS = "news:migrated:ids"; // tombstone set of imported legacy ids
+
+// Atomic import: the migrated-id tombstone and new article become visible in
+// one Redis operation. Crucially, a tombstoned (possibly deleted) article
+// MUST NEVER be imported again even after an interrupted migration.
+const IMPORT_LEGACY_ATOMIC = `
+if redis.call("SISMEMBER", KEYS[1], ARGV[1]) == 1 then return 0 end
+if redis.call("EXISTS", KEYS[2]) == 1 then
+  redis.call("SADD", KEYS[1], ARGV[1])
+  return 0
+end
+redis.call("SADD", KEYS[1], ARGV[1])
+redis.call("SET", KEYS[2], ARGV[2])
+redis.call("ZADD", KEYS[3], ARGV[3], ARGV[1])
+return 1
+`;
 const parse = <T>(x: unknown): T =>
   typeof x === "string" ? (JSON.parse(x) as T) : (x as T);
 
@@ -237,12 +252,12 @@ export async function migrateLegacyNews(): Promise<{ migrated: number }> {
       const article = legacyToArticle(legacy);
       const slug = await reserveSlug(article.slug, article.id);
       article.slug = slug;
-      await redis.set(KEY(article.id), JSON.stringify(article));
-      // Record the tombstone BEFORE/with the write so a crash can't leave an
-      // imported article that the legacy fallback would also show.
-      await redis.sadd(MIGRATED_IDS, article.id);
-      await redis.zadd(INDEX, { score: article.createdAt, member: article.id });
-      migrated++;
+      const inserted = await redis.eval(
+        IMPORT_LEGACY_ATOMIC,
+        [MIGRATED_IDS, KEY(article.id), INDEX],
+        [article.id, JSON.stringify(article), String(article.createdAt)],
+      );
+      if (Number(inserted) === 1) migrated++;
     }
     await redis.set("news:migrated", "1");
   } catch {
@@ -253,12 +268,10 @@ export async function migrateLegacyNews(): Promise<{ migrated: number }> {
 
 /** The set of legacy ids already imported (tombstones). */
 export async function migratedLegacyIds(): Promise<Set<string>> {
-  if (!redis) return new Set();
-  try {
-    return new Set(await redis.smembers<string[]>(MIGRATED_IDS));
-  } catch {
-    return new Set();
-  }
+  // Failure must never masquerade as "no tombstones": doing so can resurrect
+  // legacy copies of deleted/unpublished migrated articles.
+  if (!redis) throw new Error("newsroom storage unavailable");
+  return new Set(await redis.smembers<string[]>(MIGRATED_IDS));
 }
 
 /** Run the legacy import once (guarded by a flag). */
@@ -321,17 +334,16 @@ export async function listPublicNews(
   now = Date.now(),
 ): Promise<Article[]> {
   const model = await listPublishedArticles(locale, now);
-  let legacy: Article[] = [];
-  let migrated = new Set<string>();
   try {
+    // Resolve tombstones BEFORE loading legacy articles. If Redis errors,
+    // return only model-published entries, never an unsafe legacy fallback.
+    const migrated = await migratedLegacyIds();
     const { listNews } = await import("./news");
-    legacy = (await listNews()).map(legacyToArticle);
-    migrated = await migratedLegacyIds();
-  } catch {
-    /* ignore */
+    const legacy = (await listNews()).map(legacyToArticle);
+    const publishableLegacy = legacy.filter((a) => translationFor(a, locale));
+    return mergePublicNews(model, publishableLegacy, migrated);
+  } catch (e) {
+    console.error("[newsroom] legacy fallback suppressed; tombstones unavailable:", e);
+    return model;
   }
-  // Only published legacy items are eligible; migration tombstones exclude any
-  // already-imported id regardless of its current model state.
-  const publishableLegacy = legacy.filter((a) => translationFor(a, locale));
-  return mergePublicNews(model, publishableLegacy, migrated);
 }
