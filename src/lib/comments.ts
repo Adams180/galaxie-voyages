@@ -5,6 +5,7 @@ import {
   type Comment,
   type CommentStatus,
   validateComment,
+  collectCommentsByStatus,
 } from "./comments-model";
 
 export * from "./comments-model";
@@ -54,16 +55,18 @@ async function listByStatus(
   status: CommentStatus | "all",
   limit: number,
 ): Promise<Comment[]> {
-  if (!redis) return [];
-  try {
-    const ids = await redis.zrange<string[]>(INDEX, 0, limit - 1, { rev: true });
+  // A missing store or failed read must not be returned as an empty-but-
+  // available list. This is also used by the public API's 503 response.
+  if (!redis) throw new Error("comments storage unavailable");
+  return collectCommentsByStatus(status, limit, async (offset, size) => {
+    const ids = await redis.zrange<string[]>(INDEX, offset, offset + size - 1, {
+      rev: true,
+    });
     if (!ids.length) return [];
     const raw = await redis.mget<unknown[]>(...ids.map(ITEM));
-    const all = raw.filter(Boolean).map(parse);
-    return status === "all" ? all : all.filter((c) => c.status === status);
-  } catch {
-    return [];
-  }
+    // Keep null placeholders: sparse/deleted records must not shift the scan.
+    return raw.map((entry) => (entry == null ? null : parse(entry)));
+  });
 }
 
 /** Public: approved comments only. */
