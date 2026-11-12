@@ -1,0 +1,35 @@
+name: Galaxie Website Modernization Review
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: galaxie-website-pr-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  source-checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout reviewed PR source
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - name: Install Node.js
+        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
+        with:
+          node-version: '24'
+          package-manager-cache: false
+      - name: Install pinned pnpm
+        run: npm install --global pnpm@10.21.0
+      - name: Restore locked dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Run unit regressions
+        run: pnpm test
+      - name: Production build and TypeScript checks
+        run: pnpm build

@@ -1,50 +1,65 @@
-import { Redis } from "@upstash/redis";
+import {
+  commentsReady,
+  ensureCommentsMigrated,
+  listApproved,
+  submitComment,
+  withinRateLimit,
+} from "@/lib/comments";
 
-// Shared review storage. Uses Upstash Redis / Vercel KV when its env vars are
-// present (link a KV store in the Vercel dashboard → redeploy). Until then the
-// API reports `enabled: false` and the client falls back to localStorage.
+// Public comments API with moderation:
+//   GET  → APPROVED comments only (public-safe shape)
+//   POST → validated, honeypot- and rate-limited, stored as PENDING
+// Only approved comments are ever publicly visible.
 export const dynamic = "force-dynamic";
 
-const url =
-  process.env.KV_REST_API_URL ?? process.env.UPSTASH_REDIS_REST_URL ?? "";
-const token =
-  process.env.KV_REST_API_TOKEN ?? process.env.UPSTASH_REDIS_REST_TOKEN ?? "";
-const redis = url && token ? new Redis({ url, token }) : null;
-
-const KEY = "galaxie:comments";
-const MAX = 200;
-
-type Comment = { id: string; name: string; text: string; ts: number };
-
-const parse = (x: unknown): Comment =>
-  typeof x === "string" ? (JSON.parse(x) as Comment) : (x as Comment);
+function clientIp(request: Request): string {
+  const xff = request.headers.get("x-forwarded-for");
+  return (
+    xff?.split(",")[0]?.trim() ||
+    request.headers.get("x-real-ip") ||
+    "unknown"
+  );
+}
 
 export async function GET() {
-  if (!redis) return Response.json({ enabled: false, comments: [] });
+  if (!commentsReady()) return Response.json({ enabled: false, comments: [] });
   try {
-    const raw = await redis.lrange(KEY, 0, 49);
-    return Response.json({ enabled: true, comments: raw.map(parse) });
-  } catch {
-    return Response.json({ enabled: false, comments: [] });
+    await ensureCommentsMigrated();
+    const approved = await listApproved(50);
+    // Public shape only — never expose status, articleId internals, etc.
+    return Response.json({
+      enabled: true,
+      comments: approved.map(({ id, name, text, ts }) => ({ id, name, text, ts })),
+    });
+  } catch (error) {
+    console.error("[comments] read unavailable:", error);
+    return Response.json(
+      { enabled: false, comments: [] },
+      { status: 503 },
+    );
   }
 }
 
 export async function POST(request: Request) {
-  if (!redis)
-    return Response.json({ enabled: false }, { status: 503 });
+  if (!commentsReady()) return Response.json({ enabled: false }, { status: 503 });
 
   const body = await request.json().catch(() => null);
-  const name = String(body?.name ?? "").trim().slice(0, 60);
-  const text = String(body?.text ?? "").trim().slice(0, 600);
-  if (!name || !text)
-    return Response.json({ error: "name and text are required" }, { status: 400 });
 
-  const comment: Comment = { id: crypto.randomUUID(), name, text, ts: Date.now() };
-  try {
-    await redis.lpush(KEY, JSON.stringify(comment));
-    await redis.ltrim(KEY, 0, MAX - 1);
-    return Response.json({ enabled: true, comment }, { status: 201 });
-  } catch {
-    return Response.json({ error: "storage unavailable" }, { status: 503 });
+  // Honeypot: real users never fill this hidden field. Return an accept-looking
+  // response so bots don't learn, but store nothing.
+  if (String(body?.website ?? "").trim() !== "") {
+    return Response.json({ ok: true, status: "pending" }, { status: 201 });
   }
+
+  if (!(await withinRateLimit(clientIp(request)))) {
+    return Response.json({ error: "rate" }, { status: 429 });
+  }
+
+  const res = await submitComment({ name: body?.name, text: body?.text });
+  if (!res.ok) {
+    const status = res.reason === "unavailable" ? 503 : 400;
+    return Response.json({ error: res.reason }, { status });
+  }
+  // Pending moderation — NOT yet public.
+  return Response.json({ ok: true, status: "pending" }, { status: 201 });
 }
