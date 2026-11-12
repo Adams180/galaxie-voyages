@@ -5,6 +5,7 @@ import {
   validateComment,
   countLinks,
   isPublic,
+  collectCommentsByStatus,
   type Comment,
 } from "../comments-model.ts";
 
@@ -51,5 +52,41 @@ ok("only approved comments are public", () => {
   assert.equal(isPublic({ ...base, status: "approved" }), true);
   assert.equal(isPublic({ ...base, status: "rejected" }), false);
 });
+
+
+// Status filtering must scan past newer comments of other statuses.
+const rows: Comment[] = Array.from({ length: 250 }, (_, i) => ({
+  id: `c-${i}`, name: "Tester", text: "Message", ts: 1000 - i,
+  status: (i === 170 || i === 235 ? "approved" :
+    i === 11 || i === 230 ? "pending" : "rejected"),
+}));
+const page = async (offset: number, size: number) =>
+  rows.slice(offset, offset + size);
+
+const approvedOlder = await collectCommentsByStatus("approved", 2, page, 25);
+assert.deepEqual(approvedOlder.map((c) => c.id), ["c-170", "c-235"]);
+passed++;
+console.log("  ✓ status scan finds approved comments beyond newest all-status limit");
+
+const pendingOlder = await collectCommentsByStatus("pending", 2, page, 25);
+assert.deepEqual(pendingOlder.map((c) => c.id), ["c-11", "c-230"]);
+passed++;
+console.log("  ✓ status scan finds pending comments beyond newest all-status limit");
+
+const sparse = async (offset: number, size: number) =>
+  rows.slice(offset, offset + size).map((c) => c.id === "c-5" ? null : c);
+const sparseResult = await collectCommentsByStatus("approved", 2, sparse, 25);
+assert.deepEqual(sparseResult.map((c) => c.id), ["c-170", "c-235"]);
+passed++;
+console.log("  ✓ missing indexed records do not shift pagination");
+
+await assert.rejects(
+  collectCommentsByStatus("approved", 1, async () => {
+    throw new Error("Redis connection failed");
+  }, 25),
+  /Redis connection failed/,
+);
+passed++;
+console.log("  ✓ Redis read failure propagates rather than presenting an empty list");
 
 console.log(`\n${passed} comments-model tests passed.`);
