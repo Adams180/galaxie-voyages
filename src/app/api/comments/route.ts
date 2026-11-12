@@ -23,13 +23,21 @@ function clientIp(request: Request): string {
 
 export async function GET() {
   if (!commentsReady()) return Response.json({ enabled: false, comments: [] });
-  await ensureCommentsMigrated();
-  const approved = await listApproved(50);
-  // Public shape only — never expose status, articleId internals, etc.
-  return Response.json({
-    enabled: true,
-    comments: approved.map(({ id, name, text, ts }) => ({ id, name, text, ts })),
-  });
+  try {
+    await ensureCommentsMigrated();
+    const approved = await listApproved(50);
+    // Public shape only — never expose status, articleId internals, etc.
+    return Response.json({
+      enabled: true,
+      comments: approved.map(({ id, name, text, ts }) => ({ id, name, text, ts })),
+    });
+  } catch (error) {
+    console.error("[comments] read unavailable:", error);
+    return Response.json(
+      { enabled: false, comments: [] },
+      { status: 503 },
+    );
+  }
 }
 
 export async function POST(request: Request) {
