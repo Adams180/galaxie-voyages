@@ -118,6 +118,18 @@ export async function saveArticleAction(formData: FormData) {
   );
   const imageAlt = String(formData.get("imageAlt") ?? "").trim().slice(0, 300);
 
+  // Audit the intended write before any article mutation. A successful audit
+  // write is a required precondition even for status changes through Save.
+  // The entry records intent; the database write may still fail afterward.
+  const auditOk = await logAudit({
+    ts: Date.now(),
+    actor: actor.email,
+    action: id ? "update-intent" : "create-intent",
+    articleId: id,
+    detail: `requested status: ${status}`,
+  });
+  if (!auditOk) redirect(`/${lang}/newsroom?error=audit-unavailable`);
+
   const saved = await saveArticle(
     {
       id,
@@ -131,14 +143,7 @@ export async function saveArticleAction(formData: FormData) {
     actor,
   );
 
-  const ok = await logAudit({
-    ts: Date.now(),
-    actor: actor.email,
-    action: id ? "update" : "create",
-    articleId: saved?.id,
-    detail: status,
-  });
-  if (!ok) console.error("[audit] failed to record save", saved?.id);
+  if (!saved) redirect(`/${lang}/newsroom?error=storage-unavailable`);
 
   revalidatePath(`/${lang}/news`);
   revalidatePath(`/${lang}/newsroom`);
@@ -201,15 +206,21 @@ export async function restoreRevisionAction(formData: FormData) {
   if (!existing || !Number.isInteger(rev) || rev < 1) {
     redirect(`/${lang}/newsroom?error=bad-request`);
   }
-  await restoreRevision(id, rev, actor);
+  // A revision may restore "published" state, so gate it before the write.
+  if (!existing.revisions.some((r) => r.rev === rev)) {
+    redirect(`/${lang}/newsroom?error=bad-revision`);
+  }
   const ok = await logAudit({
     ts: Date.now(),
     actor: actor.email,
-    action: "restore",
+    action: "restore-intent",
     articleId: id,
     detail: `rev ${rev}`,
   });
-  if (!ok) console.error("[audit] failed to record restore", id);
+  if (!ok) redirect(`/${lang}/newsroom?error=audit-unavailable`);
+
+  const restored = await restoreRevision(id, rev, actor);
+  if (!restored) redirect(`/${lang}/newsroom?error=restore-failed`);
   revalidatePath(`/${lang}/news`);
   redirect(`/${lang}/newsroom/${id}?restored=1`);
 }
