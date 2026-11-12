@@ -57,3 +57,39 @@ export function validateComment(
 export function isPublic(c: Comment): boolean {
   return c.status === "approved";
 }
+
+
+/**
+ * Fetch the newest matching comments, not merely matches among the newest N
+ * comments of all statuses. Deleted index entries are represented by null,
+ * preserving the original offsets. Read failures propagate to the caller.
+ */
+export async function collectCommentsByStatus(
+  status: CommentStatus | "all",
+  limit: number,
+  readPage: (offset: number, size: number) => Promise<(Comment | null)[]>,
+  pageSize = 100,
+): Promise<Comment[]> {
+  if (!Number.isSafeInteger(limit) || limit < 0) {
+    throw new Error("invalid comment limit");
+  }
+  if (!Number.isSafeInteger(pageSize) || pageSize < 1) {
+    throw new Error("invalid comment page size");
+  }
+  const result: Comment[] = [];
+  if (limit === 0) return result;
+
+  for (let offset = 0; result.length < limit;) {
+    const page = await readPage(offset, pageSize);
+    if (page.length > pageSize) throw new Error("invalid comment page");
+    for (const comment of page) {
+      if (comment && (status === "all" || comment.status === status)) {
+        result.push(comment);
+        if (result.length === limit) break;
+      }
+    }
+    offset += page.length;
+    if (page.length < pageSize) break;
+  }
+  return result;
+}
