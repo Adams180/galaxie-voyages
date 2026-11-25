@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Node CommonJS test/e2e scripts (run with Node, not part of the app bundle).
+    "tests/e2e/**",
   ]),
 ]);
 

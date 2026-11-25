@@ -1,8 +1,15 @@
 import type { CSSProperties } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getDictionary, isLocale } from "@/lib/i18n";
-import { listNews } from "@/lib/news";
+import {
+  ensureMigrated,
+  listPublicNews,
+  translationFor,
+  type Locale,
+} from "@/lib/newsroom";
+import { excerpt } from "@/lib/markdown";
 
 // News is runtime content (Upstash Redis), so render at request time.
 export const dynamic = "force-dynamic";
@@ -12,7 +19,9 @@ export default async function NewsPage({ params }: PageProps<"/[lang]/news">) {
   if (!isLocale(lang)) notFound();
   const dict = await getDictionary(lang);
   const n = dict.news;
-  const items = await listNews();
+
+  await ensureMigrated();
+  const items = await listPublicNews(lang as Locale);
 
   const fmtDate = (ts: number) =>
     new Date(ts).toLocaleDateString(lang === "fr" ? "fr-FR" : "en-US", {
@@ -74,47 +83,59 @@ export default async function NewsPage({ params }: PageProps<"/[lang]/news">) {
           </div>
         ) : (
           <div className="space-y-8">
-            {items.map((item, i) => (
-              <article
-                key={item.id}
-                data-reveal
-                style={{ "--reveal-delay": `${Math.min(i, 4) * 90}ms` } as CSSProperties}
-                className="overflow-hidden rounded-2xl border border-line bg-surface transition duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-navy-900/10"
-              >
-                {item.image && (
-                  <div className="relative aspect-[16/9] w-full overflow-hidden bg-elevated">
-                    <Image
-                      src={item.image}
-                      alt={item.title}
-                      fill
-                      sizes="(max-width: 896px) 100vw, 896px"
-                      className="object-cover"
-                    />
-                  </div>
-                )}
-                <div className="p-6 sm:p-8">
-                  <div className="flex flex-wrap items-center gap-x-2 text-xs text-faint">
-                    <time dateTime={new Date(item.ts).toISOString()}>
-                      {fmtDate(item.ts)}
-                    </time>
-                    {item.author && (
-                      <>
-                        <span>·</span>
-                        <span>
-                          {n.by} {item.author}
-                        </span>
-                      </>
+            {items.map((a, i) => {
+              const t = translationFor(a, lang as Locale);
+              if (!t) return null;
+              const date = a.publishedAt ?? a.createdAt;
+              return (
+                <article
+                  key={a.id}
+                  data-reveal
+                  style={
+                    { "--reveal-delay": `${Math.min(i, 4) * 90}ms` } as CSSProperties
+                  }
+                  className="overflow-hidden rounded-2xl border border-line bg-surface transition duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-navy-900/10"
+                >
+                  <Link href={`/${lang}/news/${a.slug}`} className="block">
+                    {a.image?.url && (
+                      <div className="relative aspect-[16/9] w-full overflow-hidden bg-elevated">
+                        <Image
+                          src={a.image.url}
+                          alt={a.image.alt || t.title}
+                          fill
+                          sizes="(max-width: 896px) 100vw, 896px"
+                          className="object-cover"
+                        />
+                      </div>
                     )}
-                  </div>
-                  <h2 className="mt-2 text-xl font-bold text-fg sm:text-2xl">
-                    {item.title}
-                  </h2>
-                  <p className="mt-3 whitespace-pre-wrap text-sm leading-relaxed text-muted">
-                    {item.body}
-                  </p>
-                </div>
-              </article>
-            ))}
+                    <div className="p-6 sm:p-8">
+                      <div className="flex flex-wrap items-center gap-x-2 text-xs text-faint">
+                        <time dateTime={new Date(date).toISOString()}>
+                          {fmtDate(date)}
+                        </time>
+                        {a.author?.name && (
+                          <>
+                            <span>·</span>
+                            <span>
+                              {n.by} {a.author.name}
+                            </span>
+                          </>
+                        )}
+                      </div>
+                      <h2 className="mt-2 text-xl font-bold text-fg sm:text-2xl">
+                        {t.title}
+                      </h2>
+                      <p className="mt-3 text-sm leading-relaxed text-muted">
+                        {excerpt(t.body)}
+                      </p>
+                      <span className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-accent">
+                        {n.readMore} <span aria-hidden>→</span>
+                      </span>
+                    </div>
+                  </Link>
+                </article>
+              );
+            })}
           </div>
         )}
       </section>

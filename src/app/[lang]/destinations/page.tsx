@@ -1,7 +1,8 @@
 import type { CSSProperties } from "react";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getDictionary, isLocale } from "@/lib/i18n";
-import { routes } from "@/lib/data";
+import { routes, routeIsBidirectional } from "@/lib/data";
 
 export default async function DestinationsPage({
   params,
@@ -48,10 +49,12 @@ export default async function DestinationsPage({
               </tr>
             </thead>
             <tbody className="divide-y divide-line">
-              {filtered.map((r) => (
+              {filtered.map((r) => {
+                const twoWay = routeIsBidirectional(r);
+                return (
                 <tr key={r.code} className="transition hover:bg-band">
                   <td className="px-5 py-4 font-semibold text-fg">
-                    {r.a} <span className="text-accent">⇄</span> {r.b}
+                    {r.a} <span className="text-accent">{twoWay ? "⇄" : "→"}</span> {r.b}
                     {r.popular && (
                       <span className="ml-2 rounded-full bg-gold-400/15 px-2 py-0.5 text-[0.65rem] font-semibold uppercase text-highlight">
                         {c.popular}
@@ -59,10 +62,64 @@ export default async function DestinationsPage({
                     )}
                   </td>
                   <td className="px-5 py-4 text-muted">
-                    ~{r.hours}
-                    {c.hours}
+                    {r.hours != null ? (
+                      <>
+                        ~{r.hours}
+                        {c.hours}
+                      </>
+                    ) : (
+                      <span className="text-faint">—</span>
+                    )}
                   </td>
                   <td className="px-5 py-4">
+                    {r.departures && r.departures.length > 0 ? (
+                      <div className="flex flex-wrap gap-1.5">
+                        {r.departures.map((t) => (
+                          <span
+                            key={t}
+                            className="rounded-md bg-elevated px-2 py-0.5 text-xs font-medium text-fg"
+                          >
+                            {t}
+                          </span>
+                        ))}
+                      </div>
+                    ) : (
+                      <Link
+                        href={`/${lang}/contact`}
+                        className="inline-flex items-center gap-1.5 rounded-md border border-gold-400/40 bg-gold-400/10 px-2.5 py-1 text-xs font-medium text-highlight transition hover:bg-gold-400/20"
+                      >
+                        {d.timetableUnavailable}
+                      </Link>
+                    )}
+                  </td>
+                </tr>
+                );
+              })}
+            </tbody>
+          </table>
+
+          {/* mobile cards */}
+          <div className="divide-y divide-line md:hidden">
+            {filtered.map((r) => {
+              const twoWay = routeIsBidirectional(r);
+              return (
+              <div key={r.code} className="p-4">
+                <div className="flex items-center gap-2 font-semibold text-fg">
+                  {r.a} <span className="text-accent">{twoWay ? "⇄" : "→"}</span> {r.b}
+                  {r.popular && (
+                    <span className="rounded-full bg-gold-400/15 px-2 py-0.5 text-[0.6rem] font-semibold uppercase text-highlight">
+                      {c.popular}
+                    </span>
+                  )}
+                </div>
+                {r.hours != null && (
+                  <div className="mt-1 text-xs text-muted">
+                    ~{r.hours}
+                    {c.hours}
+                  </div>
+                )}
+                <div className="mt-2">
+                  {r.departures && r.departures.length > 0 ? (
                     <div className="flex flex-wrap gap-1.5">
                       {r.departures.map((t) => (
                         <span
@@ -73,35 +130,18 @@ export default async function DestinationsPage({
                         </span>
                       ))}
                     </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-
-          {/* mobile cards */}
-          <div className="divide-y divide-line md:hidden">
-            {filtered.map((r) => (
-              <div key={r.code} className="p-4">
-                <div className="flex items-center gap-2 font-semibold text-fg">
-                  {r.a} <span className="text-accent">⇄</span> {r.b}
-                </div>
-                <div className="mt-1 text-xs text-muted">
-                  ~{r.hours}
-                  {c.hours}
-                </div>
-                <div className="mt-2 flex flex-wrap gap-1.5">
-                  {r.departures.map((t) => (
-                    <span
-                      key={t}
-                      className="rounded-md bg-elevated px-2 py-0.5 text-xs font-medium text-fg"
+                  ) : (
+                    <Link
+                      href={`/${lang}/contact`}
+                      className="inline-flex items-center gap-1.5 rounded-md border border-gold-400/40 bg-gold-400/10 px-2.5 py-1 text-xs font-medium text-highlight transition hover:bg-gold-400/20"
                     >
-                      {t}
-                    </span>
-                  ))}
+                      {d.timetableUnavailable}
+                    </Link>
+                  )}
                 </div>
               </div>
-            ))}
+              );
+            })}
           </div>
 
           {filtered.length === 0 && (

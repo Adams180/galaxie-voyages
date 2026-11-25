@@ -315,17 +315,23 @@ export default async function HomePage({ params }: PageProps<"/[lang]">) {
             {routes.map((r) => (
               <li
                 key={r.code}
-                className="flex items-center justify-between rounded-xl border border-line bg-band px-5 py-4 transition hover:border-gold-400/40"
+                className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1 rounded-xl border border-line bg-band px-4 py-4 transition hover:border-gold-400/40 sm:px-5"
               >
-                <span className="flex items-center gap-2 font-medium text-fg">
-                  <span className="h-2 w-2 rounded-full bg-gold-400" />
+                <span className="flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1 font-medium text-fg">
+                  <span className="h-2 w-2 shrink-0 rounded-full bg-gold-400" />
                   {r.a}
-                  <span className="text-faint">⇄</span>
+                  <span className="text-faint">{r.bidirectional === false ? "→" : "⇄"}</span>
                   {r.b}
                 </span>
-                <span className="text-xs text-muted">
-                  ~{r.hours}
-                  {c.hours}
+                <span className="shrink-0 text-xs text-muted">
+                  {r.hours != null ? (
+                    <>
+                      ~{r.hours}
+                      {c.hours}
+                    </>
+                  ) : (
+                    c.timetableSoon
+                  )}
                 </span>
               </li>
             ))}
